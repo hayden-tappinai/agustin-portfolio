@@ -10,6 +10,9 @@ import { CountryPanel } from './components/CountryPanel'
 import { FeaturedNav } from './components/FeaturedNav'
 import { Reveal } from './components/Reveal'
 import { PerforatedDivider } from './components/PerforatedDivider'
+import { SoccerField } from './components/SoccerField'
+import { WorldCupBalls } from './components/WorldCupBalls'
+import { LogoWall } from './components/LogoWall'
 import { useLenis } from './hooks/useLenis'
 import { VISITED_ISO3 } from './data/stories'
 import type { SelectedCountry } from './types/country'
@@ -54,6 +57,14 @@ function App() {
       </section>
 
       <Scrapbook visitedCount={visitedCount} onSelect={setSelected} />
+
+      {/* ── collectibles: the pitch, the match balls, the scrambled crest wall ── */}
+      <PerforatedDivider />
+      <SoccerField />
+      <PerforatedDivider />
+      <WorldCupBalls />
+      <PerforatedDivider />
+      <LogoWall />
 
       <PerforatedDivider className="mb-2" />
 
