@@ -16,16 +16,19 @@ export interface SoccerBallState {
  * SEAM for the soccer-ball hover animation (CONTEXT.md / SPEC §8).
  *
  * A separate Higgsfield session produces a hand-drawn b/w soccer-ball
- * fly-through (background stripped → transparent WebM, GIF or PNG) and drops it
- * into `public/`. This hook owns the *trigger* ("play while a country is
- * hovered") and *resolution*: it probes the candidate files once on mount, so
- * the moment the asset lands it renders — no code change needed — and until then
- * there is never a broken image.
+ * fly-through (background stripped → transparent asset) and drops it into
+ * `public/`. This hook owns the *trigger* ("play while a country is hovered")
+ * and *resolution*: it probes the candidate files once on mount, so the moment
+ * the asset lands it renders — no code change needed — and until then there is
+ * never a broken image.
+ *
+ * Order matters: the animated TRANSPARENT WebP is preferred (best cross-browser,
+ * incl. Safari, and autoplays/loops in an <img>); the transparent WebM is the
+ * fallback for engines without animated-WebP support.
  */
 const CANDIDATES: ReadonlyArray<{ file: string; kind: 'video' | 'image' }> = [
+  { file: 'soccer-ball.webp', kind: 'image' },
   { file: 'soccer-ball.webm', kind: 'video' },
-  { file: 'soccer-ball.gif', kind: 'image' },
-  { file: 'soccer-ball.png', kind: 'image' },
 ]
 
 export function useSoccerBall(active: boolean): SoccerBallState {
