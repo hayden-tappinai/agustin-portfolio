@@ -34,8 +34,8 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
 
   // Globe rises from the bottom → centre, then HOLDS for the pinned beat. The
   // "release" is the sticky un-pinning at the section end (no fade-out gap).
-  const globeY = useTransform(scrollYProgress, [0, 0.4], ['58%', '30%'])
-  const globeScale = useTransform(scrollYProgress, [0, 0.4], [0.74, 1])
+  const globeY = useTransform(scrollYProgress, [0, 0.4], ['58%', '22%'])
+  const globeScale = useTransform(scrollYProgress, [0, 0.4], [0.82, 1.34])
 
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
     // Hint: surfaces during the pinned beat (0.42→0.52 in, hold, 0.9→1 out).
