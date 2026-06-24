@@ -44,7 +44,7 @@ export function BoardingPassNav() {
   const go = useCallback((target: string) => () => scrollToId(target), [])
 
   return (
-    <div className="sticky top-3 z-40 mx-auto w-full max-w-[1180px] px-3 sm:px-6">
+    <div className="relative z-40 mx-auto w-full max-w-[1180px] px-3 pt-3 sm:px-6">
       <nav
         aria-label="Primary"
         className="grid grid-cols-1 overflow-hidden rounded-[14px] bg-[#fbf7ec] sm:grid-cols-[minmax(0,1fr)_34px_minmax(0,250px)]"
@@ -56,7 +56,7 @@ export function BoardingPassNav() {
             <button type="button" onClick={go('top')} className="flex items-center gap-3 text-left">
               <Roundel />
               <span className="leading-none">
-                <span className="block font-display text-[clamp(26px,4vw,40px)] uppercase tracking-[0.02em] text-ink">Agustín</span>
+                <span className="block font-display text-[clamp(26px,4vw,40px)] uppercase tracking-[0.02em] text-ink">Agustin</span>
                 <span className="block font-mono text-[9px] font-bold uppercase tracking-[0.22em] text-stamp-red">Footy &amp; Far-Flung Places</span>
               </span>
             </button>

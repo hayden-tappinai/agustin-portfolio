@@ -1,21 +1,23 @@
 import { useCallback, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { BoardingPassNav } from './components/BoardingPassNav'
-import { Hero } from './components/Hero'
+import { GlobeStage } from './components/GlobeStage'
 import { Scoreboard } from './components/Scoreboard'
-import { GlobeZone } from './components/GlobeZone'
 import { Scrapbook } from './components/Scrapbook'
 import { Footer } from './components/Footer'
 import { CountryPanel } from './components/CountryPanel'
 import { FeaturedNav } from './components/FeaturedNav'
+import { Reveal } from './components/Reveal'
+import { PerforatedDivider } from './components/PerforatedDivider'
 import { VISITED_ISO3 } from './data/stories'
 import type { SelectedCountry } from './types/country'
 
 /**
- * The finished portfolio: a scrollable kraft-paper scrapbook that wraps around
- * the navy globe (the calm center). Boarding-pass nav → stadium-banner hero +
- * ticket rip-off → LED scoreboard → the interactive globe → scrapbook collage →
- * sign-off. Clicking a country opens the scrapbook journal entry.
+ * One continuous kraft-paper scroll. A boarding-pass ticket header, then the
+ * globe IS the hero — full-bleed on the page, no box. The story unspools beneath
+ * it: a taped scoreboard, the scrapbook collage, a sign-off — each woven in with
+ * a scroll reveal and threaded together by ticket tear-lines. Clicking a country
+ * opens the scrapbook journal entry.
  */
 function App() {
   const [selected, setSelected] = useState<SelectedCountry | null>(null)
@@ -29,18 +31,23 @@ function App() {
       {/* Keyboard / screen-reader path into every story (the canvas is pointer-only). */}
       <FeaturedNav onSelect={setSelected} />
 
-      <Hero />
+      <GlobeStage selected={selected} onSelect={setSelected} />
 
-      <section id="scoreboard" className="mx-auto w-full max-w-[1180px] px-6 pb-2 pt-14 sm:px-10">
-        <div className="relative">
-          <span className="washi tape-red" style={{ top: '-15px', left: '7%', transform: 'rotate(4deg)', zIndex: 20 }} />
-          <Scoreboard />
-        </div>
+      <PerforatedDivider />
+
+      {/* taped-down scoreboard — placed, not boxed */}
+      <section id="scoreboard" className="mx-auto w-full max-w-[1180px] px-6 py-16 sm:px-10 sm:py-20">
+        <Reveal>
+          <div className="relative" style={{ transform: 'rotate(-0.6deg)' }}>
+            <span className="washi tape-red" style={{ top: '-15px', left: '7%', transform: 'rotate(4deg)', zIndex: 20 }} />
+            <Scoreboard />
+          </div>
+        </Reveal>
       </section>
 
-      <GlobeZone selected={selected} onSelect={setSelected} visitedCount={visitedCount} />
-
       <Scrapbook visitedCount={visitedCount} />
+
+      <PerforatedDivider className="mb-2" />
 
       <Footer />
 

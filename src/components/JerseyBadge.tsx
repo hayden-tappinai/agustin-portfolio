@@ -27,7 +27,7 @@ export function JerseyBadge({ className }: JerseyBadgeProps) {
         }}
       >
         <div className="absolute left-1/2 top-[26px] -translate-x-1/2 font-display text-[clamp(22px,5vw,34px)] uppercase tracking-[0.16em] text-white" style={{ textShadow: '0 2px 0 rgba(0,0,0,0.18)', opacity: 0.95 }}>
-          Agustín
+          Agustin
         </div>
 
         <svg className="absolute right-[18px] top-[18px]" width="100" height="80" viewBox="0 0 120 96" aria-hidden style={{ opacity: 0.5 }}>
@@ -62,7 +62,7 @@ export function JerseyBadge({ className }: JerseyBadgeProps) {
       {/* Plate */}
       <div className="px-6 pb-6 pt-[22px]">
         <div className="flex items-end justify-between">
-          <span className="font-display text-[clamp(32px,6vw,46px)] uppercase tracking-[0.02em] text-ink">Agustín R.</span>
+          <span className="font-display text-[clamp(32px,6vw,46px)] uppercase tracking-[0.02em] text-ink">Agustin R.</span>
           <span className="font-mono text-[12px] font-bold uppercase tracking-[0.14em] text-pitch">Globetrotter</span>
         </div>
 

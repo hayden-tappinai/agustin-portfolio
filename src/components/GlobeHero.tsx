@@ -146,7 +146,7 @@ export function GlobeHero({ selected, onSelect }: GlobeHeroProps) {
           globeMaterial={oceanMaterial}
           showAtmosphere
           atmosphereColor={palette.atmosphere}
-          atmosphereAltitude={0.16}
+          atmosphereAltitude={0.11}
           polygonsData={features}
           polygonCapColor={capColor}
           polygonSideColor={sideColorAccessor}

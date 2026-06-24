@@ -1,4 +1,4 @@
-import { FlagBunting } from './FlagBunting'
+import { Reveal } from './Reveal'
 
 function BallMark() {
   return (
@@ -11,16 +11,15 @@ function BallMark() {
 }
 
 /**
- * Footer (SPEC §0) — the sign-off, on kraft. Bookends the header bunting, a
- * stadium-banner closer, ghost links with the single volt underline, and the
- * coordinates that opened the page.
+ * The sign-off — on the same kraft, no hard divider (a ticket tear-line above it
+ * does that job). A quiet stadium-banner closer, ghost links with the single
+ * volt underline, and the coordinates that opened the page.
  */
 export function Footer() {
   return (
-    <footer id="footer" className="relative mt-8">
-      <FlagBunting className="mb-2" />
-      <div className="mx-auto w-full max-w-[1180px] px-6 pb-14 pt-6 sm:px-10">
-        <div className="flex flex-col items-start justify-between gap-8 border-t-2 border-ink pt-8 lg:flex-row lg:items-end">
+    <footer id="footer" className="mx-auto w-full max-w-[1180px] px-6 pb-16 pt-10 sm:px-10">
+      <Reveal>
+        <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end">
           <div>
             <p className="flex items-center gap-[10px] font-mono text-[12px] font-bold uppercase tracking-[0.14em] text-ink-faint">
               <span className="h-[8px] w-[8px] rounded-full bg-stamp-red" style={{ boxShadow: '0 0 0 3px rgba(192,54,44,0.18)' }} />
@@ -39,7 +38,7 @@ export function Footer() {
           <div className="flex flex-col items-start gap-5 lg:items-end">
             <div className="flex items-center gap-3">
               <BallMark />
-              <span className="font-display text-[28px] uppercase tracking-[0.02em] text-ink">Agustín · 10</span>
+              <span className="font-display text-[28px] uppercase tracking-[0.02em] text-ink">Agustin · 10</span>
             </div>
             <nav aria-label="Elsewhere" className="flex flex-wrap gap-x-6 gap-y-2 font-sans text-[15px] font-semibold text-ink-2">
               <a href="#top" className="transition-colors hover:text-ink" style={{ textDecoration: 'underline', textDecorationColor: 'var(--volt-deep)', textUnderlineOffset: '4px', textDecorationThickness: '2px' }}>
@@ -49,11 +48,11 @@ export function Footer() {
               <a href="#scrapbook" className="transition-colors hover:text-ink">The stamps</a>
             </nav>
             <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
-              Made in 2026 · Plus a globe, five fonts &amp; one lime spark
+              Made in 2026 · A globe, five fonts &amp; one lime spark
             </p>
           </div>
         </div>
-      </div>
+      </Reveal>
     </footer>
   )
 }
