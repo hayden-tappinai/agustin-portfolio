@@ -29,6 +29,12 @@ function mapRange(v: number, inMin: number, inMax: number, outMin: number, outMa
 export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
   const ref = useRef<HTMLDivElement>(null)
   const hintRef = useRef<HTMLSpanElement>(null)
+  // Cardboard hero cutout — Agustin arms-up in front of scrapbook mountains. It
+  // greets you on load right below the ticket header and fades out as the globe
+  // rises to take over. Mountains parallax independently from the figure.
+  const heroRef = useRef<HTMLDivElement>(null)
+  const heroManRef = useRef<HTMLImageElement>(null)
+  const heroMtnRef = useRef<HTMLImageElement>(null)
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] })
 
@@ -43,6 +49,16 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
       const ho = v < 0.52 ? mapRange(v, 0.42, 0.52, 0, 1) : mapRange(v, 0.9, 1, 1, 0)
       hintRef.current.style.opacity = String(ho)
     }
+    // Hero cutout: fully present at the top, gone by ~20% in as the globe rises.
+    // (Opacity is written straight to the DOM — same StrictMode workaround as
+    // the hint — while the figure/mountains parallax apart from each other.)
+    if (heroRef.current) heroRef.current.style.opacity = String(mapRange(v, 0, 0.2, 1, 0))
+    if (heroManRef.current) {
+      heroManRef.current.style.transform = `translate(-50%, calc(-50% + ${mapRange(v, 0, 0.45, 0, -96)}px))`
+    }
+    if (heroMtnRef.current) {
+      heroMtnRef.current.style.transform = `translate(-50%, calc(-50% + ${mapRange(v, 0, 0.45, 0, 44)}px))`
+    }
   })
 
   return (
@@ -52,6 +68,27 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
         <motion.div className="absolute inset-0" style={{ y: globeY, scale: globeScale }}>
           <GlobeHero selected={selected} onSelect={onSelect} />
         </motion.div>
+
+        {/* cardboard hero — Agustin (front) + scrapbook mountains (behind), on
+            top of the globe while you're at the top, then fading to reveal it */}
+        <div ref={heroRef} aria-hidden className="pointer-events-none absolute inset-0 z-[6]" style={{ opacity: 1 }}>
+          <img
+            ref={heroMtnRef}
+            src="/agustin/mountains.png"
+            alt=""
+            draggable={false}
+            className="absolute left-1/2 top-[53%] w-[min(1080px,128vw)] max-w-none select-none"
+            style={{ transform: 'translate(-50%, -50%)' }}
+          />
+          <img
+            ref={heroManRef}
+            src="/agustin/hero-agustin.png"
+            alt="Agustin, arms raised, taking it all in"
+            draggable={false}
+            className="absolute left-1/2 top-[47%] h-[min(72vh,760px)] w-auto max-w-none select-none drop-shadow-[0_18px_30px_rgba(28,23,18,0.28)]"
+            style={{ transform: 'translate(-50%, -50%)' }}
+          />
+        </div>
 
         {/* drag hint during the pinned beat */}
         <span
