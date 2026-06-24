@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { SelectedCountry, Stadium } from '../types/country'
 import { getStory, isVisited } from '../data/stories'
-import { flagEmoji } from '../lib/countries'
 import { Polaroid } from './Polaroid'
 import { TicketStub } from './TicketStub'
 import { StadiumCard, StadiumLightbox } from './StadiumCard'
+import { Flag } from './CountryFlag'
 
 const SPRING = { type: 'spring', stiffness: 300, damping: 25 } as const
 
@@ -25,7 +25,6 @@ interface CountryPanelProps {
 export function CountryPanel({ country, onClose }: CountryPanelProps) {
   const story = getStory(country)
   const visited = isVisited(country)
-  const flag = flagEmoji(country.iso2)
   const closeButtonRef = useRef<HTMLButtonElement>(null)
   const restoreFocusRef = useRef<HTMLElement | null>(null)
   const [openStadium, setOpenStadium] = useState<Stadium | null>(null)
@@ -103,7 +102,6 @@ export function CountryPanel({ country, onClose }: CountryPanelProps) {
             {/* LEFT — the country */}
             <div className="min-w-0">
               <div className="flex items-center gap-3">
-                {flag && <span aria-hidden className="text-[34px] leading-none">{flag}</span>}
                 <span className="font-mono text-[13px] font-bold uppercase tracking-[0.18em] text-ink-2" style={{ border: '1.5px solid var(--ink-2)', padding: '4px 8px' }}>
                   {country.iso3 ?? '—'}
                 </span>
@@ -176,8 +174,8 @@ export function CountryPanel({ country, onClose }: CountryPanelProps) {
               {/* the country flag — the badge that replaces the passport stamp */}
               <div className="absolute -left-2 -top-2 z-30 grid place-items-center" style={{ transform: 'rotate(-9deg)' }}>
                 <div className="rounded-md bg-[#fbf7ec] px-3 py-2 text-center" style={{ border: '1.5px solid var(--paper-edge)', boxShadow: '0 6px 14px var(--paper-shadow)' }}>
-                  <div className="text-[30px] leading-none" aria-hidden>{flag || '🏳️'}</div>
-                  <div className="mt-1 font-mono text-[8px] font-bold uppercase tracking-[0.12em] text-ink-faint">{visited ? 'Visited' : 'On the list'}</div>
+                  <Flag iso2={country.iso2} className="mx-auto h-[28px] w-[42px] rounded-[2px]" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+                  <div className="mt-[6px] font-mono text-[8px] font-bold uppercase tracking-[0.12em] text-ink-faint">{visited ? 'Visited' : 'On the list'}</div>
                 </div>
               </div>
 

@@ -20,7 +20,7 @@ export interface Stat {
 
 export const STATS: readonly Stat[] = [
   { label: 'Countries', value: VISITED_ISO3.size, sub: 'VISITED' },
-  { label: 'Stadiums', value: 10, sub: 'STOOD IN' },
+  { label: 'Stadiums', value: 12, sub: 'STOOD IN' },
   { label: 'Leagues', value: 20, sub: 'FOLLOWED' },
   { label: 'Flags', value: 195, sub: 'MEMORIZED', live: true },
 ]
@@ -30,8 +30,8 @@ export const STATS: readonly Stat[] = [
  * Argentina 5–0 Panama, Copa América Centenario, Soldier Field, Messi hat-trick.
  */
 export const FIXTURE = {
-  home: { code: 'ARG', flag: '🇦🇷' },
-  away: { code: 'PAN', flag: '🇵🇦' },
+  home: { code: 'ARG', iso2: 'AR' },
+  away: { code: 'PAN', iso2: 'PA' },
   score: '5:0',
   clock: 'FT · COPA AMÉRICA',
   note: ['SOLDIER FIELD · CHICAGO', 'MESSI HAT-TRICK'],

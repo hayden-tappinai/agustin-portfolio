@@ -51,8 +51,12 @@ export function StadiumCard({ stadium, rotate = 0, onOpen }: StadiumCardProps) {
         >
           {stadium.visited ? 'Visited' : 'Bucket list'}
         </span>
-        <span className="absolute bottom-2 left-2 rounded bg-volt px-2 py-[2px] font-mono text-[8px] font-bold uppercase tracking-[0.12em] text-ink opacity-0 transition-opacity group-hover:opacity-100">
-          Click to view
+        {/* persistent tap/zoom cue (visible on touch, brightens on hover) */}
+        <span className="absolute bottom-2 left-2 grid h-[22px] w-[22px] place-items-center rounded-full bg-ink/70 text-paper opacity-80 transition-opacity group-hover:opacity-100">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden>
+            <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.6" />
+            <path d="M11 11l3.5 3.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+          </svg>
         </span>
       </div>
       <div className="absolute bottom-[8px] left-[12px] right-[12px]">

@@ -47,7 +47,7 @@ export function Scrapbook({ visitedCount, onSelect }: ScrapbookProps) {
       <Reveal>
         <div className="relative mt-16">
           {/* a quiet route arc threading the page */}
-          <svg viewBox="0 0 1000 120" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 top-16 z-0 h-[160px] w-full" aria-hidden style={{ opacity: 0.45 }}>
+          <svg viewBox="0 0 1000 120" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 top-40 z-0 h-[150px] w-full" aria-hidden style={{ opacity: 0.4 }}>
             <path d="M20 96 Q500 -28 980 64" stroke="#c0362c" strokeWidth="2" strokeDasharray="1 11" strokeLinecap="round" fill="none" />
             <circle cx="20" cy="96" r="4" fill="#c0362c" />
             <circle cx="980" cy="64" r="4.5" fill="none" stroke="#c0362c" strokeWidth="2" />

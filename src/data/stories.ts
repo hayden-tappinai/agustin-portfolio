@@ -149,7 +149,7 @@ export const STORIES: Record<string, CountryStory> = {
       { label: 'Club', value: 'RAPID WIEN' },
       { label: 'Ground', value: 'ERNST HAPPEL' },
     ],
-    margin: 'the Ernst Happel still hosts finals ↗',
+    margin: 'the Ernst Happel hosted Euro 2008 ↗',
   },
   BHS: {
     title: 'Island football in the Bahamas',

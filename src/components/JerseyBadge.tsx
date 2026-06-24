@@ -1,3 +1,5 @@
+import { Flag } from './CountryFlag'
+
 interface JerseyBadgeProps {
   className?: string
 }
@@ -67,7 +69,7 @@ export function JerseyBadge({ className }: JerseyBadgeProps) {
         </div>
 
         <div className="mt-4 flex flex-wrap gap-y-2 border-t border-dashed border-paper-edge pt-4 font-mono text-[13px] font-bold tracking-[0.06em] text-ink-2">
-          <Stat label="Stadiums" value="10" />
+          <Stat label="Stadiums" value="12" />
           <Sep />
           <Stat label="Leagues" value="20" />
           <Sep />
@@ -75,8 +77,8 @@ export function JerseyBadge({ className }: JerseyBadgeProps) {
         </div>
 
         <div className="mt-[18px] inline-flex items-center gap-2 rounded-full bg-paper px-[14px] py-[7px] pl-[12px]" style={{ border: '1px solid var(--paper-edge)', boxShadow: '0 2px 5px var(--paper-shadow)' }}>
-          <span className="text-[18px] leading-none" aria-hidden>🇦🇷</span>
-          <span className="text-[18px] leading-none" aria-hidden>🇺🇸</span>
+          <Flag iso2="AR" className="h-[14px] w-[21px] rounded-[2px]" />
+          <Flag iso2="US" className="h-[14px] w-[21px] rounded-[2px]" />
           <span className="font-mono text-[12px] font-bold uppercase tracking-[0.1em] text-ink">Dual Citizen</span>
           <span className="font-mono text-[11px] tracking-[0.04em] text-ink-faint">ARG · USA</span>
         </div>

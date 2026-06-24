@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { animate, motion, useInView, useMotionValue, useTransform } from 'framer-motion'
 import { FIXTURE, STATS, type Stat } from '../data/stats'
+import { Flag } from './CountryFlag'
 
 /** B/W iconic soccer-ball mark (static — drawn motion lives in Higgsfield). */
 function BallMark({ size = 34 }: { size?: number }) {
@@ -110,7 +111,7 @@ export function Scoreboard({ className }: { className?: string }) {
         {/* Fixture strip */}
         <div className="mt-7 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-5">
           <div className="flex items-center gap-3">
-            <span className="text-[20px] leading-none" aria-hidden>{FIXTURE.home.flag}</span>
+            <Flag iso2={FIXTURE.home.iso2} className="h-[16px] w-[24px] rounded-[2px]" />
             <span className="font-display text-[clamp(24px,4vw,34px)]" style={{ color: '#eaf2ea' }}>{FIXTURE.home.code}</span>
             <span
               className="rounded-lg px-[18px] py-[6px] font-mono text-[clamp(26px,4vw,40px)] font-bold tracking-[0.04em]"
@@ -121,7 +122,7 @@ export function Scoreboard({ className }: { className?: string }) {
               {FIXTURE.score.split(':')[1]}
             </span>
             <span className="font-display text-[clamp(24px,4vw,34px)]" style={{ color: '#eaf2ea' }}>{FIXTURE.away.code}</span>
-            <span className="text-[20px] leading-none" aria-hidden>{FIXTURE.away.flag}</span>
+            <Flag iso2={FIXTURE.away.iso2} className="h-[16px] w-[24px] rounded-[2px]" />
           </div>
 
           <div className="flex flex-col gap-2 text-right">

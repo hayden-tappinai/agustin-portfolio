@@ -1,5 +1,6 @@
 import { Reveal } from './Reveal'
 import { Polaroid } from './Polaroid'
+import { Flag } from './CountryFlag'
 
 /** Agustin's full bio, his exact words (BIO.txt) — rendered as spaced, readable prose. */
 const BIO_PARAGRAPHS: string[] = [
@@ -18,8 +19,8 @@ function FactsCard() {
       <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-ink-faint">Passport · The Facts</p>
 
       <div className="mt-4 flex items-center gap-3">
-        <span className="text-[34px] leading-none" aria-hidden>🇦🇷</span>
-        <span className="text-[34px] leading-none" aria-hidden>🇺🇸</span>
+        <Flag iso2="AR" className="h-[24px] w-[36px] rounded-[2px]" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+        <Flag iso2="US" className="h-[24px] w-[36px] rounded-[2px]" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
         <span className="font-display text-[clamp(20px,3vw,26px)] uppercase leading-none tracking-[0.02em] text-ink">Dual Citizen</span>
       </div>
 
