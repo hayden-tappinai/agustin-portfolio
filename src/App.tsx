@@ -31,8 +31,11 @@ function App() {
 
       <Hero />
 
-      <section id="scoreboard" className="mx-auto w-full max-w-[1180px] px-6 pb-2 sm:px-10">
-        <Scoreboard />
+      <section id="scoreboard" className="mx-auto w-full max-w-[1180px] px-6 pb-2 pt-14 sm:px-10">
+        <div className="relative">
+          <span className="washi tape-red" style={{ top: '-15px', left: '7%', transform: 'rotate(4deg)', zIndex: 20 }} />
+          <Scoreboard />
+        </div>
       </section>
 
       <GlobeZone selected={selected} onSelect={setSelected} visitedCount={visitedCount} />

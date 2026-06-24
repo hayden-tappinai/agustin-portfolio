@@ -26,7 +26,7 @@ export function Footer() {
               <span className="h-[8px] w-[8px] rounded-full bg-stamp-red" style={{ boxShadow: '0 0 0 3px rgba(192,54,44,0.18)' }} />
               40.4168° N, 3.7038° W · Full time
             </p>
-            <h2 className="mt-3 font-display text-[clamp(40px,8vw,96px)] uppercase leading-[0.98] tracking-[0.015em] text-ink">
+            <h2 className="mt-3 font-display text-[clamp(40px,8vw,96px)] uppercase leading-[1.04] tracking-[0.015em] text-ink">
               The Trip's
               <br />
               Not Over

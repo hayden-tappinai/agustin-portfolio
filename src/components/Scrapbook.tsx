@@ -53,6 +53,10 @@ export function Scrapbook({ visitedCount }: ScrapbookProps) {
         <span className="absolute right-5 top-4 font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-ink-faint/70">
           Passport · Agustín
         </span>
+        {/* the marker's one job (SPEC §2 — Permanent Marker, once per card) */}
+        <span aria-hidden className="pointer-events-none absolute right-[7%] top-[44%] hidden font-marker text-[clamp(34px,5vw,56px)] text-stamp-red sm:block" style={{ transform: 'rotate(-8deg)', textShadow: '2px 3px 0 rgba(192,54,44,0.18)' }}>
+          ¡GOL!
+        </span>
         <h3 className="font-display text-[clamp(28px,4vw,40px)] uppercase leading-none tracking-[0.02em] text-ink">
           The Stamp Page
         </h3>

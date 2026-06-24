@@ -18,13 +18,14 @@ export function Hero() {
       <FlagBunting className="mb-7" />
 
       <div className="relative">
-        {/* floating passport stamp */}
-        <PassportStamp
-          stamp={{ entry: 'ENTRY · MADRID', city: 'MADRID', date: '06 MAY 2026' }}
-          rotate={-13}
-          size={118}
-          className="absolute right-0 top-2 hidden sm:grid"
-        />
+        {/* floating passport stamp (hidden on mobile so it never crowds the wordmark) */}
+        <div className="absolute right-0 top-2 z-10 hidden sm:block">
+          <PassportStamp
+            stamp={{ entry: 'ENTRY · MADRID', city: 'MADRID', date: '06 MAY 2026' }}
+            rotate={-13}
+            size={118}
+          />
+        </div>
 
         {/* eyebrow */}
         <p className="flex items-center gap-[10px] font-mono text-[12px] font-bold uppercase tracking-[0.14em] text-ink-faint">

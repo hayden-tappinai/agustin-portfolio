@@ -29,7 +29,7 @@ function Roundel() {
       <ellipse cx="20" cy="20" rx="8.5" ry="18.5" stroke="#14598c" strokeWidth="1" fill="none" />
       <line x1="2" y1="20" x2="38" y2="20" stroke="#14598c" strokeWidth="1" />
       <path d="M11 14 q4 3 2 7 q5 1 7 5 q4-2 6 1" stroke="#3ea96b" strokeWidth="2.2" fill="none" />
-      <circle cx="27" cy="13" r="2.4" fill="#a6d400" />
+      <circle cx="27" cy="13" r="2.4" fill="#c0362c" />
     </svg>
   )
 }
@@ -47,11 +47,8 @@ export function BoardingPassNav() {
     <div className="sticky top-3 z-40 mx-auto w-full max-w-[1180px] px-3 sm:px-6">
       <nav
         aria-label="Primary"
-        className="grid overflow-hidden rounded-[14px] bg-[#fbf7ec]"
-        style={{
-          gridTemplateColumns: 'minmax(0,1fr) 34px minmax(0,250px)',
-          boxShadow: '0 18px 40px rgba(58,42,18,0.18), 0 2px 0 #cdb789',
-        }}
+        className="grid grid-cols-1 overflow-hidden rounded-[14px] bg-[#fbf7ec] sm:grid-cols-[minmax(0,1fr)_34px_minmax(0,250px)]"
+        style={{ boxShadow: '0 18px 40px rgba(58,42,18,0.18), 0 2px 0 #cdb789' }}
       >
         {/* MAIN */}
         <div className="flex flex-col gap-[14px] p-[18px] sm:p-[22px]">
@@ -68,6 +65,17 @@ export function BoardingPassNav() {
                 Open <em className="not-italic text-pitch">World</em>
               </span>
             </div>
+          </div>
+
+          {/* compact boarding-pass identity on mobile (the stub is desktop-only) */}
+          <div className="sm:hidden">
+            <div className="flex items-center justify-between gap-3">
+              <span className="font-mono text-[12px] font-bold uppercase tracking-[0.1em] text-ink">
+                MAD <span className="text-stamp-red">→</span> WORLD
+              </span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-ink-faint">GATE B10 · 10A</span>
+            </div>
+            <div className="barcode-ink mt-2 h-[20px] w-full opacity-80" style={{ borderRadius: '1px' }} />
           </div>
 
           {/* fields */}
@@ -104,7 +112,7 @@ export function BoardingPassNav() {
         </div>
 
         {/* SEAM */}
-        <div className="relative" aria-hidden>
+        <div className="relative hidden sm:block" aria-hidden>
           <span className="absolute bottom-[14px] top-[14px] left-1/2 -translate-x-1/2 border-l-2 border-dashed border-ink-faint opacity-70" />
           <span className="absolute -top-[11px] left-1/2 h-[22px] w-[22px] -translate-x-1/2 rounded-full bg-paper" style={{ boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.25)' }} />
           <span className="absolute -bottom-[11px] left-1/2 h-[22px] w-[22px] -translate-x-1/2 rounded-full bg-paper" style={{ boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.25)' }} />
@@ -124,8 +132,11 @@ export function BoardingPassNav() {
           <div className="barcode-ink h-[40px] w-full opacity-85" style={{ borderRadius: '1px' }} />
           <div className="mt-2 flex items-center justify-between">
             <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-ink-faint">AG · 2026</span>
-            <span className="grid h-[44px] w-[44px] place-items-center rounded-full text-center font-mono text-[7px] font-bold uppercase leading-[1.1] text-stamp-red" style={{ border: '1.6px solid #c0362c', transform: 'rotate(-12deg)', opacity: 0.78, mixBlendMode: 'multiply' }}>
-              Madrid<br />JUN 26
+            <span className="grid h-[52px] w-[52px] place-items-center rounded-full text-center font-mono text-[10px] font-bold uppercase leading-none text-stamp-red" style={{ border: '1.6px solid #c0362c', transform: 'rotate(-12deg)', opacity: 0.85, mixBlendMode: 'multiply' }}>
+              <span>
+                <span className="block text-[13px] leading-none">✦</span>
+                MAD
+              </span>
             </span>
           </div>
         </div>

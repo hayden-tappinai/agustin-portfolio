@@ -164,7 +164,7 @@ export function TicketStub({
             initial={{ opacity: 0 }}
             animate={{ opacity: [0, 1, 0] }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: 'linear' }}
+            transition={{ duration: 0.52, ease: [0.65, 0, 0.35, 1] }}
           />
         )}
       </AnimatePresence>

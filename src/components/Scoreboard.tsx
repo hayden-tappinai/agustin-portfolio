@@ -41,14 +41,14 @@ function StatWell({ stat }: { stat: Stat }) {
       }}
     >
       {stat.live && (
-        <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded bg-volt px-[7px] py-[3px] font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-navy">
-          <span className="h-[5px] w-[5px] rounded-full bg-navy" style={{ animation: 'blip 1.1s steps(1) infinite' }} />
+        <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded bg-stamp-red px-[7px] py-[3px] font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-paper">
+          <span className="h-[5px] w-[5px] rounded-full bg-paper" style={{ animation: 'blip 1.1s steps(1) infinite' }} />
           Live
         </span>
       )}
       <div
         className="font-display uppercase tracking-[0.03em]"
-        style={{ fontSize: '14px', color: stat.live ? 'rgba(205,255,61,0.85)' : 'rgba(190,205,200,0.62)' }}
+        style={{ fontSize: '14px', color: 'rgba(190,205,200,0.62)' }}
       >
         {stat.label}
       </div>
@@ -130,8 +130,8 @@ export function Scoreboard({ className }: { className?: string }) {
           </div>
 
           <div className="flex flex-col gap-2 text-right">
-            <div className="flex items-center justify-end gap-2 font-mono text-[13px] tracking-[0.1em]" style={{ color: 'rgba(205,255,61,0.9)' }}>
-              <span className="h-[6px] w-[6px] rounded-full bg-volt" style={{ boxShadow: '0 0 8px #cdff3d' }} />
+            <div className="flex items-center justify-end gap-2 font-mono text-[13px] tracking-[0.1em]" style={{ color: 'var(--gold)' }}>
+              <span className="h-[6px] w-[6px] rounded-full bg-gold" />
               {FIXTURE.clock}
             </div>
             <div className="font-mono text-[10px] uppercase leading-[1.6] tracking-[0.12em]" style={{ color: 'rgba(180,196,190,0.6)' }}>

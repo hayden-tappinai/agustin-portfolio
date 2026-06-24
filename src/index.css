@@ -107,8 +107,8 @@
   /* ── Faint lat/long graticule overlays ── */
   .graticule-paper {
     background-image:
-      linear-gradient(rgba(20, 89, 140, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(20, 89, 140, 0.1) 1px, transparent 1px);
+      linear-gradient(rgba(20, 89, 140, 0.13) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(20, 89, 140, 0.13) 1px, transparent 1px);
     background-size: 46px 46px;
   }
   .graticule-navy {

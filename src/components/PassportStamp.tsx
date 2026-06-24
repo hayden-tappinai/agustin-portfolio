@@ -41,7 +41,7 @@ export function PassportStamp({
     color: c,
     textTransform: 'uppercase',
     letterSpacing: '0.06em',
-    opacity: 0.84,
+    opacity: 0.9,
     mixBlendMode: 'multiply',
     transform: `rotate(${rotate}deg)`,
     border: `2.5px solid ${c}`,

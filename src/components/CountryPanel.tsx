@@ -95,16 +95,6 @@ export function CountryPanel({ country, onClose }: CountryPanelProps) {
             </svg>
           </button>
 
-          {/* arriving route line */}
-          {story.routeFrom && (
-            <svg viewBox="0 0 300 80" className="absolute left-6 top-1 w-[260px] sm:left-12" aria-hidden style={{ opacity: 0.8 }}>
-              <text x="2" y="12" fontFamily="var(--font-mono)" fontSize="9" fill="#8a7e68" letterSpacing="1">{`FROM ${story.routeFrom} ✈`}</text>
-              <path d="M8 44 Q150 -6 290 36" stroke="#c0362c" strokeWidth="2.4" strokeDasharray="1 9" strokeLinecap="round" fill="none" />
-              <circle cx="8" cy="44" r="4" fill="#c0362c" />
-              <circle cx="290" cy="36" r="4.5" fill="none" stroke="#c0362c" strokeWidth="2" />
-            </svg>
-          )}
-
           <div className="grid gap-8 pl-0 sm:pl-6 lg:grid-cols-[1.15fr_0.85fr]">
             {/* LEFT — the country */}
             <div className="min-w-0">
@@ -120,12 +110,15 @@ export function CountryPanel({ country, onClose }: CountryPanelProps) {
                 )}
               </div>
 
-              <h2 className="mt-3 font-display uppercase text-ink" style={{ fontSize: 'clamp(48px,7.4vw,88px)', lineHeight: 0.98, letterSpacing: '0.015em' }}>
+              <h2 className="mt-3 font-display uppercase text-ink" style={{ fontSize: 'clamp(48px,7.4vw,88px)', lineHeight: 1.04, letterSpacing: '0.015em' }}>
                 {country.name}
               </h2>
 
               <p className="mt-2 flex items-center gap-2 font-mono text-[13px] font-bold tracking-[0.08em] text-ocean">
-                <span className="text-stamp-red">📍</span>
+                <svg width="11" height="14" viewBox="0 0 11 14" aria-hidden className="shrink-0">
+                  <path d="M5.5 0C2.46 0 0 2.46 0 5.5C0 9.6 5.5 14 5.5 14C5.5 14 11 9.6 11 5.5C11 2.46 8.54 0 5.5 0Z" fill="#c0362c" />
+                  <circle cx="5.5" cy="5.3" r="2" fill="#e8d9b5" />
+                </svg>
                 {story.coords}
               </p>
 
@@ -148,8 +141,8 @@ export function CountryPanel({ country, onClose }: CountryPanelProps) {
                 </div>
               )}
 
-              {/* return ticket — the rip-off close */}
-              <div className="mt-8">
+              {/* return ticket — the rip-off close (tilted into the collage spine) */}
+              <div className="mt-8" style={{ transform: 'rotate(-1.6deg)' }}>
                 <TicketStub
                   title="Return"
                   glyph="→"
@@ -168,29 +161,44 @@ export function CountryPanel({ country, onClose }: CountryPanelProps) {
             </div>
 
             {/* RIGHT — the collage */}
-            <div className="relative min-h-[360px]">
+            <div className="relative min-h-[380px] pt-7">
+              {/* arriving route line — visibly lands on the photo collage */}
+              {story.routeFrom && (
+                <svg viewBox="0 0 300 64" className="pointer-events-none absolute left-0 top-[-6px] z-0 w-full" aria-hidden style={{ opacity: 0.9 }}>
+                  <text x="2" y="11" fontFamily="var(--font-mono)" fontSize="9" fill="#8a7e68" letterSpacing="1">{`FROM ${story.routeFrom} ✈`}</text>
+                  <path d="M8 18 Q150 60 286 32" stroke="#c0362c" strokeWidth="2.4" strokeDasharray="1 9" strokeLinecap="round" fill="none" />
+                  <circle cx="8" cy="18" r="4" fill="#c0362c" />
+                  <circle cx="286" cy="32" r="5" fill="none" stroke="#c0362c" strokeWidth="2" />
+                </svg>
+              )}
+
               {/* coffee ring */}
-              <span aria-hidden className="absolute right-8 top-0 hidden h-[74px] w-[74px] rounded-full sm:block" style={{ border: '3px solid rgba(120,82,38,0.18)', boxShadow: 'inset 0 0 0 2px rgba(120,82,38,0.07)' }} />
+              <span aria-hidden className="absolute left-1 top-3 hidden h-[58px] w-[58px] rounded-full sm:block" style={{ border: '3px solid rgba(120,82,38,0.18)', boxShadow: 'inset 0 0 0 2px rgba(120,82,38,0.07)' }} />
 
+              {/* first Polaroid — the passport stamp clips its bottom-left corner so
+                  the multiply blend soaks into the photo, not bare paper */}
               {photos[0] && (
-                <Polaroid photo={photos[0]} rotate={2.4} fixing="washi" tape="tape-ocean" width="clamp(220px, 80%, 300px)" className="ml-auto" style={{ position: 'relative', zIndex: 10 }} />
-              )}
-              {photos[1] && (
-                <Polaroid photo={photos[1]} rotate={-4} fixing="pushpin" width="clamp(180px, 62%, 230px)" style={{ position: 'relative', zIndex: 20, marginTop: '-28px', marginLeft: '8px' }} />
+                <div className="relative ml-auto w-[clamp(220px,82%,300px)]">
+                  <Polaroid photo={photos[0]} rotate={2.4} fixing="washi" tape="tape-ocean" width="100%" style={{ position: 'relative', zIndex: 10 }} />
+                  {story.stamp && (
+                    <PassportStamp
+                      stamp={story.stamp}
+                      tone={visited ? 'red' : 'gold'}
+                      rotate={-15}
+                      size={116}
+                      className="absolute -bottom-7 -left-9 z-30"
+                    />
+                  )}
+                </div>
               )}
 
-              {story.stamp && (
-                <PassportStamp
-                  stamp={story.stamp}
-                  tone={visited ? 'red' : 'gold'}
-                  rotate={-15}
-                  size={118}
-                  className="absolute -bottom-2 left-0 z-30 sm:left-4"
-                />
+              {/* second Polaroid, tucked below-left */}
+              {photos[1] && (
+                <Polaroid photo={photos[1]} rotate={-4} fixing="pushpin" width="clamp(170px, 58%, 220px)" style={{ position: 'relative', zIndex: 20, marginTop: '-16px', marginLeft: '6px' }} />
               )}
 
               {story.margin && (
-                <p className="absolute -bottom-6 right-0 max-w-[160px] font-hand text-[22px] leading-tight text-ink-faint" style={{ transform: 'rotate(5deg)' }}>
+                <p className="mt-4 max-w-[200px] font-hand text-[22px] leading-tight text-ink-faint" style={{ transform: 'rotate(4deg)' }}>
                   {story.margin}
                 </p>
               )}
