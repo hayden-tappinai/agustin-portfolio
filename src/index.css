@@ -77,7 +77,9 @@
       radial-gradient(120% 130% at 100% 100%, rgba(150, 118, 64, 0.2) 0%, transparent 55%),
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
     background-attachment: fixed;
-    overflow-x: hidden;
+    /* clip (not hidden) so it never creates a scroll container that would break
+       the globe's position:sticky pin. */
+    overflow-x: clip;
   }
 
   ::selection {
@@ -294,6 +296,21 @@
   to {
     stroke-dashoffset: -100;
   }
+}
+
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {

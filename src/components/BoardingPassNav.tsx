@@ -1,4 +1,5 @@
 import { useCallback } from 'react'
+import { scrollToTarget, scrollToTop } from '../lib/smoothScroll'
 
 interface NavItem {
   label: string
@@ -15,9 +16,8 @@ const NAV: NavItem[] = [
 ]
 
 function scrollToId(id: string) {
-  const el = document.getElementById(id)
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: id === 'top' ? 'start' : 'center' })
-  else window.scrollTo({ top: 0, behavior: 'smooth' })
+  if (id === 'top') scrollToTop()
+  else scrollToTarget(id)
 }
 
 /** Roundel — a little globe mark in the carrier slot. */

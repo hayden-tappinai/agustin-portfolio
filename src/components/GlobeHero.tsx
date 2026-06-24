@@ -109,7 +109,7 @@ export function GlobeHero({ selected, onSelect }: GlobeHeroProps) {
     controls.minPolarAngle = Math.PI * 0.12
     controls.maxPolarAngle = Math.PI * 0.88
 
-    globe.pointOfView({ lat: 20, lng: 0, altitude: 2.4 })
+    globe.pointOfView({ lat: 20, lng: 0, altitude: 2.1 })
 
     globe.lights([
       new THREE.AmbientLight(0xffffff, 2.1),
@@ -119,6 +119,11 @@ export function GlobeHero({ selected, onSelect }: GlobeHeroProps) {
         return dir
       })(),
     ])
+
+    // Let a vertical touch-drag scroll the page (so the pinned, full-screen globe
+    // never traps a phone's scroll) while horizontal drags still rotate it.
+    const canvas = globe.renderer().domElement as HTMLCanvasElement
+    canvas.style.touchAction = 'pan-y'
   }, [ready])
 
   // Fly to a country whenever one is selected (globe click or keyboard nav).

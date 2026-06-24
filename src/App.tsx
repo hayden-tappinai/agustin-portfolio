@@ -9,6 +9,7 @@ import { CountryPanel } from './components/CountryPanel'
 import { FeaturedNav } from './components/FeaturedNav'
 import { Reveal } from './components/Reveal'
 import { PerforatedDivider } from './components/PerforatedDivider'
+import { useLenis } from './hooks/useLenis'
 import { VISITED_ISO3 } from './data/stories'
 import type { SelectedCountry } from './types/country'
 
@@ -23,9 +24,10 @@ function App() {
   const [selected, setSelected] = useState<SelectedCountry | null>(null)
   const close = useCallback(() => setSelected(null), [])
   const visitedCount = VISITED_ISO3.size
+  useLenis()
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden font-sans text-ink">
+    <div className="min-h-screen w-full overflow-x-clip font-sans text-ink">
       <BoardingPassNav />
 
       {/* Keyboard / screen-reader path into every story (the canvas is pointer-only). */}

@@ -1,4 +1,5 @@
 import { Reveal } from './Reveal'
+import { scrollToTarget, scrollToTop } from '../lib/smoothScroll'
 
 function BallMark() {
   return (
@@ -41,11 +42,11 @@ export function Footer() {
               <span className="font-display text-[28px] uppercase tracking-[0.02em] text-ink">Agustin · 10</span>
             </div>
             <nav aria-label="Elsewhere" className="flex flex-wrap gap-x-6 gap-y-2 font-sans text-[15px] font-semibold text-ink-2">
-              <a href="#top" className="transition-colors hover:text-ink" style={{ textDecoration: 'underline', textDecorationColor: 'var(--volt-deep)', textUnderlineOffset: '4px', textDecorationThickness: '2px' }}>
+              <a href="#top" onClick={(e) => { e.preventDefault(); scrollToTop() }} className="transition-colors hover:text-ink" style={{ textDecoration: 'underline', textDecorationColor: 'var(--volt-deep)', textUnderlineOffset: '4px', textDecorationThickness: '2px' }}>
                 Say hello
               </a>
-              <a href="#globe" className="transition-colors hover:text-ink">The globe</a>
-              <a href="#scrapbook" className="transition-colors hover:text-ink">The stamps</a>
+              <a href="#globe" onClick={(e) => { e.preventDefault(); scrollToTarget('globe') }} className="transition-colors hover:text-ink">The globe</a>
+              <a href="#scrapbook" onClick={(e) => { e.preventDefault(); scrollToTarget('scrapbook') }} className="transition-colors hover:text-ink">The stamps</a>
             </nav>
             <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
               Made in 2026 · A globe, five fonts &amp; one lime spark
