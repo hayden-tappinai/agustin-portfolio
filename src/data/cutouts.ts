@@ -31,5 +31,12 @@ export const COUNTRY_CENTROIDS: Record<string, [number, number]> = {
 /** The ISO-3 set we have (or expect) national-kit cutouts for. */
 export const CUTOUT_ISO3: ReadonlySet<string> = new Set(Object.keys(COUNTRY_CENTROIDS))
 
-/** Public path to a country's cutout PNG. */
+/** Public path to a country's static cutout PNG (fallback). */
 export const cutoutSrc = (iso3: string): string => `/agustin/countries/${iso3}.png`
+
+/**
+ * Public path to a country's ANIMATED cutout — a seamless-looping stop-motion
+ * WebP of Agustin waving that nation's flag. An `<img>` plays it natively. If a
+ * country's webp hasn't landed yet, the render falls back to the static PNG.
+ */
+export const cutoutAnimSrc = (iso3: string): string => `/agustin/countries-anim/${iso3}.webp`

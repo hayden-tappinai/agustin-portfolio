@@ -8,7 +8,7 @@ import { SoccerBallOverlay } from './soccer-ball/SoccerBallOverlay'
 import { countryIso3, countryKey, toSelectedCountry } from '../lib/countries'
 import { altitude, palette } from '../lib/theme'
 import { VISITED_ISO3 } from '../data/stories'
-import { COUNTRY_CENTROIDS, CUTOUT_ISO3, cutoutSrc } from '../data/cutouts'
+import { COUNTRY_CENTROIDS, CUTOUT_ISO3, cutoutAnimSrc, cutoutSrc } from '../data/cutouts'
 
 // Stable constant accessors — these never depend on state, so defining them at
 // module scope keeps their identity fixed and stops react-globe.gl from
@@ -53,6 +53,9 @@ export function GlobeHero({ selected, onSelect }: GlobeHeroProps) {
   // stop trying to render it (no broken-image flash; graceful no-op).
   const cutoutAnchorRef = useRef<HTMLDivElement>(null)
   const [missingCutouts, setMissingCutouts] = useState<ReadonlySet<string>>(new Set())
+  // ISO-3s whose animated WebP failed to load → fall back to the static PNG
+  // before giving up entirely (kept in `missingCutouts`).
+  const [staticFallback, setStaticFallback] = useState<ReadonlySet<string>>(new Set())
   const hoveredIso3 = hovered ? countryIso3(hovered) : null
   const cutoutIso =
     hoveredIso3 && CUTOUT_ISO3.has(hoveredIso3) && !missingCutouts.has(hoveredIso3)
@@ -223,17 +226,19 @@ export function GlobeHero({ selected, onSelect }: GlobeHeroProps) {
               style={{ x: '-50%', transformOrigin: 'bottom center' }}
             >
               <img
-                src={cutoutSrc(cutoutIso)}
+                src={staticFallback.has(cutoutIso) ? cutoutSrc(cutoutIso) : cutoutAnimSrc(cutoutIso)}
                 alt=""
                 aria-hidden
                 draggable={false}
-                onError={() =>
-                  setMissingCutouts((prev) => {
-                    const next = new Set(prev)
-                    next.add(cutoutIso)
-                    return next
-                  })
-                }
+                onError={() => {
+                  // First failure (animated webp missing) → retry the static PNG.
+                  // Second failure (no PNG either) → mark missing and stop.
+                  if (!staticFallback.has(cutoutIso)) {
+                    setStaticFallback((prev) => new Set(prev).add(cutoutIso))
+                  } else {
+                    setMissingCutouts((prev) => new Set(prev).add(cutoutIso))
+                  }
+                }}
                 className="h-[clamp(120px,26vh,260px)] w-auto max-w-none select-none drop-shadow-[0_14px_22px_rgba(28,23,18,0.4)]"
               />
             </motion.div>

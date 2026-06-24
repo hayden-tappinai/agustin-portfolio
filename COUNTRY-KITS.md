@@ -20,5 +20,6 @@ WAVING that country's flag, mid-wave, cardboard style, plain white bg. Research-
 - SWE Sweden — kit: YELLOW shirt + blue shorts, SvFF crest. Flag: blue field w/ yellow Nordic cross.
 - CHE Switzerland — kit: RED shirt + white shorts, SFV cross crest. Flag: square red w/ bold white cross.
 - VAT Vatican City — no real national team; use Vatican colours: a white/yellow shirt. Flag: yellow / white vertical with the crossed keys + papal tiara emblem.
+- BHS Bahamas — kit: AQUAMARINE (teal) shirt + aquamarine shorts, BFA crest. Flag: aquamarine / gold / aquamarine horizontal bands with a black equilateral triangle at the hoist (left).
 
 Distinctive ones to get RIGHT: ARG (sky-blue/white stripes), PER (white + red sash), SWE (yellow), HUN (red/white/green), GRC (blue/white stripes + cross), DOM (white cross quarters). Verify current crest only if time; colours above are the priority.
