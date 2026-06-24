@@ -20,10 +20,11 @@ export const palette = {
   ocean: '#14598c',
   /** Faint atmospheric rim glow — a lighter blue, same family. */
   atmosphere: '#5aa9e6',
-  /** Country land — the resting green for places not yet visited. */
-  land: '#34965d',
-  /** A country Agustin has been to — brighter, it reads as "lit up". */
-  landVisited: '#54cf8a',
+  /** Country land — a muted resting green for places not yet visited, so the
+   *  17 visited countries clearly light up against it. */
+  land: '#2c7a4e',
+  /** A country Agustin has been to — distinctly brighter, it "lights up". */
+  landVisited: '#62e09a',
   /** Country land while hovered — the brightest shade of the same green. */
   landHover: '#8af0b3',
   /** Extruded country side wall, shown when a country lifts on hover. */
