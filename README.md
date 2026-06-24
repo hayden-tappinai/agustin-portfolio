@@ -1,32 +1,44 @@
-# React + TypeScript + Vite
+# Agustín — Footy & Far-Flung Places
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A personal portfolio whose hero is an **interactive 3D globe**. Spin it, hover a
+country to lift it off the surface, and click in to read a story from that place
+(soccer + travel). Blue ocean, green land — clean by design.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Vite + React 19 + TypeScript** (strict)
+- **react-globe.gl** (globe.gl / three-globe / three) for the WebGL globe
+- **Tailwind CSS** for the overlay chrome and country panel
+- **Natural Earth 110m** admin-0 countries (real GeoJSON, 177 countries)
 
-## React Compiler
+## Run
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build    # tsc -b && vite build
+npm run lint     # oxlint
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## How it works
+
+- `src/components/GlobeHero.tsx` — the globe. Blue `MeshPhongMaterial` ocean +
+  green country polygons. Hover raises a country via `polygonAltitude`; click
+  selects it and the camera flies there. Auto-rotate pauses while you inspect.
+- `src/components/CountryPanel.tsx` — the slide-in panel (placeholder photos +
+  story for V1; focus-managed and `inert` when closed).
+- `src/hooks/useCountries.ts` — loads the GeoJSON from `public/`.
+- `src/data/stories.ts` — placeholder stories; real content from Agustín's
+  travel photos is mapped in later.
+- `src/lib/theme.ts` — the single source of truth for the palette (mirrored into
+  `tailwind.config.js` and `src/index.css`).
+- `src/components/FeaturedNav.tsx` — a visually hidden keyboard/SR path into the
+  stories, since the globe canvas is pointer-only.
+
+## Pending assets (clean seams left, not faked)
+
+- **Soccer-ball hover animation** — a hand-drawn b/w fly-through (Higgsfield,
+  background stripped). The seam is wired: `GlobeHero` feeds a live `active` flag
+  to `SoccerBallOverlay` via `useSoccerBall`; drop the asset into `public/` and
+  render it in `SoccerBallOverlay` — no re-plumbing.
+- **Real photos & stories** — replace the placeholders in `src/data/stories.ts`.
