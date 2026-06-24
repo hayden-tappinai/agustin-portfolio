@@ -1,0 +1,387 @@
+<!-- @dsCard group="Color" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agustins Portfolio — Color</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&family=Permanent+Marker&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --paper:#F2E8CF; --paper-2:#E8D9B5; --paper-edge:#CDB789; --paper-line:#C7B488;
+    --paper-shadow:rgba(58,42,18,0.18);
+    --ink:#1C1712; --ink-2:#4A4034; --ink-faint:#8A7E68; --navy:#0A1422; --navy-2:#14233A;
+    --pitch:#1E7A46; --globe-green:#3EA96B; --ocean:#14598C; --stamp-red:#C0362C; --gold:#C8992F;
+    --volt:#CDFF3D; --volt-deep:#A6D400;
+    --font-display:"Anton","Arial Narrow",sans-serif;
+    --font-body:"Plus Jakarta Sans",system-ui,sans-serif;
+    --font-hand:"Caveat",cursive; --font-marker:"Permanent Marker",cursive;
+    --font-mono:"Space Mono",ui-monospace,monospace;
+  }
+
+  body{
+    background-color:#F2E8CF;
+    background-image:
+      radial-gradient(120% 130% at 0% 0%, rgba(255,250,235,0.55) 0%, transparent 42%),
+      radial-gradient(120% 130% at 100% 100%, rgba(150,118,64,0.20) 0%, transparent 55%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    font-family:var(--font-body); color:var(--ink); padding:48px;
+  }
+
+  .stage{max-width:1100px; margin:0 auto; position:relative}
+
+  /* faint graticule wash behind everything */
+  .graticule{
+    position:absolute; inset:-48px; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(20,89,140,.08) 1px,transparent 1px),
+      linear-gradient(90deg, rgba(20,89,140,.08) 1px,transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask-image:radial-gradient(120% 90% at 50% 22%, #000 35%, transparent 80%);
+    mask-image:radial-gradient(120% 90% at 50% 22%, #000 35%, transparent 80%);
+  }
+  .stage > *{position:relative; z-index:1}
+
+  /* ---------- header ---------- */
+  .eyebrow{
+    font-family:var(--font-mono); font-weight:700; font-size:12px; text-transform:uppercase;
+    letter-spacing:.14em; color:var(--ink-faint); display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--volt-deep);box-shadow:0 0 0 3px rgba(166,212,0,.22)}
+  h1{
+    font-family:var(--font-display); text-transform:uppercase; color:var(--ink);
+    font-size:clamp(48px,7vw,92px); line-height:.98; letter-spacing:.015em; margin:12px 0 10px;
+  }
+  .lede{font-size:18px; line-height:1.55; font-weight:500; color:var(--ink-2); max-width:62ch}
+  .lede b{color:var(--ink); font-weight:700}
+
+  .headrow{display:flex; justify-content:space-between; align-items:flex-start; gap:24px}
+  .coordtag{
+    font-family:var(--font-mono); font-size:12px; color:var(--ink-2); text-align:right;
+    border:1px solid var(--paper-edge); border-radius:4px; padding:8px 12px; background:rgba(255,250,235,.4);
+    white-space:nowrap; line-height:1.7;
+  }
+  .coordtag span{display:block; color:var(--ink-faint); letter-spacing:.1em; font-size:10px}
+
+  /* ---------- torn divider ---------- */
+  .torn-div{
+    height:26px; margin:46px 0 30px; position:relative;
+    background:var(--paper-edge);
+    clip-path:polygon(0 38%,5% 60%,10% 40%,16% 64%,22% 42%,28% 66%,34% 44%,40% 62%,46% 40%,
+      52% 66%,58% 42%,64% 60%,70% 40%,76% 64%,82% 42%,88% 62%,94% 40%,100% 60%,
+      100% 100%,0 100%);
+    opacity:.55;
+  }
+  .torn-div::before{
+    content:""; position:absolute; inset:0; transform:translateY(-7px);
+    background:var(--paper-2);
+    clip-path:polygon(0 38%,5% 60%,10% 40%,16% 64%,22% 42%,28% 66%,34% 44%,40% 62%,46% 40%,
+      52% 66%,58% 42%,64% 60%,70% 40%,76% 64%,82% 42%,88% 62%,94% 40%,100% 60%,
+      100% 100%,0 100%);
+  }
+  .section-label{
+    font-family:var(--font-mono); font-weight:700; font-size:12px; text-transform:uppercase;
+    letter-spacing:.14em; color:var(--ink-faint); display:flex; align-items:baseline; gap:12px; margin-bottom:18px;
+  }
+  .section-label .n{font-family:var(--font-display); font-size:26px; color:var(--ink); letter-spacing:.02em; line-height:1.1}
+  .section-label .note{font-family:var(--font-hand); font-size:22px; color:var(--ink-2); letter-spacing:0; font-weight:600; text-transform:none; margin-left:auto}
+
+  /* ---------- swatch grid ---------- */
+  .swatches{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:16px}
+  .chip{
+    background:var(--paper-2); border:1px solid var(--paper-edge); border-radius:10px; overflow:hidden;
+    box-shadow:0 6px 16px rgba(58,42,18,.10);
+  }
+  .chip .swatch{height:78px; display:flex; align-items:flex-end; justify-content:flex-end; padding:8px}
+  .chip .swatch.bordered{box-shadow:inset 0 0 0 1px rgba(58,42,18,.18)}
+  .chip .meta{padding:12px 14px 14px}
+  .chip .tok{font-family:var(--font-mono); font-weight:700; font-size:13px; color:var(--ink)}
+  .chip .hex{font-family:var(--font-mono); font-size:12px; color:var(--ink-2); font-variant-numeric:tabular-nums; letter-spacing:.04em}
+  .chip .role{font-size:13px; color:var(--ink-2); font-weight:500; line-height:1.4; margin-top:6px}
+  .chip .tie{font-size:12px; color:var(--ink-faint); font-weight:600; margin-top:6px; font-style:italic}
+  .chip .pin{
+    font-family:var(--font-mono); font-size:9px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+    background:rgba(0,0,0,.32); color:#fff; padding:2px 6px; border-radius:3px;
+  }
+
+  /* ---------- volt callout ---------- */
+  .volt-callout{
+    margin-top:30px; background:var(--navy); border-radius:14px; padding:34px 36px;
+    position:relative; overflow:hidden; box-shadow:0 18px 40px rgba(10,20,34,.4);
+  }
+  .volt-callout .grat{
+    position:absolute; inset:0; opacity:1; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(110,227,160,.10) 1px,transparent 1px),
+      linear-gradient(90deg, rgba(110,227,160,.10) 1px,transparent 1px);
+    background-size:46px 46px;
+  }
+  .volt-callout > *{position:relative}
+  .vc-eyebrow{font-family:var(--font-mono); font-weight:700; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--volt)}
+  .vc-title{font-family:var(--font-display); text-transform:uppercase; color:#F2E8CF; font-size:34px; line-height:1.06; letter-spacing:.02em; margin:10px 0 6px}
+  .vc-title em{color:var(--volt); font-style:normal}
+  .vc-sub{font-size:14px; color:#b9c4cf; font-weight:500; max-width:54ch; line-height:1.55}
+  .vc-modes{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:24px}
+  .mode{border-radius:10px; padding:22px; position:relative}
+  .mode.dark{background:var(--navy-2); box-shadow:inset 0 0 0 1px rgba(110,227,160,.18)}
+  .mode.light{background:var(--paper); box-shadow:inset 0 0 0 1px var(--paper-edge)}
+  .mode .mlabel{font-family:var(--font-mono); font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; margin-bottom:14px}
+  .mode.dark .mlabel{color:#7f93a5}
+  .mode.light .mlabel{color:var(--ink-faint)}
+  .glowfill{
+    display:inline-block; background:var(--volt); color:var(--navy); font-family:var(--font-mono); font-weight:700;
+    font-size:13px; letter-spacing:.08em; text-transform:uppercase; padding:8px 14px; border-radius:6px;
+    box-shadow:0 0 22px rgba(205,255,61,.55), 0 0 4px rgba(205,255,61,.8);
+  }
+  .live-dot{display:inline-flex; align-items:center; gap:9px; margin-top:16px; font-family:var(--font-mono); font-size:12px; color:#cfd8e0; letter-spacing:.06em}
+  .live-dot .d{width:11px;height:11px;border-radius:50%;background:var(--volt); box-shadow:0 0 12px var(--volt); animation:pulse 2.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.35);opacity:1}}
+  .mode.dark .tokline{font-family:var(--font-mono); font-size:11px; color:#6f8395; margin-top:14px}
+
+  .volt-text{font-size:22px; font-weight:700; color:var(--ink); line-height:1.4}
+  .volt-text u{
+    text-decoration:none; color:var(--volt-deep);
+    border-bottom:3px solid var(--volt-deep); padding-bottom:2px;
+  }
+  .mode.light .tokline{font-family:var(--font-mono); font-size:11px; color:var(--ink-faint); margin-top:16px}
+  .mode.light .sample-link{font-size:15px; color:var(--ink-2); font-weight:600; margin-top:14px; line-height:1.6}
+  .mode.light .sample-link a{color:var(--ink); text-decoration:none; border-bottom:2px solid var(--volt-deep); font-weight:700}
+
+  /* ---------- in-context strip ---------- */
+  .context{display:grid; grid-template-columns:1.05fr 1fr 1.15fr; gap:0; margin-top:30px; border-radius:14px; overflow:hidden; box-shadow:0 14px 34px rgba(58,42,18,.18)}
+  .ctx{padding:26px 24px; min-height:230px; position:relative; display:flex; flex-direction:column; justify-content:space-between}
+  .ctx .cap{font-family:var(--font-mono); font-size:10.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; line-height:1.5}
+  .ctx .big{font-family:var(--font-display); text-transform:uppercase; line-height:1.04; letter-spacing:.02em}
+
+  .ctx.navy{background:var(--navy); color:#cfd8e0}
+  .ctx.navy .grat{position:absolute; inset:0; background-image:
+      linear-gradient(rgba(110,227,160,.09) 1px,transparent 1px),
+      linear-gradient(90deg, rgba(110,227,160,.09) 1px,transparent 1px);
+    background-size:38px 38px;}
+  .ctx.navy .globe{
+    width:118px;height:118px;border-radius:50%; position:relative; margin:6px 0;
+    background:radial-gradient(circle at 36% 32%, #1b3a5a 0%, var(--navy-2) 55%, #060d18 100%);
+    box-shadow:0 0 0 1px rgba(110,227,160,.2), inset -10px -12px 26px rgba(0,0,0,.55), 0 0 40px rgba(20,89,140,.5);
+  }
+  .ctx.navy .globe::after{content:""; position:absolute; inset:0; border-radius:50%;
+    background:radial-gradient(circle at 60% 64%, rgba(62,169,107,.55) 0 14%, transparent 15%),
+               radial-gradient(circle at 38% 70%, rgba(62,169,107,.5) 0 9%, transparent 10%),
+               radial-gradient(circle at 50% 38%, rgba(62,169,107,.45) 0 11%, transparent 12%);}
+  .ctx.navy .cap{color:#7f93a5}
+
+  .ctx.kraft{background:var(--paper); color:var(--ink); box-shadow:inset 0 0 0 1px var(--paper-edge)}
+  .ctx.kraft .lines{position:absolute; inset:0; background-image:repeating-linear-gradient(var(--paper) 0 27px, var(--paper-line) 27px 28px); opacity:.5}
+  .ctx.kraft .big{color:var(--ink); font-size:30px}
+  .ctx.kraft .cap{color:var(--ink-faint)}
+
+  .ctx.pitch{background:var(--pitch); color:#eafff0; padding:0; overflow:hidden}
+  .ctx.pitch .pad{padding:26px 24px; position:relative; height:100%; display:flex; flex-direction:column; justify-content:space-between}
+  .ctx.pitch .stripes{position:absolute; inset:0; background:repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 28px, transparent 28px 56px)}
+  .ctx.pitch .num{font-family:var(--font-display); font-size:64px; line-height:1.0; letter-spacing:.02em; color:#fff}
+  .ctx.pitch .goldwrap{display:inline-block; align-self:flex-start; background:var(--gold); color:var(--ink); font-family:var(--font-mono); font-weight:700; font-size:11px; letter-spacing:.1em; text-transform:uppercase; padding:5px 10px; border-radius:4px; box-shadow:0 4px 10px rgba(0,0,0,.25)}
+  .ctx.pitch .cap{color:rgba(234,255,240,.75)}
+
+  .ctx-note{font-family:var(--font-hand); font-size:23px; font-weight:600; color:var(--ink-2); text-align:center; margin-top:16px; line-height:1.3}
+
+  /* footer rationale */
+  .why{margin-top:30px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px}
+  .why .card{background:rgba(255,250,235,.45); border:1px dashed var(--paper-edge); border-radius:8px; padding:14px 16px}
+  .why .card h4{font-family:var(--font-mono); font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); margin-bottom:6px}
+  .why .card p{font-size:13px; color:var(--ink-2); line-height:1.5}
+  .why .card p b{color:var(--ink)}
+
+  .footnote{margin-top:24px; font-family:var(--font-mono); font-size:11px; color:var(--ink-faint); letter-spacing:.04em; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px}
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="graticule"></div>
+
+    <header class="headrow">
+      <div>
+        <div class="eyebrow"><span class="dot"></span>✦ Palette / §1 — Color tokens</div>
+        <h1>The Colors<br>Of The Road</h1>
+        <p class="lede">Warm kraft is the base; the bold fusion colors are the loud bits taped on top. Everything wraps the calm navy globe at the center — <b>so the page shouts and the globe stays quiet.</b></p>
+      </div>
+      <div class="coordtag">
+        <span>HOME · MADRID, ES</span>
+        40.4168° N<br>3.7038° W
+      </div>
+    </header>
+
+    <!-- ============ PAPER / SURFACE ============ -->
+    <div class="torn-div"></div>
+    <div class="section-label">
+      <span class="n">01</span> Paper / Surface
+      <span class="note">the kraft base — everything sits on this</span>
+    </div>
+    <div class="swatches">
+      <div class="chip">
+        <div class="swatch bordered" style="background:#F2E8CF"><span class="pin">BG</span></div>
+        <div class="meta"><div class="tok">--paper</div><div class="hex">#F2E8CF</div><div class="role">Primary kraft-cream page background</div></div>
+      </div>
+      <div class="chip">
+        <div class="swatch bordered" style="background:#E8D9B5"></div>
+        <div class="meta"><div class="tok">--paper-2</div><div class="hex">#E8D9B5</div><div class="role">Aged-tan surface / cards / journal pages</div></div>
+      </div>
+      <div class="chip">
+        <div class="swatch" style="background:#CDB789"></div>
+        <div class="meta"><div class="tok">--paper-edge</div><div class="hex">#CDB789</div><div class="role">Torn / deckle edge tone, dividers</div></div>
+      </div>
+      <div class="chip">
+        <div class="swatch" style="background:#C7B488"></div>
+        <div class="meta"><div class="tok">--paper-line</div><div class="hex">#C7B488</div><div class="role">Faint ruled grid line on paper</div></div>
+      </div>
+      <div class="chip">
+        <div class="swatch bordered" style="background:linear-gradient(135deg,#F2E8CF,rgba(58,42,18,0.18))"></div>
+        <div class="meta"><div class="tok">--paper-shadow</div><div class="hex">rgba(58,42,18,.18)</div><div class="role">Warm drop-shadow for lifted paper</div></div>
+      </div>
+    </div>
+
+    <!-- ============ INK / STRUCTURE ============ -->
+    <div class="torn-div"></div>
+    <div class="section-label">
+      <span class="n">02</span> Ink / Structure
+      <span class="note">the type & the dark globe zones</span>
+    </div>
+    <div class="swatches">
+      <div class="chip">
+        <div class="swatch" style="background:#1C1712"><span class="pin">TYPE</span></div>
+        <div class="meta"><div class="tok">--ink</div><div class="hex">#1C1712</div><div class="role">Near-black warm ink — display type + body</div></div>
+      </div>
+      <div class="chip">
+        <div class="swatch" style="background:#4A4034"></div>
+        <div class="meta"><div class="tok">--ink-2</div><div class="hex">#4A4034</div><div class="role">Muted brown ink — secondary text</div></div>
+      </div>
+      <div class="chip">
+        <div class="swatch" style="background:#8A7E68"></div>
+        <div class="meta"><div class="tok">--ink-faint</div><div class="hex">#8A7E68</div><div class="role">Faint ink — captions, meta, watermarks</div></div>
+      </div>
+      <div class="chip">
+        <div class="swatch" style="background:#0A1422"><span class="pin">GLOBE</span></div>
+        <div class="meta"><div class="tok">--navy</div><div class="hex">#0A1422</div><div class="role">Globe navy — dark sections / the globe zone</div></div>
+      </div>
+      <div class="chip">
+        <div class="swatch" style="background:#14233A"></div>
+        <div class="meta"><div class="tok">--navy-2</div><div class="hex">#14233A</div><div class="role">Lifted navy panel inside dark sections</div></div>
+      </div>
+    </div>
+
+    <!-- ============ FUSION ACCENTS ============ -->
+    <div class="torn-div"></div>
+    <div class="section-label">
+      <span class="n">03</span> Fusion Accents
+      <span class="note">footy + travel + passport ink + trophy</span>
+    </div>
+    <div class="swatches">
+      <div class="chip">
+        <div class="swatch" style="background:#1E7A46"></div>
+        <div class="meta"><div class="tok">--pitch</div><div class="hex">#1E7A46</div><div class="role">Deep pitch green — sport / primary action</div><div class="tie">the grass at the Bernabéu</div></div>
+      </div>
+      <div class="chip">
+        <div class="swatch" style="background:#3EA96B"></div>
+        <div class="meta"><div class="tok">--globe-green</div><div class="hex">#3EA96B</div><div class="role">Globe land green — cohesion with the globe</div><div class="tie">the continents on the 3D globe</div></div>
+      </div>
+      <div class="chip">
+        <div class="swatch" style="background:#14598C"></div>
+        <div class="meta"><div class="tok">--ocean</div><div class="hex">#14598C</div><div class="role">Ocean / sky blue — travel</div><div class="tie">the globe's sea, the flight you're on</div></div>
+      </div>
+      <div class="chip">
+        <div class="swatch" style="background:#C0362C"></div>
+        <div class="meta"><div class="tok">--stamp-red</div><div class="hex">#C0362C</div><div class="role">Passport & postage ink — "you-are-here"</div><div class="tie">the ink in every passport stamp</div></div>
+      </div>
+      <div class="chip">
+        <div class="swatch" style="background:linear-gradient(135deg,#E0B852,#C8992F 55%,#9c7420)"></div>
+        <div class="meta"><div class="tok">--gold</div><div class="hex">#C8992F</div><div class="role">Trophy / medal gold — awards, foil highlights</div><div class="tie">the trophy lifted at full time</div></div>
+      </div>
+    </div>
+
+    <!-- ============ ELECTRIC — VOLT CALLOUT ============ -->
+    <div class="torn-div"></div>
+    <div class="section-label">
+      <span class="n">04</span> Electric
+      <span class="note">one spark per view — never two competing</span>
+    </div>
+    <div class="swatches" style="margin-bottom:30px">
+      <div class="chip">
+        <div class="swatch" style="background:#CDFF3D"><span class="pin" style="background:rgba(0,0,0,.55)">SPARK</span></div>
+        <div class="meta"><div class="tok">--volt</div><div class="hex">#CDFF3D</div><div class="role">Electric lime — fills/glows on dark, highlighter behind dark text, active pulse</div><div class="tie">the one note that says 2026, not 1974</div></div>
+      </div>
+      <div class="chip">
+        <div class="swatch" style="background:#A6D400"></div>
+        <div class="meta"><div class="tok">--volt-deep</div><div class="hex">#A6D400</div><div class="role">Volt for text/lines on light kraft (bright lime is illegible as type)</div><div class="tie">the legible-on-kraft twin</div></div>
+      </div>
+    </div>
+
+    <div class="volt-callout">
+      <div class="grat"></div>
+      <div class="vc-eyebrow">●  THE SINGLE SPARK · USE ONCE PER VIEW</div>
+      <h2 class="vc-title">Volt is <em>this was made in 2026</em></h2>
+      <p class="vc-sub">Electric lime is the one tech note in a warm, earthy room. It has two legibility modes — and they are NOT interchangeable. Bright lime glows on dark; on kraft it's illegible as text, so it drops to <b style="color:var(--volt)">--volt-deep</b> for lines and links.</p>
+
+      <div class="vc-modes">
+        <div class="mode dark">
+          <div class="mlabel">Mode A — on navy → glowing fill / live pulse</div>
+          <span class="glowfill">● LIVE — NOW IN TOKYO</span>
+          <div class="live-dot"><span class="d"></span>you-are-here marker · the globe's active pin</div>
+          <div class="tokline">background: var(--volt) #CDFF3D · text: var(--navy)</div>
+        </div>
+        <div class="mode light">
+          <div class="mlabel">Mode B — on kraft → --volt-deep text / underline</div>
+          <div class="volt-text">Next stop: <u>Buenos Aires</u></div>
+          <div class="sample-link">CTA link → <a href="#">view the match log</a></div>
+          <div class="tokline">text/line: var(--volt-deep) #A6D400 · never #CDFF3D here</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ IN CONTEXT ============ -->
+    <div class="torn-div"></div>
+    <div class="section-label">
+      <span class="n">05</span> In Context
+      <span class="note">how the bold colors wrap the calm globe</span>
+    </div>
+
+    <div class="context">
+      <div class="ctx navy">
+        <div class="grat"></div>
+        <div class="cap">THE CALM CENTER — globe zone</div>
+        <div class="globe"></div>
+        <div class="cap">--navy · --globe-green · --ocean</div>
+      </div>
+      <div class="ctx kraft">
+        <div class="lines"></div>
+        <div class="cap">THE WARM PAGE — scrapbook</div>
+        <div class="big" style="position:relative">MADRID<br>→ LISBON</div>
+        <div class="cap" style="position:relative">--paper · --ink</div>
+      </div>
+      <div class="ctx pitch">
+        <div class="pad">
+          <div class="stripes"></div>
+          <div class="goldwrap" style="position:relative">★ FINAL · TROPHY GOLD</div>
+          <div class="num" style="position:relative">2 – 1</div>
+          <div class="cap" style="position:relative">--pitch + --gold pairing</div>
+        </div>
+      </div>
+    </div>
+    <p class="ctx-note">loud banners + warm pages on the outside, the quiet navy globe in the middle — the bold colors frame it, they never fight it.</p>
+
+    <!-- ============ WHY ============ -->
+    <div class="torn-div"></div>
+    <div class="why">
+      <div class="card"><h4>Why kraft as base</h4><p><b>Warm, tactile, analog</b> — it reads as a real travel journal, not a UI. The bold colors land harder against a calm earthy ground.</p></div>
+      <div class="card"><h4>Why two greens</h4><p><b>--pitch</b> is the footy/action green; <b>--globe-green</b> matches the literal land on the 3D globe. Two jobs, one family — that's the fusion.</p></div>
+      <div class="card"><h4>Why volt has two tokens</h4><p>The bright lime <b>glows on navy</b> but vanishes as text on kraft. <b>--volt-deep</b> is the legible-on-light twin. One spark, two surfaces.</p></div>
+      <div class="card"><h4>Why navy is shared</h4><p>The dark sections reuse the exact <b>globe navy</b> so the whole site feels carved from the same object as the interactive globe.</p></div>
+    </div>
+
+    <div class="footnote">
+      <span>AGUSTINS PORTFOLIO · DESIGN SYSTEM · CARD 01 / COLOR</span>
+      <span>17 TOKENS · 4 GROUPS · 1 SPARK</span>
+    </div>
+  </div>
+</body>
+</html>

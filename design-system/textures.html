@@ -1,0 +1,521 @@
+<!-- @dsCard group="Textures" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agustins Portfolio — Textures &amp; Materials</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&family=Permanent+Marker&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --paper:#F2E8CF; --paper-2:#E8D9B5; --paper-edge:#CDB789; --paper-line:#C7B488;
+  --paper-shadow:rgba(58,42,18,0.18);
+  --ink:#1C1712; --ink-2:#4A4034; --ink-faint:#8A7E68; --navy:#0A1422; --navy-2:#14233A;
+  --pitch:#1E7A46; --globe-green:#3EA96B; --ocean:#14598C; --stamp-red:#C0362C; --gold:#C8992F;
+  --volt:#CDFF3D; --volt-deep:#A6D400;
+  --font-display:"Anton","Arial Narrow",sans-serif;
+  --font-body:"Plus Jakarta Sans",system-ui,sans-serif;
+  --font-hand:"Caveat",cursive; --font-marker:"Permanent Marker",cursive;
+  --font-mono:"Space Mono",ui-monospace,monospace;
+}
+
+body{
+  font-family:var(--font-body);
+  color:var(--ink);
+  padding:48px;
+  background-color:#F2E8CF;
+  background-image:
+    radial-gradient(120% 130% at 0% 0%, rgba(255,250,235,0.55) 0%, transparent 42%),
+    radial-gradient(120% 130% at 100% 100%, rgba(150,118,64,0.20) 0%, transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+.stage{max-width:1100px;margin:0 auto}
+
+/* ---------- header ---------- */
+.eyebrow{
+  font-family:var(--font-mono); font-weight:700; font-size:12px;
+  text-transform:uppercase; letter-spacing:.14em; color:var(--ink-faint);
+  display:flex; align-items:center; gap:10px; margin-bottom:14px;
+}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--volt-deep);box-shadow:0 0 0 3px rgba(166,212,0,.22)}
+h1{
+  font-family:var(--font-display); text-transform:uppercase; color:var(--ink);
+  font-size:clamp(44px,6vw,72px); line-height:.98; letter-spacing:.02em;
+}
+.lede{
+  font-family:var(--font-body); font-size:18px; line-height:1.55; color:var(--ink-2);
+  max-width:620px; margin-top:18px;
+}
+.lede b{color:var(--ink)}
+.rule{height:2px;background:repeating-linear-gradient(90deg,var(--ink) 0 14px,transparent 14px 22px);opacity:.5;margin:26px 0 34px}
+
+/* ---------- grid ---------- */
+.grid{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
+}
+.tile{
+  position:relative; background:var(--paper-2);
+  border:1px solid var(--paper-edge);
+  border-radius:6px; padding:18px 16px 14px;
+  min-height:200px;
+  display:flex; flex-direction:column;
+  box-shadow:0 1px 0 rgba(255,255,255,.4) inset, 0 6px 16px rgba(58,42,18,.08);
+}
+.tile.wide{grid-column:span 2}
+.tile .demo{
+  flex:1; display:flex; align-items:center; justify-content:center;
+  position:relative; min-height:120px; margin-bottom:14px; overflow:visible;
+}
+.cap{border-top:1px dashed var(--paper-edge);padding-top:10px}
+.cap .name{
+  font-family:var(--font-mono); font-weight:700; font-size:12px;
+  text-transform:uppercase; letter-spacing:.1em; color:var(--ink);
+}
+.cap .how{
+  font-family:var(--font-body); font-size:12.5px; line-height:1.45; color:var(--ink-2); margin-top:3px;
+}
+.idx{
+  position:absolute; top:10px; right:12px;
+  font-family:var(--font-mono); font-size:10px; font-weight:700;
+  letter-spacing:.1em; color:var(--ink-faint);
+}
+
+/* ---------- 4.1 kraft swatch ---------- */
+.kraft-sw{
+  width:130px;height:96px;border-radius:5px;
+  background-color:#F2E8CF;
+  background-image:
+    radial-gradient(120% 130% at 0% 0%, rgba(255,250,235,0.6) 0%, transparent 42%),
+    radial-gradient(120% 130% at 100% 100%, rgba(150,118,64,0.28) 0%, transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  box-shadow:0 6px 14px var(--paper-shadow);
+  border:1px solid var(--paper-edge);
+}
+
+/* ---------- 4.2 washi tape ---------- */
+.washi-stack{position:relative;width:100%;height:120px}
+.washi{
+  position:absolute; left:50%; width:150px; height:34px;
+  background:
+    repeating-linear-gradient(46deg, rgba(255,255,255,.22) 0 7px, transparent 7px 14px),
+    var(--tape, rgba(205,255,61,.6));
+  box-shadow:0 2px 4px rgba(0,0,0,.14);
+  clip-path:polygon(3% 0,97% 5%,100% 95%,0 100%);
+  opacity:.92;
+}
+.washi.t1{top:8px;  --tape:rgba(20,89,140,.55);  transform:translateX(-50%) rotate(-6deg)}
+.washi.t2{top:44px; --tape:rgba(192,54,44,.5);   transform:translateX(-50%) rotate(3deg)}
+.washi.t3{top:80px; --tape:rgba(200,153,47,.55); transform:translateX(-50%) rotate(-2deg)}
+
+/* ---------- 4.3 torn edge ---------- */
+.torn{
+  width:140px;height:104px;background:#fbf7ec;
+  box-shadow:0 7px 16px var(--paper-shadow);
+  clip-path:polygon(0 0,100% 0,100% 84%,96% 90%,90% 84%,83% 91%,76% 84%,68% 91%,
+    60% 84%,52% 91%,44% 84%,36% 91%,28% 84%,20% 91%,12% 84%,5% 90%,0 84%);
+  position:relative;
+}
+.torn::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 70%,rgba(205,183,137,.5));
+}
+.torn .tl{position:absolute;top:14px;left:16px;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--ink-faint)}
+
+/* ---------- 4.4 polaroid ---------- */
+.polaroid{
+  background:#fdfdfb; padding:9px 9px 34px; box-shadow:0 12px 26px var(--paper-shadow);
+  transform:rotate(-3.5deg); position:relative; width:128px;
+}
+.polaroid .photo{
+  aspect-ratio:1/1; position:relative; overflow:hidden;
+  background:linear-gradient(180deg,#9ec3e0 0%,#7fa9cd 46%,#2f7d49 46%,#256b3f 100%);
+}
+.polaroid .photo::after{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 78% 24%, rgba(255,247,220,.9) 0 7px, transparent 8px),
+    linear-gradient(90deg,transparent 49%,rgba(255,255,255,.7) 49% 51%,transparent 51%);
+}
+.polaroid .cap2{font-family:var(--font-hand);font-size:23px;color:var(--ink-2);position:absolute;bottom:5px;left:12px}
+.polaroid .mini-tape{
+  position:absolute;top:-10px;right:-8px;width:54px;height:20px;transform:rotate(20deg);
+  background:repeating-linear-gradient(46deg,rgba(255,255,255,.25) 0 5px,transparent 5px 10px),rgba(205,255,61,.6);
+  clip-path:polygon(4% 0,96% 6%,100% 94%,0 100%);box-shadow:0 1px 3px rgba(0,0,0,.16);
+}
+
+/* ---------- 4.5 postage ---------- */
+.postage{
+  background:#fbf7ec; padding:14px;
+  --pf:radial-gradient(circle 5px at center, transparent 96%, #000);
+  -webkit-mask:
+    var(--pf) top    /14px 14px repeat-x,
+    var(--pf) bottom /14px 14px repeat-x,
+    var(--pf) left   /14px 14px repeat-y,
+    var(--pf) right  /14px 14px repeat-y,
+    linear-gradient(#000,#000) center/calc(100% - 14px) calc(100% - 14px) no-repeat;
+  mask:
+    var(--pf) top    /14px 14px repeat-x,
+    var(--pf) bottom /14px 14px repeat-x,
+    var(--pf) left   /14px 14px repeat-y,
+    var(--pf) right  /14px 14px repeat-y,
+    linear-gradient(#000,#000) center/calc(100% - 14px) calc(100% - 14px) no-repeat;
+  filter:drop-shadow(0 4px 8px var(--paper-shadow));
+  width:120px;
+}
+.postage .inner{
+  border:1px solid var(--ink-faint); padding:10px 8px; text-align:center;
+}
+.postage .val{font-family:var(--font-display);font-size:30px;color:var(--stamp-red);line-height:1.0;letter-spacing:.02em}
+.postage .ctry{font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.12em;color:var(--ink-2);margin-top:4px}
+.postage .pic{height:34px;margin:4px 0;background:linear-gradient(135deg,var(--ocean),var(--globe-green))}
+
+/* ---------- 4.6 ink stamp ---------- */
+.stamp{
+  font-family:var(--font-mono); color:var(--stamp-red); border:2.5px solid var(--stamp-red);
+  border-radius:50%; padding:16px 14px; text-align:center; transform:rotate(-13deg);
+  opacity:.88; mix-blend-mode:multiply; letter-spacing:.06em; text-transform:uppercase;
+  box-shadow:inset 0 0 0 3px rgba(192,54,44,.35); width:104px; height:104px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.stamp .big{font-family:var(--font-display);font-size:20px;letter-spacing:.02em;line-height:1.0}
+.stamp .sm{font-size:8px;font-weight:700;letter-spacing:.14em;margin-top:5px}
+.stamp .date{font-size:9px;font-weight:700;margin-top:3px}
+
+/* ---------- 4.7 graticule ---------- */
+.gratic{
+  width:138px;height:104px;border-radius:5px;border:1px solid var(--paper-edge);
+  background-color:#efe5c6;
+  background-image:
+    linear-gradient(rgba(20,89,140,.18) 1px,transparent 1px),
+    linear-gradient(90deg, rgba(20,89,140,.18) 1px,transparent 1px);
+  background-size:22px 22px;
+  position:relative; overflow:hidden;
+}
+.gratic.navy{
+  background-color:var(--navy);
+  background-image:
+    linear-gradient(rgba(110,227,160,.16) 1px,transparent 1px),
+    linear-gradient(90deg, rgba(110,227,160,.16) 1px,transparent 1px);
+}
+.gratic svg{position:absolute;inset:0;width:100%;height:100%}
+
+/* ---------- 4.8 route ---------- */
+.routebox{width:100%;max-width:230px}
+
+/* ---------- 4.9 pitch ---------- */
+.pitchbox{width:150px;height:104px;background:var(--pitch);border-radius:5px;box-shadow:inset 0 0 30px rgba(0,0,0,.18);
+  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 22px,transparent 22px 44px)}
+
+/* ---------- 4.12 pushpin / paperclip ---------- */
+.pinclip{position:relative;width:140px;height:104px;background:#fbf7ec;box-shadow:0 7px 16px var(--paper-shadow);border-radius:3px}
+.pushpin{
+  position:absolute;top:14px;left:18px;width:22px;height:22px;border-radius:50%;
+  background:radial-gradient(circle at 32% 30%, #ff7a6e 0 22%, var(--stamp-red) 60%, #7d1f18 100%);
+  box-shadow:0 5px 7px rgba(58,42,18,.4);
+}
+.pushpin::after{content:"";position:absolute;top:30%;left:34%;width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.85)}
+.pushpin2{
+  position:absolute;top:54px;left:18px;width:18px;height:18px;border-radius:50%;
+  background:radial-gradient(circle at 32% 30%, #6fb3e0 0 22%, var(--ocean) 60%, #0c3a5d 100%);
+  box-shadow:0 4px 6px rgba(58,42,18,.4);
+}
+.clip{position:absolute;top:-6px;right:18px}
+.note-hand{position:absolute;bottom:10px;right:12px;font-family:var(--font-hand);font-size:20px;color:var(--ink-2);transform:rotate(-4deg)}
+
+/* ---------- 4.13 bunting ---------- */
+.bunting{width:100%;max-width:240px;display:flex;flex-direction:column;align-items:center}
+.bline{width:100%;height:2px;background:var(--ink);opacity:.55;border-radius:2px}
+.pennants{display:flex;justify-content:space-between;width:100%;margin-top:-1px}
+.pennant{width:26px;height:30px;clip-path:polygon(0 0,100% 0,50% 100%);box-shadow:0 3px 4px rgba(58,42,18,.18)}
+.p1{background:var(--stamp-red)}.p2{background:var(--ocean)}.p3{background:var(--gold)}
+.p4{background:var(--pitch)}.p5{background:var(--stamp-red)}.p6{background:var(--ocean)}.p7{background:var(--gold)}
+
+/* ---------- coffee ring ---------- */
+.coffeebox{width:140px;height:104px;background:#fbf7ec;border-radius:3px;position:relative;box-shadow:0 6px 14px var(--paper-shadow)}
+.cring{
+  position:absolute;top:26px;left:40px;width:64px;height:64px;border-radius:50%;
+  border:6px solid rgba(120,78,32,.16);
+  box-shadow:inset 0 0 8px rgba(120,78,32,.10), 0 0 0 2px rgba(120,78,32,.05);
+  background:radial-gradient(circle, transparent 64%, rgba(120,78,32,.05) 78%, transparent 80%);
+}
+.cring::after{content:"";position:absolute;top:-10px;left:8px;width:40px;height:18px;border-radius:50%;border-bottom:5px solid rgba(120,78,32,.13);transform:rotate(-18deg)}
+
+/* ---------- ticket / boarding-pass stub (signature motif, static) ---------- */
+.ticketbox{width:100%;max-width:300px;display:flex;align-items:stretch;
+  filter:drop-shadow(0 7px 16px var(--paper-shadow))}
+.ticket{
+  position:relative;flex:1;display:flex;background:var(--pitch);border-radius:6px;color:#fdfdfb;
+  /* perforated tear seam punched out of the right side of the main piece */
+  -webkit-mask:radial-gradient(circle 6px at right 56px top -3px, transparent 96%, #000) ,
+    radial-gradient(circle 6px at right 56px bottom -3px, transparent 96%, #000);
+  -webkit-mask-composite:source-in; mask-composite:intersect;
+}
+.ticket .main{flex:1;padding:14px 14px 12px;display:flex;flex-direction:column;justify-content:space-between}
+.ticket .route{font-family:var(--font-display);font-size:26px;line-height:1.0;letter-spacing:.02em;text-transform:uppercase}
+.ticket .route .arrow{color:var(--volt);margin:0 6px}
+.ticket .meta{font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.85;margin-top:8px}
+.ticket .stub{
+  width:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  padding:10px 0;background:rgba(0,0,0,.16);
+  border-left:2px dashed rgba(253,253,251,.6);
+}
+.ticket .stub .punch{width:11px;height:11px;border-radius:50%;background:var(--paper)}
+.ticket .stub .seat{font-family:var(--font-mono);font-size:8px;font-weight:700;letter-spacing:.1em;writing-mode:vertical-rl;transform:rotate(180deg);opacity:.9}
+.ticket .barcode{height:26px;align-self:stretch;margin-top:10px;
+  background:repeating-linear-gradient(90deg,#fdfdfb 0 2px,transparent 2px 4px,#fdfdfb 4px 5px,transparent 5px 8px);opacity:.85;border-radius:1px}
+
+/* footer note */
+.footnote{
+  margin-top:30px;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;
+  color:var(--ink-faint);display:flex;gap:18px;flex-wrap:wrap;border-top:1px solid var(--paper-edge);padding-top:14px;
+}
+.footnote b{color:var(--ink-2)}
+.volt-note{background:var(--volt);color:var(--ink);padding:1px 6px;border-radius:3px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="eyebrow"><span class="dot"></span>40.4168° N, 3.7038° W · MADRID · MATERIAL LIBRARY §4</div>
+  <h1>Textures &amp; Materials</h1>
+  <p class="lede"><b>Analog texture on a modern grid — the structure stays sharp.</b> Every motif in the cookbook, rendered as real CSS/SVG and dropped onto an aligned grid. Tear them out, reuse them; the collage is warm, the bones are crisp.</p>
+
+  <div class="rule"></div>
+
+  <div class="grid">
+
+    <!-- 4.1 kraft -->
+    <div class="tile">
+      <span class="idx">§4.1</span>
+      <div class="demo"><div class="kraft-sw"></div></div>
+      <div class="cap"><div class="name">KRAFT PAPER BG</div><div class="how">Cream base + two warm radial glows + 5% SVG noise. The whole system sits on this.</div></div>
+    </div>
+
+    <!-- 4.2 washi -->
+    <div class="tile">
+      <span class="idx">§4.2</span>
+      <div class="demo"><div class="washi-stack">
+        <div class="washi t1"></div><div class="washi t2"></div><div class="washi t3"></div>
+      </div></div>
+      <div class="cap"><div class="name">WASHI TAPE · 3 WAYS</div><div class="how">Ocean / stamp-red / gold. Striped overlay + torn clip-path ends, always rotated.</div></div>
+    </div>
+
+    <!-- 4.3 torn -->
+    <div class="tile">
+      <span class="idx">§4.3</span>
+      <div class="demo"><div class="torn"><span class="tl">DECKLE</span></div></div>
+      <div class="cap"><div class="name">TORN / DECKLED EDGE</div><div class="how">Jagged clip-path with a faint under-layer drop — paper that's been ripped from a journal.</div></div>
+    </div>
+
+    <!-- 4.4 polaroid -->
+    <div class="tile">
+      <span class="idx">§4.4</span>
+      <div class="demo"><div class="polaroid">
+        <div class="mini-tape"></div>
+        <div class="photo"></div>
+        <div class="cap2">Bernabéu '25</div>
+      </div></div>
+      <div class="cap"><div class="name">MINI POLAROID</div><div class="how">SVG-gradient photo, Caveat caption, taped corner, -3.5° tilt. Never a broken img.</div></div>
+    </div>
+
+    <!-- 4.5 postage -->
+    <div class="tile">
+      <span class="idx">§4.5</span>
+      <div class="demo"><div class="postage"><div class="inner">
+        <div class="pic"></div>
+        <div class="val">€2</div>
+        <div class="ctry">ESPAÑA · CORREOS</div>
+      </div></div></div>
+      <div class="cap"><div class="name">POSTAGE PERFORATION</div><div class="how">Radial-gradient mask punches the perf holes around the edge — a true stamp silhouette.</div></div>
+    </div>
+
+    <!-- 4.6 ink stamp -->
+    <div class="tile">
+      <span class="idx">§4.6</span>
+      <div class="demo"><div class="stamp">
+        <div class="big">MADRID</div>
+        <div class="sm">ENTRY · ESP</div>
+        <div class="date">23 · 06 · 26</div>
+      </div></div>
+      <div class="cap"><div class="name">PASSPORT INK STAMP</div><div class="how">Red double border, rotated, multiply-blended so it reads as ink soaked into paper.</div></div>
+    </div>
+
+    <!-- 4.7 graticule light -->
+    <div class="tile">
+      <span class="idx">§4.7</span>
+      <div class="demo"><div class="gratic">
+        <svg viewBox="0 0 140 104" fill="none" preserveAspectRatio="none">
+          <ellipse cx="70" cy="52" rx="52" ry="46" stroke="rgba(20,89,140,.35)" stroke-width="1"/>
+          <ellipse cx="70" cy="52" rx="26" ry="46" stroke="rgba(20,89,140,.30)" stroke-width="1"/>
+          <line x1="18" y1="52" x2="122" y2="52" stroke="rgba(192,54,44,.45)" stroke-width="1"/>
+        </svg>
+      </div></div>
+      <div class="cap"><div class="name">GRATICULE · LIGHT</div><div class="how">Lat/long grid in faint ocean blue + curved SVG meridians = globe feel on kraft.</div></div>
+    </div>
+
+    <!-- 4.7 graticule navy -->
+    <div class="tile">
+      <span class="idx">§4.7</span>
+      <div class="demo"><div class="gratic navy">
+        <svg viewBox="0 0 140 104" fill="none" preserveAspectRatio="none">
+          <ellipse cx="70" cy="52" rx="52" ry="46" stroke="rgba(110,227,160,.30)" stroke-width="1"/>
+          <ellipse cx="70" cy="52" rx="26" ry="46" stroke="rgba(110,227,160,.26)" stroke-width="1"/>
+          <line x1="18" y1="52" x2="122" y2="52" stroke="rgba(205,255,61,.55)" stroke-width="1"/>
+        </svg>
+      </div></div>
+      <div class="cap"><div class="name">GRATICULE · NAVY</div><div class="how">Same grid inverted for the globe zone — green meridians, one volt equator spark.</div></div>
+    </div>
+
+    <!-- 4.8 route -->
+    <div class="tile wide">
+      <span class="idx">§4.8</span>
+      <div class="demo"><div class="routebox">
+        <svg viewBox="0 0 400 100" fill="none" width="100%">
+          <path d="M16 78 Q 200 -6 384 50" stroke="var(--stamp-red)" stroke-width="2.5" stroke-dasharray="1 9" stroke-linecap="round"/>
+          <circle cx="16" cy="78" r="5" fill="var(--stamp-red)"/>
+          <text x="6" y="98" font-family="Space Mono" font-size="11" font-weight="700" letter-spacing="1" fill="#8A7E68">MAD</text>
+          <text x="356" y="98" font-family="Space Mono" font-size="11" font-weight="700" letter-spacing="1" fill="#8A7E68">NRT</text>
+          <g transform="translate(384 50) rotate(28)">
+            <path d="M0 0 L-20 6 L-15 0 L-20 -6 Z M-15 0 L-26 0" fill="var(--ink)"/>
+            <path d="M-12 0 L-8 -9 L-5 -9 L-7 0 Z" fill="var(--ink)"/>
+          </g>
+        </svg>
+      </div></div>
+      <div class="cap"><div class="name">DASHED ROUTE + PLANE</div><div class="how">stroke-dasharray "1 9" round dots = the classic travel line; SVG plane lands at the endpoint. Madrid → Tokyo.</div></div>
+    </div>
+
+    <!-- 4.9 pitch -->
+    <div class="tile">
+      <span class="idx">§4.9</span>
+      <div class="demo"><div class="pitchbox">
+        <svg viewBox="0 0 150 104" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="2" width="100%" height="100%">
+          <rect x="6" y="6" width="138" height="92" rx="2"/>
+          <line x1="75" y1="6" x2="75" y2="98"/>
+          <circle cx="75" cy="52" r="22"/>
+          <circle cx="75" cy="52" r="2.5" fill="rgba(255,255,255,.85)" stroke="none"/>
+        </svg>
+      </div></div>
+      <div class="cap"><div class="name">PITCH MARKINGS</div><div class="how">White lines on pitch-green: box, halfway line, center circle + spot. Sport DNA, flat &amp; iconic.</div></div>
+    </div>
+
+    <!-- 4.10 soccer ball -->
+    <div class="tile">
+      <span class="idx">§4.10</span>
+      <div class="demo">
+        <svg width="92" height="92" viewBox="0 0 100 100">
+          <defs><clipPath id="ballclip"><circle cx="50" cy="50" r="46"/></clipPath></defs>
+          <circle cx="50" cy="50" r="46" fill="#fdfdfb" stroke="var(--ink)" stroke-width="2.5"/>
+          <g clip-path="url(#ballclip)">
+            <!-- center pentagon -->
+            <polygon points="50,34 65,45 59,63 41,63 35,45" fill="var(--ink)"/>
+            <!-- five outer (partial) pentagons -->
+            <polygon points="50,34 35,45 24,33 38,18 56,22" fill="var(--ink)"/>
+            <polygon points="65,45 59,63 73,76 88,62 80,42" fill="var(--ink)"/>
+            <polygon points="41,63 35,45 18,48 16,68 33,80" fill="var(--ink)"/>
+            <polygon points="59,63 41,63 33,80 50,92 67,80" fill="var(--ink)"/>
+            <polygon points="35,45 50,34 56,22 40,12 22,22" fill="#fdfdfb"/>
+            <!-- seams connecting center vertices outward -->
+            <g stroke="var(--ink)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="50" y1="34" x2="50" y2="14"/>
+              <line x1="65" y1="45" x2="83" y2="38"/>
+              <line x1="59" y1="63" x2="74" y2="76"/>
+              <line x1="41" y1="63" x2="26" y2="76"/>
+              <line x1="35" y1="45" x2="17" y2="38"/>
+            </g>
+          </g>
+          <circle cx="50" cy="50" r="46" fill="none" stroke="var(--ink)" stroke-width="2.5"/>
+        </svg>
+      </div>
+      <div class="cap"><div class="name">SOCCER BALL · B/W</div><div class="how">Flat STATIC iconic mark — inline SVG, black pentagons radiating from a center, thin seams. Never animated here; the hand-drawn fly-through is a Higgsfield asset (§8).</div></div>
+    </div>
+
+    <!-- 4.11 compass -->
+    <div class="tile">
+      <span class="idx">§4.11</span>
+      <div class="demo">
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="44" fill="none" stroke="var(--gold)" stroke-width="1.5"/>
+          <circle cx="50" cy="50" r="38" fill="none" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="1 4"/>
+          <polygon points="50,8 56,50 50,50" fill="var(--stamp-red)"/>
+          <polygon points="50,8 44,50 50,50" fill="#9a2a22"/>
+          <polygon points="50,92 56,50 50,50" fill="var(--ink)"/>
+          <polygon points="50,92 44,50 50,50" fill="var(--ink-2)"/>
+          <polygon points="92,50 50,44 50,50" fill="var(--ink-2)"/>
+          <polygon points="92,50 50,56 50,50" fill="var(--ink)"/>
+          <polygon points="8,50 50,44 50,50" fill="var(--ink)"/>
+          <polygon points="8,50 50,56 50,50" fill="var(--ink-2)"/>
+          <circle cx="50" cy="50" r="4" fill="var(--gold)"/>
+          <text x="50" y="6" text-anchor="middle" font-family="Anton" font-size="11" fill="var(--ink)">N</text>
+        </svg>
+      </div>
+      <div class="cap"><div class="name">COMPASS ROSE</div><div class="how">8-point star, gold degree ring, Anton "N". Cartography anchor for legends + nav.</div></div>
+    </div>
+
+    <!-- 4.12 pushpin / paperclip -->
+    <div class="tile">
+      <span class="idx">§4.12</span>
+      <div class="demo"><div class="pinclip">
+        <div class="pushpin"></div>
+        <div class="pushpin2"></div>
+        <svg class="clip" width="30" height="56" viewBox="0 0 30 56" fill="none">
+          <path d="M9 52 V14 a6 6 0 0 1 12 0 V44 a4 4 0 0 1-8 0 V18" stroke="#8c8c8c" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+        <span class="note-hand">pinned ✦</span>
+      </div></div>
+      <div class="cap"><div class="name">PUSHPIN + PAPERCLIP</div><div class="how">Radial-gradient pin heads with a highlight; SVG-path clip over the corner. Fixes photos down.</div></div>
+    </div>
+
+    <!-- 4.13 bunting -->
+    <div class="tile wide">
+      <span class="idx">§4.13</span>
+      <div class="demo"><div class="bunting">
+        <div class="bline"></div>
+        <div class="pennants">
+          <div class="pennant p1"></div><div class="pennant p2"></div><div class="pennant p3"></div>
+          <div class="pennant p4"></div><div class="pennant p5"></div><div class="pennant p6"></div>
+          <div class="pennant p7"></div>
+        </div>
+      </div></div>
+      <div class="cap"><div class="name">FLAG BUNTING</div><div class="how">String + clip-path triangle pennants cycling fusion colors. Tops a stadium header.</div></div>
+    </div>
+
+    <!-- ticket / boarding-pass stub -->
+    <div class="tile wide">
+      <span class="idx">§5</span>
+      <div class="demo"><div class="ticketbox"><div class="ticket">
+        <div class="main">
+          <div class="route">MAD<span class="arrow">→</span>NRT</div>
+          <div class="meta">GATE 7 · BOARDING 14:40 · ESP→JPN</div>
+          <div class="barcode"></div>
+        </div>
+        <div class="stub">
+          <span class="punch"></span>
+          <span class="seat">SEAT 23A</span>
+        </div>
+      </div></div></div>
+      <div class="cap"><div class="name">TICKET / BOARDING PASS</div><div class="how">THE signature motif — pitch-green stub, punched perforation + dashed tear seam, mono fields, fake barcode. Static here; the rip-off tear is the hero coded interaction (§7.1, Motion card).</div></div>
+    </div>
+
+    <!-- coffee ring -->
+    <div class="tile">
+      <span class="idx">§4 · extra</span>
+      <div class="demo"><div class="coffeebox"><div class="cring"></div></div></div>
+      <div class="cap"><div class="name">COFFEE-RING STAIN</div><div class="how">Faint brown ring (border + inset shadow) with a drip arc. The accidental, lived-in detail.</div></div>
+    </div>
+
+  </div>
+
+  <div class="footnote">
+    <span><b>WHY:</b> Anton = stadium banner · Space Mono = coordinates &amp; labels · Caveat = margin notes.</span>
+    <span><b>SPARK:</b> volt appears <span class="volt-note">once</span> — the navy graticule equator. Never two.</span>
+    <span><b>STRUCTURE:</b> a 4-col grid holds the collage. Texture is warm; the bones stay sharp.</span>
+  </div>
+
+</div>
+</body>
+</html>

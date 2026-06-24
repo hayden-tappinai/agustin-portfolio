@@ -1,0 +1,464 @@
+<!-- @dsCard group="Brand" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agustins Portfolio — Brand / Identity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&family=Permanent+Marker&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F2E8CF; --paper-2:#E8D9B5; --paper-edge:#CDB789; --paper-line:#C7B488;
+    --paper-shadow:rgba(58,42,18,0.18);
+    --ink:#1C1712; --ink-2:#4A4034; --ink-faint:#8A7E68; --navy:#0A1422; --navy-2:#14233A;
+    --pitch:#1E7A46; --globe-green:#3EA96B; --ocean:#14598C; --stamp-red:#C0362C; --gold:#C8992F;
+    --volt:#CDFF3D; --volt-deep:#A6D400;
+    --font-display:"Anton","Arial Narrow",sans-serif;
+    --font-body:"Plus Jakarta Sans",system-ui,sans-serif;
+    --font-hand:"Caveat",cursive; --font-marker:"Permanent Marker",cursive;
+    --font-mono:"Space Mono",ui-monospace,monospace;
+    --ease-thunk:cubic-bezier(.18,.89,.32,1.28); --ease-paper:cubic-bezier(.2,.7,.2,1);
+    --ease-draw:cubic-bezier(.65,0,.35,1);
+    --t-micro:120ms; --t-quick:240ms; --t-base:400ms; --t-tear:520ms; --t-slow:700ms;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  body{
+    background-color:#F2E8CF;
+    background-image:
+      radial-gradient(120% 130% at 0% 0%, rgba(255,250,235,0.55) 0%, transparent 42%),
+      radial-gradient(120% 130% at 100% 100%, rgba(150,118,64,0.20) 0%, transparent 55%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    font-family:var(--font-body);
+    color:var(--ink);
+    padding:48px;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .stage{max-width:1100px;margin:0 auto;position:relative}
+
+  /* ── Flag bunting across the very top ───────────────────────────── */
+  .bunting{position:relative;height:46px;margin-bottom:30px}
+  .bunting .string{
+    position:absolute;top:6px;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,transparent,var(--ink-2) 6%,var(--ink-2) 94%,transparent);
+    transform-origin:center;
+  }
+  .bunting .pennants{display:flex;justify-content:space-between;gap:0;padding:0 4px}
+  .pennant{
+    width:34px;height:40px;
+    clip-path:polygon(0 0,100% 0,50% 100%);
+    transform-origin:top center;
+    transform:rotate(-1.5deg);
+    box-shadow:0 4px 6px rgba(58,42,18,.14);
+  }
+  /* bunting sits STATIC — sway was a decorative loop; §7 de-emphasizes it.
+     A faint alternating tilt gives string-on-a-wall realism without animating. */
+  .pennant:nth-child(even){transform:rotate(1.5deg)}
+  /* alternating fusion colors */
+  .pennant:nth-child(6n+1){background:var(--pitch)}
+  .pennant:nth-child(6n+2){background:var(--ocean)}
+  .pennant:nth-child(6n+3){background:var(--stamp-red)}
+  .pennant:nth-child(6n+4){background:var(--gold)}
+  .pennant:nth-child(6n+5){background:var(--globe-green)}
+  .pennant:nth-child(6n+6){background:var(--navy)}
+  .note{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--ink-faint)}
+
+  /* ── Passport-title masthead ────────────────────────────────────── */
+  .eyebrow{
+    font-family:var(--font-mono);font-weight:700;font-size:12px;
+    text-transform:uppercase;letter-spacing:.14em;color:var(--ink-faint);
+    display:flex;align-items:center;gap:10px;margin-bottom:10px;
+  }
+  .eyebrow .pip{width:8px;height:8px;border-radius:50%;background:var(--stamp-red);
+    box-shadow:0 0 0 3px rgba(192,54,44,.18)}
+
+  .masthead{position:relative;padding-bottom:6px;margin-bottom:8px}
+  /* HERO wordmark — the single largest display: lh 0.98 (the floor, never tighter),
+     OPEN positive tracking so the condensed Anton breathes. §2 revision. */
+  .wordmark{
+    font-family:var(--font-display);text-transform:uppercase;
+    font-size:clamp(72px,13vw,184px);line-height:.98;letter-spacing:0.015em;
+    color:var(--ink);position:relative;display:inline-block;
+  }
+  /* the single VOLT spark — one highlight swipe behind the accented Í region */
+  .wordmark .swipe{position:relative;z-index:1}
+  .wordmark .swipe::before{
+    content:"";position:absolute;left:-2px;right:-4px;bottom:8%;height:34%;
+    background:var(--volt);z-index:-1;transform:skewX(-9deg) rotate(-1.2deg);
+    border-radius:2px;opacity:.92;
+    box-shadow:0 1px 0 rgba(166,212,0,.4);
+  }
+  .jersey{
+    font-family:var(--font-mono);font-weight:700;font-size:clamp(22px,3vw,40px);
+    vertical-align:super;color:var(--pitch);letter-spacing:.01em;
+    margin-left:10px;position:relative;top:-.2em;
+  }
+  .coords{
+    font-family:var(--font-mono);font-weight:700;font-size:14px;
+    letter-spacing:.1em;color:var(--ink-2);margin-top:14px;
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  }
+  .coords .tag{background:var(--paper-2);border:1px solid var(--paper-edge);
+    padding:5px 11px;border-radius:3px;text-transform:uppercase;font-size:11.5px}
+
+  .tagline{
+    font-family:var(--font-hand);font-weight:700;font-size:clamp(30px,4vw,46px);
+    color:var(--pitch);transform:rotate(-2deg);margin:18px 0 4px;line-height:1.02;
+    display:inline-block;
+  }
+
+  /* ── SIGNATURE: ADMIT ONE ticket-stub in the identity lockup — §5 ──
+     The ticket / boarding-pass is THE signature motif. Here it's a small
+     torn match-ticket tag: perforated tear seam (notch + dashed line),
+     punched hole, Space Mono fields, pitch-green fill. Static in this
+     identity card; the rip-off interaction lives on the motion card. */
+  .lockup{display:flex;align-items:center;gap:18px;margin:22px 0 4px;flex-wrap:wrap}
+  .ticket{
+    position:relative;display:inline-flex;align-items:stretch;
+    background:var(--pitch);color:#F2E8CF;border-radius:7px;
+    box-shadow:0 8px 18px var(--paper-shadow);transform:rotate(-1.5deg);
+    font-family:var(--font-mono);overflow:visible;
+  }
+  /* the perforated tear seam: notches punched into both edges + a dashed line */
+  .ticket .seam{
+    position:relative;width:0;border-left:2px dashed rgba(242,232,207,.6);
+    margin:0 2px;
+  }
+  .ticket .seam::before,.ticket .seam::after{
+    content:"";position:absolute;left:-7px;width:12px;height:12px;border-radius:50%;
+    background:var(--paper);box-shadow:0 0 0 1px var(--paper-edge) inset;
+  }
+  .ticket .seam::before{top:-6px}
+  .ticket .seam::after{bottom:-6px}
+  .ticket .stub{
+    display:flex;flex-direction:column;justify-content:center;gap:2px;
+    padding:11px 14px;
+  }
+  .ticket .stub.main{padding-right:12px}
+  .ticket .admit{
+    font-weight:700;font-size:14px;letter-spacing:.18em;text-transform:uppercase;
+    line-height:1.1;
+  }
+  .ticket .row{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+    color:rgba(242,232,207,.82);line-height:1.5}
+  .ticket .stub.right{align-items:center;text-align:center;gap:4px;padding:11px 13px}
+  /* punched hole on the tear-off stub */
+  .ticket .hole{width:14px;height:14px;border-radius:50%;
+    background:var(--paper);box-shadow:0 0 0 1.5px rgba(242,232,207,.6) inset}
+  /* arrow stays cream — NOT volt; the single volt spark is the swipe under "Í" only (§1) */
+  .ticket .arrow{font-size:16px;line-height:1;color:rgba(242,232,207,.92)}
+  .ticket .no{font-size:9px;letter-spacing:.14em;color:rgba(242,232,207,.7)}
+  .position{
+    font-family:var(--font-body);font-weight:500;font-size:18px;line-height:1.55;
+    color:var(--ink-2);max-width:620px;margin-top:14px;
+  }
+  .position b{color:var(--ink);font-weight:800}
+
+  /* a passport stamp dropped near the masthead */
+  .stamp{
+    position:absolute;top:18px;right:6px;width:128px;height:128px;
+    font-family:var(--font-mono);color:var(--stamp-red);
+    border:2.5px solid var(--stamp-red);border-radius:50%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;transform:rotate(-13deg);opacity:.85;mix-blend-mode:multiply;
+    letter-spacing:.06em;text-transform:uppercase;
+    box-shadow:inset 0 0 0 3px rgba(192,54,44,.35);
+  }
+  .stamp .big{font-weight:700;font-size:13px;letter-spacing:.12em;margin:3px 0}
+  .stamp .sm{font-size:8.5px;letter-spacing:.1em;line-height:1.5}
+  .stamp .star{font-size:14px;margin-bottom:1px}
+
+  /* ── divider ─────────────────────────────────────────────────────── */
+  .rule{height:1px;background:repeating-linear-gradient(90deg,var(--paper-edge) 0 8px,transparent 8px 16px);
+    margin:34px 0 30px;opacity:.8}
+
+  /* ── THE FUSION lockup ──────────────────────────────────────────── */
+  .section-h{font-family:var(--font-display);text-transform:uppercase;
+    font-size:30px;letter-spacing:.02em;color:var(--ink);line-height:1.1;
+    display:flex;align-items:baseline;gap:14px}
+  .section-h .meta{font-family:var(--font-mono);font-weight:700;font-size:11px;
+    letter-spacing:.12em;color:var(--ink-faint)}
+
+  .chips{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:20px}
+  .chip{
+    background:var(--paper-2);border-radius:8px;padding:18px 20px;
+    border-left:6px solid var(--chip,#000);position:relative;overflow:hidden;
+    box-shadow:0 6px 14px var(--paper-shadow);
+  }
+  .chip::after{content:"";position:absolute;inset:0;
+    background-image:linear-gradient(rgba(199,180,136,.18) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(199,180,136,.18) 1px,transparent 1px);
+    background-size:22px 22px;pointer-events:none;opacity:.5}
+  .chip .ico{font-size:22px;line-height:1}
+  .chip .label{font-family:var(--font-display);text-transform:uppercase;
+    font-size:21px;letter-spacing:.02em;color:var(--chip);margin:6px 0 4px;line-height:1.05}
+  .chip .desc{font-family:var(--font-body);font-weight:500;font-size:13.5px;
+    color:var(--ink-2);line-height:1.45}
+  .chip .num{position:absolute;top:12px;right:16px;font-family:var(--font-mono);
+    font-weight:700;font-size:11px;color:var(--chip);opacity:.55;letter-spacing:.1em}
+  .chip.cup{--chip:var(--pitch)}
+  .chip.map{--chip:var(--ocean)}
+  .chip.book{--chip:var(--stamp-red)}
+  .chip.tech{--chip:var(--volt-deep)}
+
+  /* ── Motif vocabulary strip ─────────────────────────────────────── */
+  .vocab{
+    margin-top:30px;background:var(--paper-2);border:1px dashed var(--paper-edge);
+    border-radius:10px;padding:24px 22px 20px;position:relative;
+  }
+  .vocab-grid{display:flex;align-items:flex-end;justify-content:space-between;
+    gap:14px;flex-wrap:wrap}
+  .motif{display:flex;flex-direction:column;align-items:center;gap:9px;flex:1;min-width:120px}
+  .motif svg{display:block}
+  .motif .cap{font-family:var(--font-mono);font-weight:700;font-size:9.5px;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);text-align:center}
+
+  /* washi tape sample */
+  .washi-sample{position:relative;width:120px;height:36px;
+    background:
+      repeating-linear-gradient(46deg, rgba(255,255,255,.22) 0 7px, transparent 7px 14px),
+      rgba(20,89,140,.55);
+    box-shadow:0 2px 4px rgba(0,0,0,.14);
+    clip-path:polygon(3% 0,97% 5%,100% 95%,0 100%);transform:rotate(-5deg)}
+
+  /* ── VOICE note ─────────────────────────────────────────────────── */
+  .voice{display:flex;gap:22px;align-items:stretch;margin-top:30px;flex-wrap:wrap}
+  .voice-card{flex:1;min-width:280px;background:var(--navy);color:#EDE6D2;
+    border-radius:10px;padding:24px 26px;position:relative;overflow:hidden;
+    box-shadow:0 14px 28px var(--paper-shadow)}
+  .voice-card::before{content:"";position:absolute;inset:0;
+    background-image:linear-gradient(rgba(110,227,160,.10) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(110,227,160,.10) 1px,transparent 1px);
+    background-size:40px 40px;pointer-events:none}
+  .voice-card .vh{font-family:var(--font-mono);font-weight:700;font-size:11px;
+    letter-spacing:.14em;text-transform:uppercase;color:#9FB0C2;margin-bottom:10px;
+    position:relative}
+  .voice-card .vwords{font-family:var(--font-display);text-transform:uppercase;
+    font-size:clamp(26px,4vw,40px);line-height:1.08;letter-spacing:.02em;color:#fff;
+    position:relative}
+  .voice-card .vwords .amp{color:var(--gold)}
+  .voice-card .vsub{font-family:var(--font-body);font-weight:500;font-size:13.5px;
+    color:#B9C4CF;margin-top:12px;line-height:1.5;position:relative}
+
+  .marker-note{flex:0 0 240px;min-width:220px;display:flex;flex-direction:column;
+    justify-content:center;align-items:center;gap:8px;text-align:center;
+    border:2px dashed var(--paper-edge);border-radius:10px;padding:22px;position:relative}
+  .marker-note .mk{font-family:var(--font-marker);font-size:34px;color:var(--stamp-red);
+    line-height:.95;transform:rotate(-3deg)}
+  .marker-note .hand{font-family:var(--font-hand);font-weight:600;font-size:22px;
+    color:var(--ink-2);transform:rotate(-1.5deg)}
+
+  /* footer rationale */
+  .footer{margin-top:30px;display:flex;justify-content:space-between;gap:16px;
+    flex-wrap:wrap;align-items:center}
+  .footer .doc{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--ink-faint);line-height:1.7;max-width:640px}
+  .footer .doc b{color:var(--ink-2)}
+  .barcode{height:38px;width:170px;background:repeating-linear-gradient(90deg,
+    var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 9px);
+    opacity:.85;border-radius:2px}
+
+  /* paperclip over masthead corner */
+  .clip{position:absolute;top:-8px;left:24px;transform:rotate(8deg);z-index:5}
+</style>
+</head>
+<body>
+  <div class="stage">
+
+    <!-- Flag bunting tops the header — §4.13. Tone-setter: this is a match programme. -->
+    <div class="bunting" aria-hidden="true">
+      <div class="string"></div>
+      <div class="pennants">
+        <span class="pennant"></span><span class="pennant"></span><span class="pennant"></span>
+        <span class="pennant"></span><span class="pennant"></span><span class="pennant"></span>
+        <span class="pennant"></span><span class="pennant"></span><span class="pennant"></span>
+        <span class="pennant"></span><span class="pennant"></span><span class="pennant"></span>
+        <span class="pennant"></span><span class="pennant"></span><span class="pennant"></span>
+        <span class="pennant"></span><span class="pennant"></span><span class="pennant"></span>
+        <span class="pennant"></span><span class="pennant"></span><span class="pennant"></span>
+        <span class="pennant"></span>
+      </div>
+    </div>
+
+    <!-- ── MASTHEAD: passport title page × match-programme cover ── -->
+    <div class="masthead">
+      <div class="eyebrow"><span class="pip"></span>BRAND&nbsp;/&nbsp;IDENTITY · THE COVER · EST. 2026</div>
+
+      <div class="wordmark">AGUST<span class="swipe">Í</span>N<span class="jersey">10</span></div>
+
+      <div class="coords">
+        <span class="tag">40.4168° N, 3.7038° W</span>
+        <span>HOME · MADRID, ESP</span>
+      </div>
+
+      <!-- identity lockup: handwritten tagline + the SIGNATURE ticket-stub (§5) -->
+      <div class="lockup">
+        <span class="tagline">footy &amp; far-flung places</span>
+
+        <!-- ADMIT ONE ticket — the signature boarding-pass motif, static here -->
+        <div class="ticket" aria-label="Admit one — Agustin ticket stub">
+          <div class="stub main">
+            <span class="admit">Admit One</span>
+            <span class="row">Agustín · No. 10</span>
+            <span class="row">Bernabéu → Anywhere</span>
+          </div>
+          <div class="seam" aria-hidden="true"></div>
+          <div class="stub right">
+            <span class="hole" aria-hidden="true"></span>
+            <span class="arrow" aria-hidden="true">✈</span>
+            <span class="no">AGU·10</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="position">
+        A <b>young guy who's seen the world and isn't shy about it</b> — chasing matchdays
+        from the Bernabéu to wherever the next stamp lands, and turning every trip into a
+        page worth keeping.
+      </p>
+
+      <!-- passport stamp dropped on the title page — §4.6 -->
+      <div class="stamp" aria-hidden="true">
+        <span class="star">✦</span>
+        <span class="big">ADMITTED</span>
+        <span class="sm">PASSPORT NO. AGU·10<br/>MADRID 23·06·26<br/>VALID — EVERYWHERE</span>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <!-- ── THE FUSION ── -->
+    <div class="section-h">THE&nbsp;FUSION <span class="meta">// FOUR WORLDS, ONE SKETCHBOOK</span></div>
+    <div class="chips">
+      <div class="chip cup">
+        <span class="num">01</span><span class="ico">⚽</span>
+        <div class="label">World Cup / Sport</div>
+        <div class="desc">Stadium-banner type, jersey numbers, pitch lines, trophy gold — the roar of matchday.</div>
+      </div>
+      <div class="chip map">
+        <span class="num">02</span><span class="ico">🧭</span>
+        <div class="label">Travel / Cartography</div>
+        <div class="desc">Graticule lat/long, dotted route lines, compass rose, coordinates as captions.</div>
+      </div>
+      <div class="chip book">
+        <span class="num">03</span><span class="ico">✂</span>
+        <div class="label">Scrapbook / Journal</div>
+        <div class="desc">Taped Polaroids, washi tape, torn kraft, ink stamps, handwritten margin notes.</div>
+      </div>
+      <div class="chip tech">
+        <span class="num">04</span><span class="ico">⚡</span>
+        <div class="label">Tech Spark</div>
+        <div class="desc">A sharp modern grid under the collage, generous space, one electric-lime note.</div>
+      </div>
+    </div>
+
+    <!-- ── MOTIF VOCABULARY STRIP (real inline SVG / CSS) ── -->
+    <div class="vocab">
+      <div class="section-h" style="font-size:22px;margin-bottom:18px">
+        MOTIF&nbsp;VOCABULARY <span class="meta">// THE PARTS BIN</span>
+      </div>
+      <div class="vocab-grid">
+
+        <!-- b/w soccer ball — §4.10 -->
+        <div class="motif">
+          <svg width="68" height="68" viewBox="0 0 68 68" aria-hidden="true">
+            <circle cx="34" cy="34" r="31" fill="#fff" stroke="#1C1712" stroke-width="2"/>
+            <polygon points="34,20 43,27 39,38 29,38 25,27" fill="#1C1712"/>
+            <path d="M34 20 L34 6 M43 27 L56 22 M39 38 L48 50 M29 38 L20 50 M25 27 L12 22"
+                  stroke="#1C1712" stroke-width="1.6" fill="none"/>
+            <path d="M34 6 a28 28 0 0 1 22 16 M48 50 a28 28 0 0 1 -28 0 M12 22 a28 28 0 0 1 22 -16"
+                  stroke="#1C1712" stroke-width="1.2" fill="none" opacity=".5"/>
+          </svg>
+          <div class="cap">B/W BALL</div>
+        </div>
+
+        <!-- compass rose — §4.11 -->
+        <div class="motif">
+          <svg width="68" height="68" viewBox="0 0 68 68" aria-hidden="true">
+            <circle cx="34" cy="34" r="30" fill="none" stroke="var(--ink-faint)" stroke-width="1" stroke-dasharray="1 4"/>
+            <polygon points="34,6 38,34 34,34" fill="var(--stamp-red)"/>
+            <polygon points="34,62 30,34 34,34" fill="var(--ink)"/>
+            <polygon points="6,34 34,30 34,34" fill="var(--ink-2)"/>
+            <polygon points="62,34 34,38 34,34" fill="var(--ink-2)"/>
+            <polygon points="34,34 50,18 44,28" fill="var(--gold)" opacity=".8"/>
+            <polygon points="34,34 18,50 24,40" fill="var(--gold)" opacity=".8"/>
+            <circle cx="34" cy="34" r="3" fill="var(--ink)"/>
+            <text x="34" y="16" text-anchor="middle" font-family="Anton" font-size="11" fill="var(--ink)">N</text>
+          </svg>
+          <div class="cap">COMPASS</div>
+        </div>
+
+        <!-- passport stamp — §4.6 -->
+        <div class="motif">
+          <svg width="68" height="68" viewBox="0 0 68 68" aria-hidden="true" style="transform:rotate(-10deg)">
+            <circle cx="34" cy="34" r="28" fill="none" stroke="var(--stamp-red)" stroke-width="2"/>
+            <circle cx="34" cy="34" r="23" fill="none" stroke="var(--stamp-red)" stroke-width="1" stroke-dasharray="2 3"/>
+            <text x="34" y="30" text-anchor="middle" font-family="Space Mono" font-weight="700" font-size="8" letter-spacing="1" fill="var(--stamp-red)">ENTRY</text>
+            <text x="34" y="42" text-anchor="middle" font-family="Space Mono" font-size="6.5" fill="var(--stamp-red)">MAD · LIS</text>
+          </svg>
+          <div class="cap">STAMP</div>
+        </div>
+
+        <!-- washi tape — §4.2 -->
+        <div class="motif">
+          <div class="washi-sample"></div>
+          <div class="cap">WASHI TAPE</div>
+        </div>
+
+        <!-- dashed route line + plane — §4.8 -->
+        <div class="motif">
+          <svg width="120" height="56" viewBox="0 0 120 56" fill="none" aria-hidden="true">
+            <path d="M8 44 Q 60 -6 112 26" stroke="var(--stamp-red)" stroke-width="2.5"
+                  stroke-dasharray="1 9" stroke-linecap="round"/>
+            <circle cx="8" cy="44" r="4" fill="var(--stamp-red)"/>
+            <text x="108" y="22" font-size="15">✈</text>
+          </svg>
+          <div class="cap">ROUTE DASH</div>
+        </div>
+
+        <!-- small flag -->
+        <div class="motif">
+          <svg width="56" height="64" viewBox="0 0 56 64" aria-hidden="true">
+            <line x1="10" y1="4" x2="10" y2="60" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M10 6 L46 12 L40 21 L46 30 L10 24 Z" fill="var(--pitch)"/>
+            <circle cx="10" cy="4" r="3" fill="var(--gold)"/>
+          </svg>
+          <div class="cap">FLAG</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── VOICE + marker callout ── -->
+    <div class="voice">
+      <div class="voice-card">
+        <div class="vh">● THE VOICE — HOW AGUSTÍN SOUNDS</div>
+        <div class="vwords">BOLD. CONFIDENT.<br/>ADVENTUROUS <span class="amp">&amp;</span> PERSONAL.</div>
+        <div class="vsub">Speaks first-person and earned-it. Never a brochure — a mate showing you
+          the photos. Navy here = cohesion with the interactive globe at the site's core.</div>
+      </div>
+      <div class="marker-note">
+        <div class="mk">¡VAMOS!</div>
+        <div class="hand">one marker shout per page — used here, then put away.</div>
+      </div>
+    </div>
+
+    <!-- ── self-documenting footer ── -->
+    <div class="footer">
+      <div class="doc">
+        <b>WHY:</b> Anton = the stadium banner (the wordmark roar) — open tracking + lh 0.98 so it
+        BREATHES. · Space Mono "10" + coords = jersey number meets passport data. · Caveat tagline =
+        the human margin note. · <b>ADMIT ONE ticket = the signature boarding-pass motif</b> (recurs
+        as button/nav/tag site-wide). · <b>VOLT USED ONCE</b> — the lime swipe under the "Í".
+        Bunting + ball sit STATIC (drawn motion → Higgsfield). Everything else stays warm &amp; earthy.
+      </div>
+      <div class="barcode" aria-hidden="true" title="boarding-pass barcode motif"></div>
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!-- @dsCard group="Signature" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agustins Portfolio — Destination / Country-Story Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&family=Permanent+Marker&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F2E8CF; --paper-2:#E8D9B5; --paper-edge:#CDB789; --paper-line:#C7B488;
+  --paper-shadow:rgba(58,42,18,0.18);
+  --ink:#1C1712; --ink-2:#4A4034; --ink-faint:#8A7E68; --navy:#0A1422; --navy-2:#14233A;
+  --pitch:#1E7A46; --globe-green:#3EA96B; --ocean:#14598C; --stamp-red:#C0362C; --gold:#C8992F;
+  --volt:#CDFF3D; --volt-deep:#A6D400;
+  --font-display:"Anton","Arial Narrow",sans-serif;
+  --font-body:"Plus Jakarta Sans",system-ui,sans-serif;
+  --font-hand:"Caveat",cursive; --font-marker:"Permanent Marker",cursive;
+  --font-mono:"Space Mono",ui-monospace,monospace;
+  --ease-thunk:cubic-bezier(.18,.89,.32,1.28); --ease-paper:cubic-bezier(.2,.7,.2,1);
+  --ease-draw:cubic-bezier(.65,0,.35,1);
+  --t-micro:120ms; --t-quick:240ms; --t-base:400ms; --t-tear:520ms; --t-slow:700ms;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  background-color:#F2E8CF;
+  background-image:
+    radial-gradient(120% 130% at 0% 0%, rgba(255,250,235,0.55) 0%, transparent 42%),
+    radial-gradient(120% 130% at 100% 100%, rgba(150,118,64,0.20) 0%, transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  font-family:var(--font-body); color:var(--ink); padding:48px;
+}
+.stage{max-width:1100px;margin:0 auto}
+
+/* ---- header ---- */
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:14px;flex-wrap:wrap}
+.eyebrow{font-family:var(--font-mono);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-faint)}
+.eyebrow .dot{color:var(--stamp-red)}
+.head h1{font-family:var(--font-display);text-transform:uppercase;font-size:46px;line-height:1.06;letter-spacing:.02em;color:var(--ink);margin-top:8px}
+.head .right{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--ink-faint);text-align:right;text-transform:uppercase}
+
+/* ---- the journal page (torn kraft, rotated, gridded) ---- */
+.page-wrap{position:relative;margin-top:8px}
+.page{
+  position:relative;background:var(--paper-2);
+  border-radius:2px;
+  padding:46px 52px 56px;
+  box-shadow:0 22px 48px var(--paper-shadow), 0 2px 0 var(--paper-edge);
+  transform:rotate(-1.1deg);
+  background-image:
+    /* faint graticule (travel cartography) */
+    linear-gradient(rgba(20,89,140,.09) 1px,transparent 1px),
+    linear-gradient(90deg, rgba(20,89,140,.09) 1px,transparent 1px);
+  background-size:46px 46px;
+  /* torn top + bottom deckle */
+  clip-path:polygon(
+    0 1.6%,5% .4%,11% 1.4%,18% .3%,26% 1.5%,34% .5%,43% 1.6%,52% .4%,61% 1.4%,70% .4%,79% 1.5%,88% .5%,95% 1.3%,100% .4%,
+    100% 96.5%,95% 98%,89% 96.4%,82% 98.2%,74% 96.5%,66% 98.2%,58% 96.5%,50% 98.2%,42% 96.6%,34% 98.2%,26% 96.6%,18% 98.2%,11% 96.7%,5% 98.2%,0 96.8%);
+}
+.under-edge{position:absolute;inset:6px -4px -6px 6px;background:var(--paper-edge);border-radius:2px;transform:rotate(-1.1deg);z-index:-1;opacity:.8}
+
+/* ruled margin line — left, like a real notebook */
+.margin-rule{position:absolute;top:0;bottom:0;left:38px;width:2px;background:rgba(192,54,44,.32)}
+.page-inner{position:relative;padding-left:26px}
+
+/* grid that holds the collage down */
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:start;margin-top:18px}
+
+/* ---- country title block ---- */
+.country{position:relative}
+.flagchip{display:inline-flex;flex-direction:column;width:54px;height:36px;border-radius:3px;overflow:hidden;box-shadow:0 2px 5px var(--paper-shadow);vertical-align:middle}
+.flagchip .stripe{width:100%}
+.flagchip .red{background:#C60B1E;flex:1}
+.flagchip .gold{background:#FFC400;flex:2;position:relative}
+.flagchip .gold:after{content:"";position:absolute;left:11px;top:50%;transform:translateY(-50%);width:7px;height:11px;background:#AD1519;border-radius:1px;opacity:.85}
+.iso{font-family:var(--font-mono);font-weight:700;font-size:13px;letter-spacing:.18em;color:var(--ink-2);border:1.5px solid var(--ink-2);padding:4px 8px;border-radius:3px;margin-left:12px;vertical-align:middle}
+.titlerow{display:flex;align-items:center;gap:4px;margin-bottom:2px}
+.country h2{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(56px,7.6vw,94px);line-height:.98;letter-spacing:.015em;color:var(--ink)}
+.country h2 .sub{display:block;font-size:.42em;color:var(--ink-2);letter-spacing:.03em;line-height:1.05;margin-top:10px}
+.coords{font-family:var(--font-mono);font-weight:700;font-size:13px;letter-spacing:.08em;color:var(--ocean);margin-top:14px;text-transform:uppercase}
+.coords .pin{color:var(--stamp-red)}
+
+/* ---- handwritten story ---- */
+.story{font-family:var(--font-hand);font-weight:600;font-size:29px;line-height:1.32;color:var(--ink-2);margin-top:22px;max-width:30ch}
+.story .hi{color:var(--ink);text-decoration:underline;text-decoration-color:rgba(200,153,47,.7);text-decoration-thickness:2px;text-underline-offset:3px}
+
+/* the single VOLT spark — VISITED ticket-stub tag (signature motif; tears off along its seam) */
+.visited{position:relative;display:inline-flex;align-items:center;gap:9px;margin-top:24px;background:var(--ink);color:var(--volt);
+  font-family:var(--font-mono);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  padding:9px 16px 9px 26px;border-radius:4px;transform:rotate(-2deg);box-shadow:0 4px 12px rgba(0,0,0,.22)}
+/* ticket-stub tear seam (left): a punched circle + a dashed vertical perforation */
+.visited:before{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:9px;height:9px;border-radius:50%;
+  background:var(--paper-2);box-shadow:inset 0 1px 2px rgba(0,0,0,.45)}
+.visited:after{content:"";position:absolute;left:20px;top:6px;bottom:6px;width:0;border-left:2px dotted rgba(205,255,61,.45)}
+.visited .pulse{width:8px;height:8px;border-radius:50%;background:var(--volt);box-shadow:0 0 0 0 rgba(205,255,61,.7);animation:pulse 2.6s var(--ease-paper) infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(205,255,61,.65)}70%{box-shadow:0 0 0 9px rgba(205,255,61,0)}100%{box-shadow:0 0 0 0 rgba(205,255,61,0)}}
+
+/* ---- scoreboard / stat line (Space Mono) ---- */
+.stats{margin-top:26px;background:var(--navy);color:#EAF1EC;border-radius:5px;padding:14px 18px;display:flex;flex-wrap:wrap;gap:18px 26px;align-items:center;box-shadow:0 8px 20px rgba(10,20,34,.3);
+  background-image:linear-gradient(rgba(110,227,160,.06) 1px,transparent 1px);background-size:100% 8px}
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat .lab{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.16em;color:#7E93A6;text-transform:uppercase}
+.stat .val{font-family:var(--font-display);font-size:26px;line-height:1.04;letter-spacing:.02em}
+.stat .val.score em{font-style:normal;color:var(--gold)}
+.stat .val.live{color:var(--volt)}
+.stats .sep{width:1px;align-self:stretch;background:rgba(255,255,255,.12)}
+
+/* ---- polaroid ---- */
+.col-right{position:relative;padding-top:8px}
+.polaroid{background:#fdfdfb;padding:12px 12px 48px;box-shadow:0 16px 30px var(--paper-shadow);transform:rotate(2.4deg);position:relative;width:100%;max-width:320px;margin-left:auto}
+.polaroid .photo{aspect-ratio:1/1;overflow:hidden;border-radius:1px;display:block}
+.polaroid .cap{font-family:var(--font-hand);font-weight:600;font-size:25px;color:var(--ink-2);position:absolute;bottom:9px;left:16px;right:14px;line-height:1.05}
+
+/* washi on polaroid corner */
+.washi{position:absolute;width:128px;height:34px;
+  background:
+    repeating-linear-gradient(46deg, rgba(255,255,255,.22) 0 7px, transparent 7px 14px),
+    var(--tape, rgba(20,89,140,.55));
+  box-shadow:0 2px 4px rgba(0,0,0,.14);
+  clip-path:polygon(3% 0,97% 5%,100% 95%,0 100%);}
+
+/* pushpin */
+.pushpin{position:absolute;width:18px;height:18px;border-radius:50%;
+  background:radial-gradient(circle at 33% 30%, #f6a39b 0 18%, var(--stamp-red) 55%, #7c1f18 100%);
+  box-shadow:0 5px 7px rgba(0,0,0,.28);z-index:6}
+.pushpin:after{content:"";position:absolute;left:50%;top:60%;width:2px;height:11px;background:rgba(0,0,0,.32);transform:translateX(-50%) rotate(6deg)}
+
+/* passport stamp */
+.stamp{position:absolute;font-family:var(--font-mono);color:var(--stamp-red);
+  border:2.5px solid var(--stamp-red);border-radius:50%;width:124px;height:124px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  transform:rotate(-15deg);opacity:.82;mix-blend-mode:multiply;letter-spacing:.05em;text-transform:uppercase;
+  box-shadow:inset 0 0 0 3px rgba(192,54,44,.32);line-height:1.25}
+.stamp .big{font-weight:700;font-size:13px;letter-spacing:.1em}
+.stamp .sm{font-size:8.5px;letter-spacing:.08em}
+.stamp .star{font-size:14px}
+
+/* dashed route line arriving from a previous city */
+.route{position:absolute;top:-22px;left:-10px;width:300px;height:90px;pointer-events:none}
+.route .arrive{font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;fill:var(--ink-faint);text-transform:uppercase}
+
+/* compass micro legend, bottom — cartography note */
+.footrow{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-top:30px;flex-wrap:wrap}
+.legend{display:flex;gap:18px;align-items:center;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase}
+.legend i{font-style:normal}
+.legend .v{color:var(--volt-deep)}
+.legend .r{color:var(--stamp-red)}
+
+/* ticket back-to-globe control — boarding-pass stub (THE signature motif) */
+.ticket-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.ticket{position:relative;display:inline-flex;align-items:center;gap:14px;background:var(--pitch);color:#F2E8CF;
+  font-family:var(--font-mono);font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  padding:13px 64px 13px 18px;border-radius:5px;box-shadow:0 8px 18px rgba(30,122,70,.3);cursor:pointer;
+  transition:transform var(--t-quick) var(--ease-thunk), box-shadow var(--t-quick) var(--ease-thunk)}
+.ticket:hover{transform:translateY(-3px);box-shadow:0 13px 24px rgba(30,122,70,.36)}
+/* the right-hand stub that tears off along the perforation */
+.ticket .stub{font-size:13px;letter-spacing:.05em}
+.ticket .notch{position:absolute;top:50%;right:52px;transform:translateY(-50%);width:14px;height:14px;border-radius:50%;background:var(--paper-2);box-shadow:inset 0 1px 2px rgba(0,0,0,.25)}
+.ticket .tear{position:absolute;top:7px;bottom:7px;right:58px;width:0;border-left:2px dotted rgba(242,232,207,.6)}
+.ticket .notch.top{top:-1px;right:52px;width:12px;height:12px;background:var(--paper-2)}
+.ticket .notch.bot{top:auto;bottom:-1px;transform:none;right:52px;width:12px;height:12px;background:var(--paper-2)}
+.ticket .arrow{font-size:14px}
+.ticket-hint{font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+
+/* margin handwritten note */
+.margin-note{position:absolute;right:-6px;top:120px;font-family:var(--font-hand);font-weight:600;font-size:23px;color:var(--ink-faint);transform:rotate(6deg);max-width:150px;line-height:1.1;text-align:center}
+.margin-note .arrow{display:block;font-family:var(--font-marker);color:var(--stamp-red);font-size:18px;transform:rotate(-12deg);margin-top:2px}
+
+/* coffee ring (collage texture) */
+.coffee{position:absolute;width:74px;height:74px;border-radius:50%;border:3px solid rgba(120,82,38,.18);box-shadow:inset 0 0 0 2px rgba(120,82,38,.07)}
+
+/* self-doc captions */
+.why{font-family:var(--font-body);font-size:11.5px;line-height:1.5;color:var(--ink-faint);max-width:240px}
+.why b{color:var(--ink-2);font-weight:700}
+.whyrow{display:flex;gap:26px;flex-wrap:wrap;margin-top:34px;border-top:1px dashed var(--paper-edge);padding-top:18px}
+.whyrow .why{display:flex;gap:9px}
+.whyrow .why .tag{font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--ink);background:rgba(0,0,0,.05);padding:3px 6px;border-radius:3px;height:fit-content;white-space:nowrap;text-transform:uppercase}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div class="head">
+    <div>
+      <div class="eyebrow"><span class="dot">●</span> 40.4168° N, 3.7038° W &nbsp;·&nbsp; Destination Dossier</div>
+      <h1>The Country Story</h1>
+    </div>
+    <div class="right">Opens on globe click<br/>Journal-entry spread · 12 / 23 visited</div>
+  </div>
+
+  <div class="page-wrap">
+    <div class="under-edge"></div>
+    <div class="page">
+      <div class="margin-rule"></div>
+
+      <!-- arriving route line from previous city -->
+      <svg class="route" viewBox="0 0 300 90" fill="none" aria-hidden="true">
+        <text class="arrive" x="2" y="14">FROM LISBON ✈</text>
+        <path d="M14 36 Q 150 -6 286 52" stroke="var(--stamp-red)" stroke-width="2.5" stroke-dasharray="1 9" stroke-linecap="round"/>
+        <circle cx="14" cy="36" r="4" fill="var(--stamp-red)"/>
+        <circle cx="286" cy="52" r="4.5" fill="none" stroke="var(--stamp-red)" stroke-width="2"/>
+      </svg>
+
+      <div class="page-inner">
+        <div class="grid">
+
+          <!-- LEFT: title + story + stats -->
+          <div class="country">
+            <div class="titlerow">
+              <span class="flagchip"><span class="stripe red"></span><span class="stripe gold"></span><span class="stripe red"></span></span>
+              <span class="iso">ESP</span>
+            </div>
+            <h2>España<span class="sub">/ Spain</span></h2>
+            <div class="coords"><span class="pin">◆</span> 40.4168° N, 3.7038° W &nbsp;·&nbsp; Madrid</div>
+
+            <div class="story">
+              Landed in <span class="hi">Madrid</span> on a Sunday and went straight for the metro.
+              First match at the Bernabéu that night — ninety minutes I'll never forget.
+              Vinícius scored in the 71st and the whole stand just <span class="hi">erupted</span>.
+              Tapas till 2am, the city never slept. Easily the best week of the trip.
+            </div>
+
+            <span class="visited" role="button" tabindex="0" aria-label="Visited stub — tears off along the perforation"><span class="pulse"></span> Visited · You are here</span>
+
+            <!-- scoreboard stat block -->
+            <div class="stats" aria-label="trip stats">
+              <div class="stat"><span class="lab">Matches Seen</span><span class="val">03</span></div>
+              <div class="sep"></div>
+              <div class="stat"><span class="lab">RMA · Bernabéu</span><span class="val score">RMA <em>3</em> : 1 SEV</span></div>
+              <div class="sep"></div>
+              <div class="stat"><span class="lab">Miles Flown</span><span class="val">5,792</span></div>
+              <div class="sep"></div>
+              <div class="stat"><span class="lab">Days</span><span class="val live">07</span></div>
+            </div>
+          </div>
+
+          <!-- RIGHT: polaroid + stamp -->
+          <div class="col-right">
+            <div class="coffee" style="top:-8px;right:8px"></div>
+
+            <div class="polaroid">
+              <span class="washi" style="--tape:rgba(20,89,140,.55);top:-15px;left:30px;transform:rotate(-7deg)"></span>
+              <span class="pushpin" style="top:-9px;right:24px"></span>
+              <div class="photo">
+                <!-- inline SVG: floodlit Bernabéu pitch at night -->
+                <svg viewBox="0 0 300 300" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" aria-label="Floodlit Bernabéu pitch">
+                  <defs>
+                    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="#0A1422"/><stop offset="1" stop-color="#1a2c45"/>
+                    </linearGradient>
+                    <radialGradient id="flood" cx="50%" cy="14%" r="70%">
+                      <stop offset="0" stop-color="rgba(220,235,255,.55)"/><stop offset="1" stop-color="rgba(220,235,255,0)"/>
+                    </radialGradient>
+                    <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="#2c9456"/><stop offset="1" stop-color="#176336"/>
+                    </linearGradient>
+                  </defs>
+                  <rect width="300" height="300" fill="url(#sky)"/>
+                  <!-- stand silhouette -->
+                  <rect x="0" y="86" width="300" height="64" fill="#0f1d31"/>
+                  <rect x="0" y="78" width="300" height="10" fill="#0c1727"/>
+                  <!-- crowd specks -->
+                  <g fill="rgba(235,241,236,.5)">
+                    <circle cx="24" cy="104" r="1.3"/><circle cx="52" cy="118" r="1.3"/><circle cx="80" cy="98" r="1.3"/>
+                    <circle cx="118" cy="120" r="1.3"/><circle cx="150" cy="100" r="1.3"/><circle cx="186" cy="116" r="1.3"/>
+                    <circle cx="222" cy="102" r="1.3"/><circle cx="258" cy="120" r="1.3"/><circle cx="282" cy="100" r="1.3"/>
+                    <circle cx="38" cy="132" r="1.3"/><circle cx="96" cy="134" r="1.3"/><circle cx="170" cy="132" r="1.3"/><circle cx="240" cy="134" r="1.3"/>
+                  </g>
+                  <!-- floodlights -->
+                  <rect x="44" y="40" width="3" height="40" fill="#26384f"/><circle cx="45.5" cy="40" r="6" fill="#fff" opacity=".9"/>
+                  <rect x="252" y="40" width="3" height="40" fill="#26384f"/><circle cx="253.5" cy="40" r="6" fill="#fff" opacity=".9"/>
+                  <ellipse cx="150" cy="150" rx="180" ry="60" fill="url(#flood)"/>
+                  <!-- pitch -->
+                  <polygon points="0,150 300,150 300,300 0,300" fill="url(#grass)"/>
+                  <!-- mowing stripes -->
+                  <g fill="rgba(255,255,255,.05)">
+                    <polygon points="0,150 300,150 300,178 0,182"/>
+                    <polygon points="0,210 300,206 300,238 0,246"/>
+                    <polygon points="0,274 300,266 300,300 0,300"/>
+                  </g>
+                  <!-- pitch markings (§4.9) -->
+                  <g stroke="rgba(255,255,255,.85)" stroke-width="1.6" fill="none">
+                    <line x1="0" y1="150" x2="300" y2="150"/>
+                    <ellipse cx="150" cy="150" rx="34" ry="11"/>
+                    <line x1="150" y1="150" x2="150" y2="300"/>
+                  </g>
+                  <circle cx="150" cy="150" r="2" fill="rgba(255,255,255,.85)"/>
+                </svg>
+              </div>
+              <div class="cap">first match at the Bernabéu — unreal ⚽</div>
+            </div>
+
+            <!-- passport stamp (§4.6) -->
+            <div class="stamp" style="bottom:-30px;left:-26px">
+              <span class="star">✦</span>
+              <span class="big">Entry · Madrid</span>
+              <span class="sm">15 JUN 2026</span>
+              <span class="sm">ESP — BARAJAS</span>
+            </div>
+
+            <div class="margin-note">
+              halftime churros 🥐
+              <span class="arrow">↘</span>
+            </div>
+          </div>
+
+        </div><!-- /grid -->
+
+        <div class="footrow">
+          <div class="legend">
+            <i><span class="r">●</span> Visited</i>
+            <i>◌ Next up</i>
+            <i><span class="r">┄</span> Route flown</i>
+            <i><span class="v">▮</span> You are here</i>
+          </div>
+          <div class="ticket-wrap">
+            <div class="ticket" role="button" tabindex="0" aria-label="Back to globe — boarding-pass stub">
+              <span class="arrow">←</span> Back to globe
+              <span class="tear"></span><span class="notch top"></span><span class="notch"></span><span class="notch bot"></span>
+              <span class="stub">✈</span>
+            </div>
+            <span class="ticket-hint">Tear along seam ✦ stub rips off — see Motion §7.1</span>
+          </div>
+        </div>
+
+        <!-- self-documenting rationale -->
+        <div class="whyrow">
+          <div class="why"><span class="tag">ANTON</span><span><b>ESPAÑA</b> in Anton = stadium-banner voice, now loosened — <b>positive tracking + lh ~0.98</b> so the hero breathes (no tight negative kerning).</span></div>
+          <div class="why"><span class="tag">TICKET</span><span>The <b>"Visited"</b> tag and <b>"← Back to globe"</b> are boarding-pass <b>stubs</b> — perforated seam + punched notch. They <b>tear off</b> along the seam (Motion §7.1, the hero rip-off).</span></div>
+          <div class="why"><span class="tag">VOLT × 1</span><span>The lime "Visited" stub + live day-counter is the <b>single</b> spark — nothing else competes with it.</span></div>
+          <div class="why"><span class="tag">SPACE MONO</span><span>Coords, scoreline & stats stay monospaced — data reads as cartography/scoreboard, not prose.</span></div>
+        </div>
+
+      </div><!-- /page-inner -->
+    </div><!-- /page -->
+  </div><!-- /page-wrap -->
+
+</div>
+</body>
+</html>

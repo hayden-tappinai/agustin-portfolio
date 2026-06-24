@@ -1,0 +1,356 @@
+<!-- @dsCard group="Motion & Interactions" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agustins Portfolio — Higgsfield Asset Slots</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&family=Permanent+Marker&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  :root{
+    --paper:#F2E8CF; --paper-2:#E8D9B5; --paper-edge:#CDB789; --paper-line:#C7B488;
+    --paper-shadow:rgba(58,42,18,0.18);
+    --ink:#1C1712; --ink-2:#4A4034; --ink-faint:#8A7E68; --navy:#0A1422; --navy-2:#14233A;
+    --pitch:#1E7A46; --globe-green:#3EA96B; --ocean:#14598C; --stamp-red:#C0362C; --gold:#C8992F;
+    --volt:#CDFF3D; --volt-deep:#A6D400;
+    --font-display:"Anton","Arial Narrow",sans-serif;
+    --font-body:"Plus Jakarta Sans",system-ui,sans-serif;
+    --font-hand:"Caveat",cursive; --font-marker:"Permanent Marker",cursive;
+    --font-mono:"Space Mono",ui-monospace,monospace;
+
+    /* §7 motion tokens — pasted whole so timing matches the rest of the system */
+    --ease-thunk:cubic-bezier(.18,.89,.32,1.28); --ease-paper:cubic-bezier(.2,.7,.2,1);
+    --ease-draw:cubic-bezier(.65,0,.35,1);
+    --t-micro:120ms; --t-quick:240ms; --t-base:400ms; --t-tear:520ms; --t-slow:700ms;
+  }
+
+  /* §4.1 kraft paper background */
+  body{
+    background-color:#F2E8CF;
+    background-image:
+      radial-gradient(120% 130% at 0% 0%, rgba(255,250,235,0.55) 0%, transparent 42%),
+      radial-gradient(120% 130% at 100% 100%, rgba(150,118,64,0.20) 0%, transparent 55%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    font-family:var(--font-body);
+    color:var(--ink);
+    padding:48px;
+  }
+
+  .stage{max-width:1100px;margin:0 auto}
+
+  /* ---------- header ---------- */
+  .eyebrow{
+    font-family:var(--font-mono); font-weight:700; font-size:12px; text-transform:uppercase;
+    letter-spacing:0.14em; color:var(--ink-faint); display:flex; align-items:center; gap:8px;
+  }
+  /* neutral ink dot — volt is reserved for the ONE spark (the reserve-sweep), §1 */
+  .eyebrow .dot{ width:7px; height:7px; border-radius:50%; background:var(--ink-faint); }
+  h1{
+    font-family:var(--font-display); font-weight:400; text-transform:uppercase;
+    font-size:clamp(40px,5.4vw,56px);
+    /* §2 revision: Anton must BREATHE — open positive tracking, line-height >= 1.0 */
+    letter-spacing:0.02em; line-height:1.06;
+    color:var(--ink); margin-top:14px; max-width:18ch;
+  }
+  .lede{
+    font-family:var(--font-body); font-weight:500; font-size:18px; line-height:1.55;
+    color:var(--ink-2); max-width:62ch; margin-top:18px;
+  }
+
+  /* a single explainer panel — aged-tan secondary surface */
+  .explainer{
+    margin-top:28px; background:var(--paper-2); border:1px solid var(--paper-edge);
+    border-left:5px solid var(--pitch);
+    border-radius:12px; padding:22px 24px;
+    box-shadow:0 8px 22px var(--paper-shadow);
+    position:relative;
+  }
+  .explainer p{ font-family:var(--font-body); font-weight:500; font-size:16px; line-height:1.62; color:var(--ink-2); }
+  .explainer strong{ color:var(--ink); font-weight:700; }
+  .explainer .why{
+    margin-top:14px; font-family:var(--font-mono); font-size:11px; letter-spacing:0.04em;
+    color:var(--ink-faint); line-height:1.7;
+  }
+  /* washi tape on the explainer corner — §4.2 ocean colorway */
+  .washi{
+    position:absolute; width:128px; height:34px; top:-15px; right:34px;
+    background:
+      repeating-linear-gradient(46deg, rgba(255,255,255,.22) 0 7px, transparent 7px 14px),
+      rgba(20,89,140,.55);
+    box-shadow:0 2px 4px rgba(0,0,0,.14);
+    clip-path:polygon(3% 0,97% 5%,100% 95%,0 100%);
+    transform:rotate(-4deg); opacity:.92;
+  }
+
+  /* ---------- section label ---------- */
+  .sec-label{
+    margin:46px 0 18px; display:flex; align-items:baseline; gap:14px;
+  }
+  .sec-label h2{
+    font-family:var(--font-display); font-weight:400; text-transform:uppercase;
+    font-size:30px; letter-spacing:0.025em; line-height:1.04; color:var(--ink);
+  }
+  .sec-label .count{ font-family:var(--font-mono); font-size:12px; letter-spacing:0.12em; color:var(--ink-faint); text-transform:uppercase; }
+
+  /* ---------- the slots grid ---------- */
+  .slots{ display:grid; grid-template-columns:repeat(2,1fr); gap:26px; }
+  .slot-card{
+    background:var(--paper-2); border:1px solid var(--paper-edge); border-radius:16px;
+    padding:20px; box-shadow:0 10px 24px var(--paper-shadow); position:relative;
+  }
+  .slot-card.full{ grid-column:1 / -1; }
+  .slot-head{ display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .slot-no{
+    font-family:var(--font-display); font-size:26px; line-height:1; letter-spacing:0.01em;
+    color:var(--pitch);
+  }
+  .slot-no.sig{ color:var(--stamp-red); }
+  .slot-title{
+    font-family:var(--font-body); font-weight:800; font-size:18px; letter-spacing:0; color:var(--ink);
+  }
+  .sig-flag{
+    font-family:var(--font-mono); font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--paper); background:var(--stamp-red); padding:3px 8px; border-radius:4px; margin-left:auto;
+  }
+  .slot-desc{ font-family:var(--font-body); font-weight:500; font-size:14px; line-height:1.55; color:var(--ink-2); margin:4px 0 16px; }
+
+  /* §8 .hf-slot pattern — the clean dashed labeled placeholder */
+  .hf-slot{
+    position:relative; display:grid; place-items:center; gap:10px; min-height:200px;
+    border:2px dashed var(--ink-faint); border-radius:14px;
+    background:repeating-linear-gradient(45deg, rgba(28,23,18,.03) 0 10px, transparent 10px 20px);
+    color:var(--ink-2); padding:22px 18px; text-align:center; overflow:hidden;
+  }
+  .hf-tag{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase;
+    background:var(--ink); color:var(--paper); padding:6px 11px; border-radius:4px; z-index:2;
+  }
+  .hf-meta{ font-family:var(--font-mono); font-size:11px; color:var(--ink-faint); z-index:2; line-height:1.6; }
+
+  /* corner ticks so the dashed box reads as a deliberate reserved frame, not a broken image */
+  .hf-slot .tick{ position:absolute; width:14px; height:14px; border:2px solid var(--ink-faint); opacity:.55; }
+  .hf-slot .tick.tl{ top:10px; left:10px; border-right:0; border-bottom:0; }
+  .hf-slot .tick.tr{ top:10px; right:10px; border-left:0; border-bottom:0; }
+  .hf-slot .tick.bl{ bottom:10px; left:10px; border-right:0; border-top:0; }
+  .hf-slot .tick.br{ bottom:10px; right:10px; border-left:0; border-top:0; }
+
+  /* a faint ghost of the iconic mark so the reserved space reads its purpose at a glance.
+     STATIC only — per §7 revision, the drawn ball never animates in CSS; the live motion is the WebM. */
+  .hf-ghost{ position:absolute; opacity:.10; z-index:1; }
+  .hf-ghost.center{ top:50%; left:50%; transform:translate(-50%,-50%); }
+
+  /* the soft moving "waiting for asset" sweep — this is the ONLY motion in the slot:
+     it marks the reservation as live/intentional, it does NOT fake the drawn animation. */
+  .hf-slot::after{
+    content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+    background:linear-gradient(115deg, transparent 38%, rgba(205,255,61,.16) 50%, transparent 62%);
+    background-size:240% 100%;
+    animation:reserve-sweep 4.5s var(--ease-paper) infinite;
+  }
+  @keyframes reserve-sweep{
+    0%   { background-position:140% 0; }
+    55%  { background-position:-40% 0; }
+    100% { background-position:-40% 0; }
+  }
+
+  /* §4.7 graticule wash on the signature slot — ties it to the globe zone */
+  .hf-slot.globe{
+    background-image:
+      repeating-linear-gradient(45deg, rgba(28,23,18,.03) 0 10px, transparent 10px 20px),
+      linear-gradient(rgba(20,89,140,.10) 1px,transparent 1px),
+      linear-gradient(90deg, rgba(20,89,140,.10) 1px,transparent 1px);
+    background-size:auto, 46px 46px, 46px 46px;
+  }
+
+  /* spec field row beneath each slot — what / where / trigger / dims */
+  .fields{ margin-top:16px; display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--paper-edge); border:1px solid var(--paper-edge); border-radius:8px; overflow:hidden; }
+  .fields .f{ background:var(--paper); padding:9px 12px; }
+  .fields .f.wide{ grid-column:1 / -1; }
+  .f .k{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-faint); }
+  .f .v{ font-family:var(--font-body); font-weight:600; font-size:13px; color:var(--ink); margin-top:2px; }
+  .f .v.mono{ font-family:var(--font-mono); font-weight:700; font-size:12px; letter-spacing:0.02em; }
+
+  /* hand note tying it to the globe hover effect — §4 Caveat */
+  .globe-note{
+    margin-top:30px; display:flex; align-items:flex-start; gap:14px;
+    font-family:var(--font-hand); font-weight:600; font-size:27px; line-height:1.25; color:var(--ink-2);
+  }
+  .globe-note svg{ flex:0 0 auto; margin-top:4px; }
+  .globe-note .coord{ font-family:var(--font-mono); font-weight:700; font-size:12px; letter-spacing:0.06em; color:var(--stamp-red); display:block; margin-top:6px; }
+
+  /* footnote rationale */
+  /* the ONE coded looping motion in this card, documented per §7 (trigger/moves/duration/easing/impl) */
+  .motion-spec{
+    margin-top:30px; background:var(--paper-2); border:1px solid var(--paper-edge);
+    border-left:5px solid var(--volt-deep); border-radius:12px; padding:18px 20px;
+    box-shadow:0 8px 22px var(--paper-shadow);
+  }
+  .motion-spec .ms-title{
+    font-family:var(--font-display); font-weight:400; text-transform:uppercase; font-size:22px;
+    letter-spacing:0.025em; line-height:1.06; color:var(--ink); margin-bottom:12px;
+  }
+  .motion-spec .ms-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--paper-edge); border:1px solid var(--paper-edge); border-radius:8px; overflow:hidden; }
+  .motion-spec .ms{ background:var(--paper); padding:10px 12px; }
+  .motion-spec .ms .k{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-faint); }
+  .motion-spec .ms .v{ font-family:var(--font-mono); font-weight:700; font-size:12px; letter-spacing:0.02em; color:var(--ink); margin-top:3px; line-height:1.4; }
+  @media (max-width:760px){ .motion-spec .ms-grid{ grid-template-columns:1fr 1fr; } }
+
+  .footnote{
+    margin-top:34px; padding-top:18px; border-top:1px dashed var(--paper-edge);
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.03em; color:var(--ink-faint); line-height:1.8;
+  }
+  .footnote b{ color:var(--ink-2); }
+
+  @media (max-width:760px){
+    .slots{ grid-template-columns:1fr; }
+    body{ padding:28px 20px; }
+  }
+</style>
+</head>
+<body>
+  <main class="stage">
+
+    <p class="eyebrow"><span class="dot"></span>40.4168&deg; N, 3.7038&deg; W &middot; Madrid &middot; Asset Pipeline</p>
+    <h1>Higgsfield Asset Slots</h1>
+    <p class="lede">Where the drawn, hand-animated moments live. The design system reserves the space; it never fakes the motion.</p>
+
+    <!-- EXPLAINER — Plus Jakarta, verbatim from the brief -->
+    <section class="explainer">
+      <span class="washi" aria-hidden="true"></span>
+      <p>Drawn / character motion is generated in <strong>Higgsfield</strong> &mdash; b/w hand-drawn style, start frame + end frame on green &rarr; animated &rarr; background stripped to a transparent WebM &mdash; then dropped into the React site. We never fake these in CSS; that looks brittle. The design system just reserves a clean, intentional slot.</p>
+      <p class="why">WHY A SLOT, NOT CODE &mdash; HAND-DRAWN MOTION CARRIES THE BRAND. CSS APPROXIMATIONS READ AS CHEAP AND STIFF. A LABELED DASHED FRAME IS HONEST: IT SAYS &ldquo;A REAL ASSET MOUNTS HERE&rdquo; AND KEEPS THE LAYOUT INTACT WHILE THE WEBM IS PRODUCED.</p>
+    </section>
+
+    <!-- SECTION LABEL -->
+    <div class="sec-label">
+      <h2>Reserved Slots</h2>
+      <span class="count">3 &middot; ALL TRANSPARENT WEBM</span>
+    </div>
+
+    <div class="slots">
+
+      <!-- 1 · SIGNATURE soccer-ball fly-through -->
+      <article class="slot-card">
+        <div class="slot-head">
+          <span class="slot-no sig">01</span>
+          <span class="slot-title">Soccer-ball fly-through</span>
+          <span class="sig-flag">Signature</span>
+        </div>
+        <p class="slot-desc">The b/w hand-drawn ball that streaks past the cursor and arcs over a country as it lifts on the interactive globe. The single most recognizable motion in the whole portfolio.</p>
+
+        <div class="hf-slot globe" role="img" aria-label="Higgsfield asset slot — soccer-ball fly-through">
+          <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+          <!-- STATIC ghost of the §4.10 b/w ball — never animates; the WebM does the motion -->
+          <svg class="hf-ghost center" width="120" height="120" viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="32" cy="32" r="30" fill="#fff" stroke="#1C1712" stroke-width="2"/>
+            <path d="M32 16 L41 23 L37 34 L27 34 L23 23 Z" fill="#1C1712"/>
+            <path d="M32 16 L23 23 L13 19 M32 16 L41 23 L51 19 M37 34 L44 44 M27 34 L20 44 M23 23 L14 31 M41 23 L50 31" stroke="#1C1712" stroke-width="1.6" fill="none"/>
+          </svg>
+          <span class="hf-tag">Higgsfield asset &mdash; added later</span>
+          <span class="hf-meta">transparent WebM &middot; ~480&times;480 &middot; loops &middot; trigger: country hover</span>
+        </div>
+
+        <div class="fields">
+          <div class="f"><div class="k">What</div><div class="v">B/W hand-drawn ball fly-through</div></div>
+          <div class="f"><div class="k">Format / size</div><div class="v mono">WEBM &middot; ~480&times;480</div></div>
+          <div class="f"><div class="k">Where it sits</div><div class="v">Overlay near cursor, above globe</div></div>
+          <div class="f"><div class="k">Trigger</div><div class="v mono">COUNTRY HOVER</div></div>
+        </div>
+      </article>
+
+      <!-- 2 · Ball-roll-across section transition -->
+      <article class="slot-card">
+        <div class="slot-head">
+          <span class="slot-no">02</span>
+          <span class="slot-title">Ball-roll-across</span>
+        </div>
+        <p class="slot-desc">A drawn ball rolls left-to-right across the seam between sections &mdash; the scrapbook&rsquo;s page-turn between the pitch story and the travel map.</p>
+
+        <div class="hf-slot" role="img" aria-label="Higgsfield asset slot — ball roll across">
+          <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+          <svg class="hf-ghost center" width="108" height="108" viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="32" cy="32" r="30" fill="#fff" stroke="#1C1712" stroke-width="2"/>
+            <path d="M32 16 L41 23 L37 34 L27 34 L23 23 Z" fill="#1C1712"/>
+            <path d="M32 16 L23 23 L13 19 M32 16 L41 23 L51 19 M37 34 L44 44 M27 34 L20 44" stroke="#1C1712" stroke-width="1.6" fill="none"/>
+          </svg>
+          <span class="hf-tag">Higgsfield asset &mdash; added later</span>
+          <span class="hf-meta">transparent WebM &middot; trigger: section enter</span>
+        </div>
+
+        <div class="fields">
+          <div class="f"><div class="k">What</div><div class="v">Ball rolls across, drawn</div></div>
+          <div class="f"><div class="k">Format / size</div><div class="v mono">WEBM &middot; ~1280&times;320</div></div>
+          <div class="f"><div class="k">Where it sits</div><div class="v">Full-width seam between sections</div></div>
+          <div class="f"><div class="k">Trigger</div><div class="v mono">SECTION ENTER</div></div>
+        </div>
+      </article>
+
+      <!-- 3 · Optional celebratory flourish (full width) -->
+      <article class="slot-card full">
+        <div class="slot-head">
+          <span class="slot-no">03</span>
+          <span class="slot-title">&ldquo;GOOOAL&rdquo; flourish</span>
+          <span class="sig-flag" style="background:var(--gold)">Optional</span>
+        </div>
+        <p class="slot-desc">A hand-drawn celebratory mark &mdash; a marker &ldquo;GOOOAL&rdquo; scrawl with chalk-confetti &mdash; that pops on a milestone (e.g. visiting the 50th country, or the Bernab&eacute;u stamp landing). Used at most once per page; it&rsquo;s the loudest the system ever gets.</p>
+
+        <div class="hf-slot" role="img" aria-label="Higgsfield asset slot — celebratory GOOOAL flourish" style="min-height:160px">
+          <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+          <svg class="hf-ghost center" width="320" height="92" viewBox="0 0 320 92" aria-hidden="true">
+            <text x="160" y="60" text-anchor="middle" font-family="'Permanent Marker',cursive" font-size="52" fill="#1C1712">GOOOAL</text>
+            <circle cx="34" cy="22" r="4" fill="#1C1712"/><circle cx="282" cy="26" r="4" fill="#1C1712"/>
+            <circle cx="60" cy="74" r="3" fill="#1C1712"/><circle cx="258" cy="78" r="3" fill="#1C1712"/>
+            <path d="M20 50 l8 -8 M300 48 l-8 -8" stroke="#1C1712" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span class="hf-tag">Higgsfield asset &mdash; added later</span>
+          <span class="hf-meta">transparent WebM &middot; trigger: milestone</span>
+        </div>
+
+        <div class="fields">
+          <div class="f"><div class="k">What</div><div class="v">Hand-drawn &ldquo;GOOOAL&rdquo; + chalk confetti</div></div>
+          <div class="f"><div class="k">Format / size</div><div class="v mono">WEBM &middot; ~720&times;360</div></div>
+          <div class="f"><div class="k">Where it sits</div><div class="v">Center-screen burst over the milestone card</div></div>
+          <div class="f"><div class="k">Trigger</div><div class="v mono">MILESTONE</div></div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- hand note tying slot 01 to the planned globe hover effect -->
+    <div class="globe-note">
+      <!-- tiny static ball glyph -->
+      <svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="32" cy="32" r="30" fill="#fff" stroke="#1C1712" stroke-width="3"/>
+        <path d="M32 16 L41 23 L37 34 L27 34 L23 23 Z" fill="#1C1712"/>
+      </svg>
+      <span>Slot 01 is the same ball that&rsquo;ll fly over a lifting country when you hover the globe &mdash; e.g. hover Spain and it arcs toward the Bernab&eacute;u.
+        <span class="coord">REAL MADRID &middot; ESTADIO SANTIAGO BERNAB&Eacute;U &middot; 40.4530&deg; N, 3.6883&deg; W</span>
+      </span>
+    </div>
+
+    <!-- the single coded looping motion of this card, specced like every motion in the system -->
+    <section class="motion-spec">
+      <h3 class="ms-title">Reserved-slot sweep &mdash; the one coded loop</h3>
+      <div class="ms-grid">
+        <div class="ms"><div class="k">Trigger</div><div class="v">AMBIENT (always)</div></div>
+        <div class="ms"><div class="k">Moves</div><div class="v">A faint volt diagonal band drifts across the slot, then rests</div></div>
+        <div class="ms"><div class="k">Duration</div><div class="v">4.5S LOOP</div></div>
+        <div class="ms"><div class="k">Easing</div><div class="v">--EASE-PAPER</div></div>
+        <div class="ms"><div class="k">Impl</div><div class="v">CSS @keyframes reserve-sweep on .hf-slot::after &middot; no Framer Motion (decorative)</div></div>
+      </div>
+    </section>
+
+    <p class="footnote">
+      <b>WHY THIS CARD CODES ALMOST NOTHING:</b> per SPEC &sect;7 + &sect;8, drawn/character motion is a Higgsfield deliverable, not a CSS trick. &mdash;
+      <b>THE ONLY MOTION HERE</b> is the faint volt &ldquo;reserved&rdquo; sweep across each slot: it signals the slot is live &amp; intentional without pretending to be the asset. &mdash;
+      <b>STATIC GHOST</b> = the &sect;4.10 b/w ball mark, held at 10% so the slot&rsquo;s purpose reads at a glance (never animated). &mdash;
+      <b>FONTS</b>: Plus Jakarta = explainer/body, Anton = banner headlines, Space Mono = every meta/coord/field, Caveat = the margin note, Permanent Marker = the one &ldquo;GOOOAL&rdquo; mark.
+    </p>
+
+  </main>
+</body>
+</html>

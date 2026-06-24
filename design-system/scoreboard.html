@@ -1,0 +1,324 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agustins Portfolio — Scoreboard Stat Block</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&family=Permanent+Marker&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --paper:#F2E8CF; --paper-2:#E8D9B5; --paper-edge:#CDB789; --paper-line:#C7B488;
+    --paper-shadow:rgba(58,42,18,0.18);
+    --ink:#1C1712; --ink-2:#4A4034; --ink-faint:#8A7E68; --navy:#0A1422; --navy-2:#14233A;
+    --pitch:#1E7A46; --globe-green:#3EA96B; --ocean:#14598C; --stamp-red:#C0362C; --gold:#C8992F;
+    --volt:#CDFF3D; --volt-deep:#A6D400;
+    --font-display:"Anton","Arial Narrow",sans-serif;
+    --font-body:"Plus Jakarta Sans",system-ui,sans-serif;
+    --font-hand:"Caveat",cursive; --font-marker:"Permanent Marker",cursive;
+    --font-mono:"Space Mono",ui-monospace,monospace;
+    --ease-thunk:cubic-bezier(.18,.89,.32,1.28); --ease-paper:cubic-bezier(.2,.7,.2,1);
+    --ease-draw:cubic-bezier(.65,0,.35,1);
+    --t-micro:120ms; --t-quick:240ms; --t-base:400ms; --t-tear:520ms; --t-slow:700ms;
+  }
+
+  body{
+    background-color:#F2E8CF;
+    background-image:
+      radial-gradient(120% 130% at 0% 0%, rgba(255,250,235,0.55) 0%, transparent 42%),
+      radial-gradient(120% 130% at 100% 100%, rgba(150,118,64,0.20) 0%, transparent 55%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    font-family:var(--font-body); color:var(--ink); padding:48px;
+  }
+
+  .stage{max-width:1100px;margin:0 auto}
+
+  /* ---------- header ---------- */
+  .eyebrow{
+    font-family:var(--font-mono); font-weight:700; font-size:12px; text-transform:uppercase;
+    letter-spacing:.14em; color:var(--ink-faint); display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--stamp-red);box-shadow:0 0 0 3px rgba(192,54,44,.18)}
+  h1{
+    font-family:var(--font-display); text-transform:uppercase; letter-spacing:0.015em;
+    line-height:1.0; font-size:clamp(40px,5.4vw,72px); color:var(--ink); margin-top:14px;
+  }
+  .lede{font-size:18px;line-height:1.55;color:var(--ink-2);max-width:680px;margin-top:16px;font-weight:500}
+  .lede b{color:var(--ink);font-weight:700}
+
+  /* ---------- the scoreboard ---------- */
+  .board{
+    position:relative; margin-top:40px; border-radius:20px; overflow:hidden;
+    background:linear-gradient(180deg,var(--navy-2) 0%, var(--navy) 100%);
+    box-shadow:
+      0 28px 60px rgba(10,20,34,.45),
+      inset 0 1px 0 rgba(255,255,255,.05),
+      inset 0 0 0 1px rgba(110,227,160,.06);
+    padding:34px 36px 30px;
+    border:1px solid rgba(0,0,0,.4);
+  }
+  /* faint graticule overlay (navy variant) */
+  .board::before{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(110,227,160,.10) 1px,transparent 1px),
+      linear-gradient(90deg, rgba(110,227,160,.10) 1px,transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask:radial-gradient(120% 120% at 50% 0%, #000 40%, transparent 100%);
+    mask:radial-gradient(120% 120% at 50% 0%, #000 40%, transparent 100%);
+  }
+  /* LED scanline for the stadium-board feel */
+  .board::after{
+    content:""; position:absolute; inset:0; pointer-events:none; opacity:.5;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,.16) 0 2px, transparent 2px 4px);
+    mix-blend-mode:multiply;
+  }
+  .board > *{position:relative;z-index:2}
+
+  .board-top{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+    border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:18px;margin-bottom:26px}
+  .board-title{
+    font-family:var(--font-display);text-transform:uppercase;letter-spacing:.025em;
+    color:#EAF2EA;font-size:30px;line-height:1.05;display:flex;align-items:center;gap:14px;
+  }
+  .ball{flex:none}
+  .board-meta{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:rgba(180,196,190,.7);text-align:right;line-height:1.7}
+
+  /* stat grid */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .stat{
+    background:rgba(0,0,0,.28);border-radius:12px;padding:20px 18px 18px;
+    box-shadow:inset 0 2px 6px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.04);
+    position:relative;
+  }
+  .stat .label{
+    font-family:var(--font-display);text-transform:uppercase;letter-spacing:.03em;
+    color:rgba(190,205,200,.62);font-size:14px;line-height:1.1;
+  }
+  .stat .digits{
+    font-family:var(--font-mono);font-weight:700;font-size:46px;line-height:1;margin-top:14px;
+    color:#DDE8DE;letter-spacing:.01em;
+    text-shadow:0 0 1px rgba(255,255,255,.25), 0 2px 0 rgba(0,0,0,.5);
+    font-variant-numeric:tabular-nums;
+  }
+  .stat .sub{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:rgba(150,168,162,.6);margin-top:8px}
+
+  /* the ONE volt spark — the live figure glows */
+  .stat.live{box-shadow:inset 0 2px 6px rgba(0,0,0,.55), inset 0 0 0 1px rgba(205,255,61,.3)}
+  .stat.live .label{color:rgba(205,255,61,.85)}
+  .stat.live .digits{
+    color:var(--volt);
+    text-shadow:0 0 10px rgba(205,255,61,.55), 0 0 26px rgba(205,255,61,.30);
+    animation:voltPulse 3.2s var(--ease-paper) infinite;
+  }
+  .stat.live .livetag{
+    position:absolute;top:14px;right:14px;font-family:var(--font-mono);font-weight:700;
+    font-size:9px;letter-spacing:.16em;color:var(--navy);background:var(--volt);
+    padding:3px 7px;border-radius:4px;display:flex;align-items:center;gap:5px;
+  }
+  .stat.live .livetag i{width:5px;height:5px;border-radius:50%;background:var(--navy);
+    animation:blink 1.1s steps(1) infinite}
+  @keyframes blink{50%{opacity:.15}}
+  @keyframes voltPulse{0%,100%{text-shadow:0 0 10px rgba(205,255,61,.55),0 0 26px rgba(205,255,61,.30)}
+    50%{text-shadow:0 0 16px rgba(205,255,61,.8),0 0 38px rgba(205,255,61,.45)}}
+
+  /* ----- count-up (SPEC §7 coded motion) — odometer reel, alive on an ambient loop ----- */
+  .reel{display:inline-flex;overflow:hidden;height:1em;vertical-align:bottom;line-height:1}
+  .reel .strip{display:flex;flex-direction:column;animation:countUp 4.2s var(--ease-draw) infinite}
+  .reel .strip span{height:1em;line-height:1}
+  /* settle: reel lands on the final digit and holds, then loops (ambient demo of a real count-up) */
+  @keyframes countUp{
+    0%{transform:translateY(0)}
+    62%{transform:translateY(-90%)}            /* sweeps 0→9 with draw easing */
+    72%,100%{transform:translateY(-90%)}        /* lands on final digit + holds */
+  }
+
+  /* match-result strip */
+  .matchrow{display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;
+    margin-top:26px;padding-top:22px;border-top:1px solid rgba(255,255,255,.07)}
+  .match{display:flex;align-items:center;gap:18px}
+  .team{display:flex;align-items:center;gap:10px}
+  .team .code{font-family:var(--font-display);font-size:34px;color:#EAF2EA;letter-spacing:.03em;line-height:1.05}
+  .team .flag{width:26px;height:18px;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.5)}
+  .flag.esp{background:linear-gradient(180deg,var(--stamp-red) 0 30%,var(--gold) 30% 70%,var(--stamp-red) 70% 100%)}
+  .flag.arg{background:linear-gradient(180deg,#6CB7E6 0 33%,#fff 33% 67%,#6CB7E6 67% 100%)}
+  .score{font-family:var(--font-mono);font-weight:700;font-size:40px;color:#DDE8DE;
+    background:rgba(0,0,0,.3);padding:6px 18px;border-radius:8px;letter-spacing:.04em;
+    box-shadow:inset 0 2px 6px rgba(0,0,0,.55)}
+  .score .colon{color:var(--gold);padding:0 6px}
+  .clock{font-family:var(--font-mono);font-size:13px;letter-spacing:.1em;color:rgba(205,255,61,.9);
+    display:flex;align-items:center;gap:8px}
+  .clock .blip{width:6px;height:6px;border-radius:50%;background:var(--volt);
+    box-shadow:0 0 8px var(--volt);animation:blink 1.1s steps(1) infinite}
+  .matchnote{font-family:var(--font-mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+    color:rgba(150,168,162,.65);text-align:right}
+
+  /* ---------- compact single-stat tile ---------- */
+  .lower{display:grid;grid-template-columns:1fr 320px;gap:28px;margin-top:34px;align-items:start}
+  @media (max-width:760px){.lower{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+
+  .tile{
+    position:relative;border-radius:16px;overflow:hidden;padding:24px 24px 22px;
+    background:linear-gradient(180deg,var(--navy-2) 0%, var(--navy) 100%);
+    box-shadow:0 18px 38px rgba(10,20,34,.4), inset 0 0 0 1px rgba(110,227,160,.06);
+  }
+  .tile::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,.16) 0 2px, transparent 2px 4px);mix-blend-mode:multiply}
+  .tile > *{position:relative;z-index:2}
+  .tile .t-ey{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    color:rgba(190,205,200,.6);display:flex;justify-content:space-between}
+  .tile .t-ey .pin{color:var(--gold)}
+  .tile .t-label{font-family:var(--font-display);text-transform:uppercase;color:#EAF2EA;font-size:22px;
+    margin-top:16px;line-height:1.08;letter-spacing:.025em}
+  .tile .t-digit{font-family:var(--font-mono);font-weight:700;font-size:60px;line-height:1;margin-top:6px;
+    color:var(--volt);text-shadow:0 0 12px rgba(205,255,61,.5),0 0 30px rgba(205,255,61,.28);
+    font-variant-numeric:tabular-nums}
+  .tile .t-sub{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:rgba(150,168,162,.7);
+    margin-top:10px}
+
+  /* caption / spec column */
+  .notes{display:flex;flex-direction:column;gap:18px}
+  .cap{font-size:14px;line-height:1.6;color:var(--ink-2);font-weight:500}
+  .cap b{color:var(--ink);font-weight:700}
+  .hand{font-family:var(--font-hand);font-size:25px;color:var(--ink-2);line-height:1.25;
+    transform:rotate(-2deg);transform-origin:left}
+  .hand .arrow{color:var(--volt-deep)}
+  .specnote{
+    font-family:var(--font-mono);font-size:11px;line-height:1.7;letter-spacing:.04em;color:var(--ink-2);
+    background:var(--paper-2);border:1px dashed var(--paper-edge);border-radius:10px;padding:14px 16px;
+  }
+  .specnote .k{color:var(--ink-faint);text-transform:uppercase;letter-spacing:.12em;font-size:9px;display:block;margin-bottom:6px}
+  .specnote b{color:var(--ink)}
+
+  /* motion spec sheet — TRIGGER / MOVES / DURATION / EASING / IMPL */
+  .motionspec{background:var(--paper-2);border:1px dashed var(--paper-edge);border-radius:10px;
+    padding:14px 16px;font-family:var(--font-mono);font-size:11px;line-height:1.5;color:var(--ink-2)}
+  .motionspec .mk{color:var(--ink-faint);text-transform:uppercase;letter-spacing:.12em;font-size:9px;
+    display:block;margin-bottom:8px}
+  .motionspec .mtitle{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.025em;
+    color:var(--ink);font-size:18px;line-height:1.1;margin:2px 0 8px}
+  .motionspec .mtitle:not(:first-of-type){margin-top:16px;padding-top:14px;border-top:1px dashed var(--paper-edge)}
+  .motionspec .row{display:grid;grid-template-columns:74px 1fr;gap:8px;margin-top:4px}
+  .motionspec .row .f{color:var(--ink-faint);text-transform:uppercase;letter-spacing:.1em;font-size:9px;padding-top:1px}
+  .motionspec .row b{color:var(--ink);font-weight:700}
+
+  .footcap{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-faint);margin-top:30px;text-align:center}
+</style>
+</head>
+<body>
+  <div class="stage">
+
+    <div class="eyebrow"><span class="dot"></span>40.4168° N 3.7038° W · LIVE BOARD</div>
+    <h1>The Scoreboard</h1>
+    <p class="lede">The dark counterpoint to the kraft collage — a stadium LED board that sits
+      <b>right beside the globe</b>, sharing its navy so the eye reads one world. Travel and footy
+      tallied like a final score.</p>
+
+    <!-- FULL BOARD -->
+    <div class="board">
+      <div class="board-top">
+        <div class="board-title">
+          <!-- §4.10 b/w soccer ball, kept iconic + flat -->
+          <svg class="ball" width="34" height="34" viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="32" cy="32" r="30" fill="#EAF2EA" stroke="#0A1422" stroke-width="2"/>
+            <polygon points="32,18 41,25 37,36 27,36 23,25" fill="#0A1422"/>
+            <path d="M32 18 L32 6 M41 25 L52 20 M37 36 L44 47 M27 36 L20 47 M23 25 L12 20"
+              stroke="#0A1422" stroke-width="2" fill="none"/>
+          </svg>
+          SEASON TOTALS
+        </div>
+        <div class="board-meta">AGUSTIN · CAREER ON THE ROAD<br>UPDATED 23.06.2026 · MAD ⇄ WORLD</div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="label">Countries</div>
+          <div class="digits">23</div>
+          <div class="sub">visited · 6 continents</div>
+        </div>
+        <div class="stat">
+          <div class="label">Matches Seen</div>
+          <div class="digits">47</div>
+          <div class="sub">stadiums · live</div>
+        </div>
+        <div class="stat live">
+          <div class="livetag"><i></i>LIVE</div>
+          <div class="label">Miles Flown</div>
+          <div class="digits">88,40<span class="reel" aria-label="2"><span class="strip"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>2</span></span></span></div>
+          <div class="sub">and counting</div>
+        </div>
+        <div class="stat">
+          <div class="label">Stamps</div>
+          <div class="digits">31</div>
+          <div class="sub">in the passport</div>
+        </div>
+      </div>
+
+      <!-- match-result strip -->
+      <div class="matchrow">
+        <div class="match">
+          <div class="team"><span class="flag esp"></span><span class="code">ESP</span></div>
+          <div class="score">3<span class="colon">:</span>1</div>
+          <div class="team"><span class="code">ARG</span><span class="flag arg"></span></div>
+        </div>
+        <div class="clock"><span class="blip"></span>78:14 · 2ND HALF</div>
+        <div class="matchnote">ESTADIO SANTIAGO BERNABÉU<br>MADRID · ATTENDED LIVE</div>
+      </div>
+    </div>
+
+    <!-- LOWER: compact tile + notes -->
+    <div class="lower">
+
+      <!-- compact single-stat tile variant -->
+      <div class="tile">
+        <div class="t-ey"><span>STAT · TILE</span><span class="pin">★ SEASON HIGH</span></div>
+        <div class="t-label">Miles Flown</div>
+        <div class="t-digit">88,402</div>
+        <div class="t-sub">MAD · BUE · LIS · NRT — and back</div>
+      </div>
+
+      <div class="notes">
+        <p class="cap"><b>Why navy, not kraft.</b> Every other card lives on warm paper. The board
+          flips to the globe's <b>--navy</b> so it feels like a panel cut from the same globe scene —
+          continuity, not contrast.</p>
+        <p class="hand">the live figure is the <span class="arrow">↳</span> one volt spark — nothing else glows</p>
+        <div class="specnote">
+          <span class="k">Space Mono · spec note</span>
+          Digits = <b>Space Mono 700</b>, tabular-nums, inset shadow = LED inset. Labels =
+          <b>Anton</b> uppercase. <b>--volt</b> = the single focal glow (the LIVE figure);
+          the clock blip is a hairline tick, everything else stays calm off-white.
+          Scanline = repeating-linear-gradient at 4px.
+        </div>
+
+        <div class="motionspec">
+          <span class="mk">Motion &amp; Interactions · spec sheet</span>
+
+          <div class="mtitle">Scoreboard count-up</div>
+          <div class="row"><span class="f">Trigger</span><span><b>Board enters viewport</b> (here: ambient loop, since a static render can't fire scroll)</span></div>
+          <div class="row"><span class="f">Moves</span><span>Digit odometer reel sweeps 0→final, the new figure tumbling up into the LED slot</span></div>
+          <div class="row"><span class="f">Duration</span><span><b>--t-slow 700ms</b> (demo reel runs 4.2s so the climb reads in a still frame)</span></div>
+          <div class="row"><span class="f">Easing</span><span><b>--ease-draw</b> cubic-bezier(.65,0,.35,1) — accelerate, then settle</span></div>
+          <div class="row"><span class="f">Impl</span><span>CSS: <b>translateY</b> on a stacked <b>.strip</b> in an overflow-clipped reel. FM: <b>useMotionValue + animate(0→n)</b>, spring {stiffness:300,damping:25}.</span></div>
+
+          <div class="mtitle">Live volt pulse</div>
+          <div class="row"><span class="f">Trigger</span><span>Always-on, on the single LIVE figure — the one volt spark</span></div>
+          <div class="row"><span class="f">Moves</span><span>Text-shadow glow breathes in/out; LIVE-tag dot blinks on a steps tick</span></div>
+          <div class="row"><span class="f">Duration</span><span>Glow <b>3.2s</b> ambient idle · blip <b>1.1s</b></span></div>
+          <div class="row"><span class="f">Easing</span><span><b>--ease-paper</b> for the glow · <b>steps(1)</b> for the hard blink</span></div>
+          <div class="row"><span class="f">Impl</span><span>CSS <b>@keyframes voltPulse</b> + <b>blink</b>, infinite. FM: <b>animate</b> loop on textShadow, repeat:Infinity, repeatType:"mirror".</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="footcap">COMPONENT · SCOREBOARD STAT BLOCK — DARK SECTION · SITS NEXT TO THE GLOBE</p>
+
+  </div>
+</body>
+</html>

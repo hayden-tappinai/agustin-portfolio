@@ -1,0 +1,369 @@
+<!-- @dsCard group="Brand" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agustins Portfolio — Globe Cohesion / Page Composition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&family=Permanent+Marker&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F2E8CF; --paper-2:#E8D9B5; --paper-edge:#CDB789; --paper-line:#C7B488;
+  --paper-shadow:rgba(58,42,18,0.18);
+  --ink:#1C1712; --ink-2:#4A4034; --ink-faint:#8A7E68; --navy:#0A1422; --navy-2:#14233A;
+  --pitch:#1E7A46; --globe-green:#3EA96B; --ocean:#14598C; --stamp-red:#C0362C; --gold:#C8992F;
+  --volt:#CDFF3D; --volt-deep:#A6D400;
+  --font-display:"Anton","Arial Narrow",sans-serif;
+  --font-body:"Plus Jakarta Sans",system-ui,sans-serif;
+  --font-hand:"Caveat",cursive; --font-marker:"Permanent Marker",cursive;
+  --font-mono:"Space Mono",ui-monospace,monospace;
+  --ease-thunk:cubic-bezier(.18,.89,.32,1.28); --ease-paper:cubic-bezier(.2,.7,.2,1);
+  --ease-draw:cubic-bezier(.65,0,.35,1);
+  --t-micro:120ms; --t-quick:240ms; --t-base:400ms; --t-tear:520ms; --t-slow:700ms;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background-color:#F2E8CF;
+  background-image:
+    radial-gradient(120% 130% at 0% 0%, rgba(255,250,235,0.55) 0%, transparent 42%),
+    radial-gradient(120% 130% at 100% 100%, rgba(150,118,64,0.20) 0%, transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  font-family:var(--font-body); color:var(--ink); padding:48px;
+}
+.stage{max-width:1100px;margin:0 auto}
+
+/* ---------- header ---------- */
+.eyebrow{font-family:var(--font-mono);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-faint);display:flex;align-items:center;gap:10px}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--volt-deep)}
+h1.page-title{font-family:var(--font-display);text-transform:uppercase;font-size:46px;line-height:1.06;letter-spacing:.02em;color:var(--ink);margin-top:10px}
+.lede{font-family:var(--font-body);font-weight:500;font-size:17px;line-height:1.55;color:var(--ink-2);max-width:660px;margin-top:14px}
+
+/* zone label tag used across the mock */
+.zlabel{position:absolute;z-index:40;font-family:var(--font-mono);font-weight:700;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--paper);background:var(--ink);padding:5px 9px;border-radius:3px;box-shadow:0 3px 8px var(--paper-shadow);white-space:nowrap}
+.zlabel.alt{background:var(--stamp-red)}
+.zlabel.pitch{background:var(--pitch)}
+.zlabel.ocean{background:var(--ocean)}
+
+/* ===================================================================
+   THE HOMEPAGE MOCK — a kraft canvas wrapping a navy globe panel
+   =================================================================== */
+.mock{position:relative;margin-top:42px;background:var(--paper-2);
+  background-image:
+    linear-gradient(var(--paper-line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--paper-line) 1px,transparent 1px);
+  background-size:34px 34px;
+  border:1px solid var(--paper-edge);border-radius:10px;
+  padding:18px 18px 26px;box-shadow:0 30px 60px -28px var(--paper-shadow), inset 0 0 0 6px rgba(255,250,235,.35)}
+.mock-frame-note{position:absolute;top:-13px;right:18px;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--ink-faint);background:var(--paper);padding:3px 8px;border:1px solid var(--paper-edge);border-radius:3px}
+
+/* ---------- TOP: flag bunting + boarding-pass nav ---------- */
+.bunting{position:relative;height:30px;margin:0 6px 8px}
+.bunting .string{position:absolute;top:6px;left:0;right:0;height:2px;background:var(--ink);opacity:.55}
+.bunting .pennants{display:flex;gap:13px;padding-left:6px}
+/* bunting sway is de-emphasized per SPEC §7 — static pennants, no coded loop */
+.bunting .pennant{width:24px;height:22px;clip-path:polygon(0 0,100% 0,50% 100%);box-shadow:0 2px 3px rgba(0,0,0,.12);transform-origin:top center}
+.bunting .pennant:nth-child(odd){transform:rotate(-2deg)}
+.bunting .pennant:nth-child(even){transform:rotate(2deg)}
+
+.nav{position:relative;background:var(--ink);color:var(--paper);border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:14px;box-shadow:0 10px 20px -12px rgba(0,0,0,.5)}
+.nav .brand{font-family:var(--font-display);text-transform:uppercase;font-size:22px;letter-spacing:.01em;line-height:1;color:var(--paper)}
+.nav .brand small{display:block;font-family:var(--font-mono);font-size:8.5px;letter-spacing:.18em;color:var(--volt);margin-top:3px}
+.nav .field{font-family:var(--font-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(242,232,207,.55);border-left:1px solid rgba(242,232,207,.2);padding-left:12px}
+.nav .field b{display:block;font-size:12px;font-weight:700;color:var(--paper);letter-spacing:.06em;margin-top:3px}
+.nav .links{margin-left:auto;display:flex;gap:18px;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.nav .links a{color:rgba(242,232,207,.78);text-decoration:none}
+.nav .links a.active{color:var(--ink);background:var(--volt);padding:4px 8px;border-radius:3px}
+.nav .barcode{height:30px;width:54px;background:repeating-linear-gradient(90deg,var(--paper) 0 2px,transparent 2px 4px,var(--paper) 4px 5px,transparent 5px 8px);border-radius:2px;align-self:center}
+
+/* ---------- HERO ROW: headline kraft + navy globe panel ---------- */
+.hero{display:grid;grid-template-columns:1fr 1.18fr;gap:18px;margin-top:34px;position:relative}
+
+.hero-copy{position:relative;padding:8px 4px}
+.hero-copy .coord{font-family:var(--font-mono);font-weight:700;font-size:11px;letter-spacing:.1em;color:var(--stamp-red);text-transform:uppercase}
+.hero-copy h2{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(40px,5.2vw,62px);line-height:.98;letter-spacing:.015em;color:var(--ink);margin-top:8px}
+.hero-copy h2 .hl{position:relative;display:inline-block;color:var(--ink);z-index:1}
+.hero-copy h2 .hl::after{content:"";position:absolute;left:-3px;right:-3px;bottom:6px;height:42%;background:var(--volt);z-index:-1;transform:skewX(-7deg)}
+.subnote{font-family:var(--font-hand);font-weight:600;font-size:27px;color:var(--ink-2);line-height:1.15;margin-top:18px;max-width:330px}
+.subnote .pen{color:var(--stamp-red)}
+.cta-row{display:flex;gap:12px;align-items:center;margin-top:22px}
+.ticket-btn{position:relative;background:var(--pitch);color:#fff;font-family:var(--font-mono);font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:13px 20px 13px 26px;border-radius:6px;box-shadow:0 8px 16px -8px rgba(30,122,70,.7);transition:transform var(--t-quick) var(--ease-thunk)}
+.ticket-btn::before{content:"";position:absolute;left:11px;top:50%;width:7px;height:7px;border-radius:50%;background:var(--paper-2);transform:translateY(-50%);box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.ticket-btn::after{content:"";position:absolute;left:24px;top:6px;bottom:6px;border-left:2px dashed rgba(255,255,255,.4)}
+.ghost-link{font-family:var(--font-body);font-weight:700;font-size:13px;color:var(--ink);text-decoration:none;border-bottom:2.5px solid var(--volt-deep);padding-bottom:1px}
+
+/* THE GLOBE ZONE — navy calm center */
+.globe-zone{position:relative;background:var(--navy);border-radius:16px;
+  background-image:
+    linear-gradient(rgba(110,227,160,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(110,227,160,.07) 1px,transparent 1px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  background-size:40px 40px,40px 40px,160px 160px;
+  box-shadow:0 26px 50px -22px rgba(10,20,34,.8), inset 0 0 0 1px rgba(110,227,160,.12);
+  padding:26px;display:flex;align-items:center;justify-content:center;min-height:380px;overflow:hidden}
+.globe-zone .gz-meta{position:absolute;top:14px;left:16px;font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(110,227,160,.6)}
+.globe-zone .gz-meta2{position:absolute;bottom:14px;right:16px;font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(242,232,207,.4)}
+.globe-svg{width:300px;height:300px;filter:drop-shadow(0 14px 28px rgba(0,0,0,.5))}
+.you-pulse{transform-box:fill-box;transform-origin:center;animation:pulse 2.6s var(--ease-paper) infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.7}}
+.you-ring{transform-box:fill-box;transform-origin:center;animation:ring 2.6s var(--ease-paper) infinite}
+@keyframes ring{0%{transform:scale(.5);opacity:.55}70%,100%{transform:scale(1.9);opacity:0}}
+.route-draw{stroke-dasharray:2 8;animation:rdash 6s linear infinite}
+@keyframes rdash{to{stroke-dashoffset:-100}}
+
+/* ---------- Higgsfield asset slot (drawn/character MOTION lives here, never coded) ---------- */
+.hf-slot{position:absolute;z-index:28;display:grid;place-items:center;gap:7px;
+  border:2px dashed rgba(110,227,160,.55);border-radius:12px;
+  background:repeating-linear-gradient(45deg, rgba(110,227,160,.05) 0 10px, transparent 10px 20px);
+  color:rgba(242,232,207,.7);padding:14px 12px;text-align:center}
+.hf-slot .hf-tag{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--paper);color:var(--ink);padding:5px 9px;border-radius:4px}
+.hf-slot .hf-meta{font-family:var(--font-mono);font-size:9px;letter-spacing:.06em;color:rgba(110,227,160,.65);line-height:1.4}
+
+/* ---------- OVERLAPPING destination panel (mini signature card) ---------- */
+.dest-peek{position:absolute;z-index:30;top:54%;right:-26px;width:248px;
+  background:var(--paper);border:1px solid var(--paper-edge);border-radius:8px;
+  padding:14px 14px 16px;transform:rotate(2.4deg);
+  box-shadow:0 22px 40px -18px var(--paper-shadow);
+  clip-path:polygon(0 0,100% 0,100% 93%,93% 97%,84% 93%,74% 97%,64% 93%,54% 97%,44% 93%,34% 97%,24% 93%,14% 97%,5% 93%,0 96%)}
+.dest-peek .flagchip{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.12em;color:var(--ink-2);text-transform:uppercase}
+.dest-peek .flagchip .sw{width:24px;height:15px;border-radius:2px;background:linear-gradient(180deg,#C60B1E 0 33%,#FFC400 33% 66%,#C60B1E 66%);box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.dest-peek h3{font-family:var(--font-display);text-transform:uppercase;font-size:30px;line-height:1.02;letter-spacing:.02em;margin-top:7px;color:var(--ink)}
+.dest-peek .dcoord{font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.06em;color:var(--ink-faint);margin-top:4px}
+.dest-peek .mini-polaroid{background:#fdfdfb;padding:6px 6px 18px;margin-top:12px;box-shadow:0 8px 16px var(--paper-shadow);transform:rotate(-2deg);position:relative}
+.dest-peek .mini-polaroid .photo{height:74px;border-radius:2px;background:
+  linear-gradient(180deg,#1b3a5a 0 56%,var(--pitch) 56% 100%);position:relative;overflow:hidden}
+.dest-peek .mini-polaroid .photo::after{content:"";position:absolute;left:50%;top:60%;width:42px;height:1px;background:rgba(255,255,255,.5);transform:translateX(-50%)}
+.dest-peek .dnote{font-family:var(--font-hand);font-size:18px;color:var(--ink-2);line-height:1.05;margin-top:10px}
+.dest-peek .dstamp{position:absolute;top:-14px;left:-12px;width:54px;height:54px;border:2px solid var(--stamp-red);border-radius:50%;color:var(--stamp-red);font-family:var(--font-mono);font-weight:700;font-size:7px;letter-spacing:.04em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.15;transform:rotate(-12deg);opacity:.85;mix-blend-mode:multiply;background:var(--paper);box-shadow:inset 0 0 0 2px rgba(192,54,44,.3)}
+
+/* ---------- BOTTOM: scoreboard stat strip ---------- */
+.scoreboard{margin-top:46px;background:var(--navy);border-radius:12px;padding:20px 24px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;position:relative;
+  box-shadow:0 18px 38px -20px rgba(10,20,34,.75), inset 0 0 0 1px rgba(110,227,160,.1)}
+.scoreboard .stat{text-align:center;position:relative}
+.scoreboard .stat + .stat::before{content:"";position:absolute;left:0;top:14%;bottom:14%;border-left:1px solid rgba(242,232,207,.12)}
+.scoreboard .stat .lab{font-family:var(--font-display);text-transform:uppercase;font-size:13px;letter-spacing:.04em;color:rgba(242,232,207,.55)}
+.scoreboard .stat .num{font-family:var(--font-mono);font-weight:700;font-size:40px;letter-spacing:.02em;color:var(--paper);line-height:1;margin-top:5px}
+.scoreboard .stat.live .num{color:var(--volt);text-shadow:0 0 16px rgba(205,255,61,.5);animation:glow 2.8s ease-in-out infinite}
+@keyframes glow{50%{text-shadow:0 0 26px rgba(205,255,61,.85)}}
+.scoreboard .stat .sub{font-family:var(--font-mono);font-size:9px;letter-spacing:.1em;color:rgba(242,232,207,.4);margin-top:5px;text-transform:uppercase}
+
+/* ---------- FOOTER ---------- */
+.footer{margin-top:20px;display:flex;align-items:center;gap:16px;padding:10px 6px;border-top:1px solid var(--paper-edge)}
+.footer .fcoord{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--ink-faint);text-transform:uppercase}
+.footer .fname{font-family:var(--font-display);text-transform:uppercase;font-size:16px;color:var(--ink);letter-spacing:.02em}
+.footer .compass{margin-left:auto;width:46px;height:46px}
+
+/* ---------- scattered scrapbook accents ---------- */
+.acc{position:absolute;z-index:25}
+.washi{position:absolute;width:120px;height:32px;
+  background:repeating-linear-gradient(46deg,rgba(255,255,255,.22) 0 7px,transparent 7px 14px),var(--tape,rgba(20,89,140,.55));
+  box-shadow:0 2px 4px rgba(0,0,0,.14);clip-path:polygon(3% 0,97% 5%,100% 95%,0 100%);transform:rotate(-5deg);opacity:.9;z-index:35}
+.polaroid-acc{background:#fdfdfb;padding:9px 9px 30px;box-shadow:0 14px 28px var(--paper-shadow);transform:rotate(-6deg);width:128px}
+.polaroid-acc .photo{aspect-ratio:1/1;border-radius:2px;background:linear-gradient(160deg,#2a4a6a 0 50%,var(--pitch) 50% 100%);position:relative;overflow:hidden}
+.polaroid-acc .photo .ball{position:absolute;right:8px;bottom:8px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:inset -3px -3px 0 rgba(0,0,0,.12)}
+.polaroid-acc .photo .ball::after{content:"";position:absolute;left:50%;top:50%;width:7px;height:7px;background:var(--ink);clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%);transform:translate(-50%,-50%)}
+.polaroid-acc .cap{font-family:var(--font-hand);font-size:21px;color:var(--ink-2);position:absolute;bottom:5px;left:11px;line-height:1}
+.stamp-acc{width:84px;height:84px;border:2.5px solid var(--stamp-red);border-radius:50%;color:var(--stamp-red);font-family:var(--font-mono);font-weight:700;font-size:8px;letter-spacing:.05em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1.3;transform:rotate(11deg);opacity:.82;mix-blend-mode:multiply;box-shadow:inset 0 0 0 3px rgba(192,54,44,.3)}
+.pushpin{position:absolute;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#e8645c,var(--stamp-red));box-shadow:0 3px 5px rgba(0,0,0,.3);z-index:36}
+.pushpin::after{content:"";position:absolute;left:55%;top:55%;width:3px;height:1px;background:rgba(255,255,255,.7);border-radius:2px}
+
+/* ---------- rationale captions ---------- */
+.why{display:flex;align-items:flex-start;gap:8px;font-family:var(--font-body);font-size:12px;line-height:1.5;color:var(--ink-2);margin-top:10px}
+.why .tag{flex:none;font-family:var(--font-mono);font-weight:700;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--paper);background:var(--ink-2);padding:3px 6px;border-radius:3px;margin-top:1px}
+.why-grid{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:14px 32px;padding-top:22px;border-top:2px dashed var(--paper-edge)}
+.legend-note{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--ink-faint);text-transform:uppercase}
+.keymsg{margin-top:26px;background:var(--paper-2);border:1px solid var(--paper-edge);border-left:5px solid var(--volt-deep);border-radius:6px;padding:16px 18px}
+.keymsg .h{font-family:var(--font-mono);font-weight:700;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--volt-deep)}
+.keymsg p{font-family:var(--font-body);font-size:14px;line-height:1.55;color:var(--ink);margin-top:7px;max-width:760px}
+.keymsg b{font-weight:800}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- ===== CARD HEADER ===== -->
+  <div class="eyebrow"><span class="dot"></span>40.4168° N&nbsp; 3.7038° W &nbsp;·&nbsp; BRAND / PAGE COMPOSITION</div>
+  <h1 class="page-title">Globe Cohesion — How The Page Assembles</h1>
+  <p class="lede">A wide mock of the full homepage. The bold World-Cup &amp; scrapbook system lives on the warm kraft <i>around</i> a calm navy globe panel — so the interactive globe stays legible while the collage carries the personality.</p>
+
+  <!-- ===================== THE HOMEPAGE MOCK ===================== -->
+  <div class="mock">
+    <span class="mock-frame-note">HOMEPAGE · 1440 ARTBOARD ↘ SCALED</span>
+
+    <!-- ----- TOP: flag bunting ----- -->
+    <span class="zlabel" style="top:6px;left:14px;">ZONE 01 · MASTHEAD</span>
+    <div class="bunting" style="margin-top:6px;">
+      <div class="string"></div>
+      <div class="pennants">
+        <span class="pennant" style="background:var(--stamp-red)"></span>
+        <span class="pennant" style="background:var(--gold)"></span>
+        <span class="pennant" style="background:var(--pitch)"></span>
+        <span class="pennant" style="background:var(--ocean)"></span>
+        <span class="pennant" style="background:var(--stamp-red)"></span>
+        <span class="pennant" style="background:var(--gold)"></span>
+        <span class="pennant" style="background:var(--pitch)"></span>
+        <span class="pennant" style="background:var(--ocean)"></span>
+        <span class="pennant" style="background:var(--stamp-red)"></span>
+        <span class="pennant" style="background:var(--gold)"></span>
+      </div>
+    </div>
+
+    <!-- ----- boarding-pass nav ----- -->
+    <div class="nav">
+      <div class="brand">AGUSTÍN<small>BOARDING PASS · NAV</small></div>
+      <div class="field">FROM<b>MADRID</b></div>
+      <div class="field">TO<b>WHEREVER</b></div>
+      <div class="field">GATE<b>B7</b></div>
+      <div class="links">
+        <a class="active" href="#">GLOBE</a>
+        <a href="#">PLACES</a>
+        <a href="#">MATCHES</a>
+        <a href="#">ABOUT</a>
+      </div>
+      <div class="barcode" title="boarding-pass barcode"></div>
+    </div>
+
+    <!-- ----- HERO ROW ----- -->
+    <div class="hero">
+
+      <!-- copy column on kraft -->
+      <div class="hero-copy">
+        <div class="coord">● MADRID · 40.4168° N, 3.7038° W</div>
+        <h2>A LIFE<br>MAPPED IN<br><span class="hl">FOOTY</span> &amp; FAR-<br>FLUNG PLACES</h2>
+        <div class="subnote">spin the globe — every <span class="pen">pin</span> is a match I chased or a city I got lost in.</div>
+        <div class="cta-row">
+          <span class="ticket-btn">SPIN THE GLOBE →</span>
+          <a class="ghost-link" href="#">or read the journal</a>
+        </div>
+      </div>
+
+      <!-- THE GLOBE ZONE (navy calm center) -->
+      <div class="globe-zone">
+        <span class="zlabel ocean" style="top:-12px;left:50%;transform:translateX(-50%);">ZONE 02 · GLOBE (THE CALM CENTER)</span>
+        <span class="gz-meta">◐ INTERACTIVE · DRAG TO ROTATE</span>
+        <span class="gz-meta2">EPSG:4326 · ORTHOGRAPHIC</span>
+        <svg class="globe-svg" viewBox="0 0 300 300" aria-label="Simplified interactive globe">
+          <defs>
+            <radialGradient id="ocean" cx="38%" cy="32%" r="75%">
+              <stop offset="0%" stop-color="#1c6fa8"/>
+              <stop offset="60%" stop-color="#14598C"/>
+              <stop offset="100%" stop-color="#0c3a5e"/>
+            </radialGradient>
+            <clipPath id="globeClip"><circle cx="150" cy="150" r="120"/></clipPath>
+          </defs>
+          <!-- ocean sphere -->
+          <circle cx="150" cy="150" r="120" fill="url(#ocean)"/>
+          <g clip-path="url(#globeClip)">
+            <!-- faint graticule meridians + parallels -->
+            <g stroke="rgba(110,227,160,.28)" stroke-width="1" fill="none">
+              <ellipse cx="150" cy="150" rx="40" ry="120"/>
+              <ellipse cx="150" cy="150" rx="82" ry="120"/>
+              <line x1="30" y1="150" x2="270" y2="150"/>
+              <ellipse cx="150" cy="150" rx="120" ry="48"/>
+              <ellipse cx="150" cy="150" rx="120" ry="92"/>
+            </g>
+            <!-- landmass blobs (globe green) -->
+            <g fill="var(--globe-green)" opacity=".92">
+              <path d="M70 90 Q100 70 128 88 Q150 102 138 128 Q120 150 92 142 Q66 132 60 110 Z"/>
+              <path d="M150 175 Q168 160 184 178 Q196 200 180 222 Q160 244 146 220 Q138 198 150 175 Z"/>
+              <path d="M196 96 Q224 86 240 108 Q250 128 230 140 Q206 146 196 124 Z"/>
+              <path d="M120 200 Q132 192 142 206 Q146 222 130 228 Q116 224 116 210 Z"/>
+            </g>
+            <!-- pitch-green highlighted countries (visited) -->
+            <path d="M126 96 Q140 88 150 100 Q154 114 142 122 Q128 122 124 110 Z" fill="var(--pitch)" stroke="rgba(205,255,61,.5)" stroke-width="1.2"/>
+            <path d="M152 178 Q166 168 176 182 Q178 198 164 204 Q152 200 150 188 Z" fill="var(--pitch)" stroke="rgba(205,255,61,.5)" stroke-width="1.2"/>
+            <!-- dotted route arc -->
+            <path class="route-draw" d="M138 110 Q200 120 165 188" stroke="var(--stamp-red)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+            <circle cx="138" cy="110" r="3.4" fill="var(--stamp-red)"/>
+          </g>
+          <!-- sphere edge highlight -->
+          <circle cx="150" cy="150" r="120" fill="none" stroke="rgba(110,227,160,.35)" stroke-width="1.5"/>
+          <!-- VOLT you-are-here dot (the single spark inside the globe) -->
+          <circle class="you-ring" cx="138" cy="110" r="11" fill="none" stroke="var(--volt)" stroke-width="1.5"/>
+          <circle class="you-pulse" cx="138" cy="110" r="5" fill="var(--volt)"/>
+        </svg>
+
+        <!-- HIGGSFIELD ASSET SLOT — the b/w hand-drawn soccer-ball fly-through is a
+             generated transparent WebM, NEVER coded in CSS (SPEC §7 revision + §8).
+             Sits near the globe; triggered when a country lifts on hover. -->
+        <div class="hf-slot" style="left:18px;bottom:18px;width:210px;min-height:118px;" role="img" aria-label="Higgsfield asset slot — soccer-ball fly-through">
+          <span class="hf-tag">HIGGSFIELD ASSET — added later</span>
+          <span class="hf-meta">ball fly-through plays here (Higgsfield)<br>transparent WebM · ~480×480 · loops · trigger: country lift</span>
+        </div>
+
+        <!-- OVERLAPPING destination panel (mini signature card) -->
+        <div class="dest-peek">
+          <span class="zlabel alt" style="top:-26px;right:0;">ZONE 03 · DESTINATION PEEK</span>
+          <div class="dstamp">ENTRY<br>ESP · '24</div>
+          <div class="flagchip"><span class="sw"></span>SPAIN · ESP</div>
+          <h3>MADRID</h3>
+          <div class="dcoord">40.4530° N · 3.6883° W</div>
+          <div class="mini-polaroid"><div class="photo"></div></div>
+          <div class="dnote">Bernabéu under floodlights — still the loudest 80,000 I've heard.</div>
+        </div>
+      </div>
+    </div><!-- /hero -->
+
+    <!-- ----- BOTTOM: scoreboard stat strip ----- -->
+    <span class="zlabel pitch" style="position:relative;display:inline-block;margin:44px 0 -34px 4px;">ZONE 04 · SCOREBOARD STAT STRIP</span>
+    <div class="scoreboard">
+      <div class="stat"><div class="lab">Countries</div><div class="num">23</div><div class="sub">stamped · 5 continents</div></div>
+      <div class="stat"><div class="lab">Matches</div><div class="num">47</div><div class="sub">stadiums visited</div></div>
+      <div class="stat live"><div class="lab">Miles</div><div class="num">88,402</div><div class="sub">● live counter</div></div>
+    </div>
+
+    <!-- ----- FOOTER ----- -->
+    <div class="footer">
+      <span class="zlabel" style="position:relative;display:inline-block;margin-right:6px;">ZONE 05 · FOOTER</span>
+      <span class="fname">AGUSTÍN</span>
+      <span class="fcoord">EST. MADRID · 40.4168° N, 3.7038° W · ©2026</span>
+      <svg class="compass" viewBox="0 0 100 100" aria-label="compass rose">
+        <circle cx="50" cy="50" r="42" fill="none" stroke="var(--ink-faint)" stroke-width="1.5"/>
+        <g fill="var(--ink)">
+          <path d="M50 8 L57 50 L50 46 L43 50 Z"/>
+          <path d="M50 92 L43 50 L50 54 L57 50 Z" opacity=".5"/>
+          <path d="M8 50 L50 43 L46 50 L50 57 Z" opacity=".5"/>
+          <path d="M92 50 L50 57 L54 50 L50 43 Z" opacity=".5"/>
+        </g>
+        <circle cx="50" cy="50" r="3" fill="var(--stamp-red)"/>
+        <text x="50" y="6" text-anchor="middle" font-family="Anton" font-size="11" fill="var(--ink)">N</text>
+      </svg>
+    </div>
+
+    <!-- ===== scattered scrapbook accents around the margins ===== -->
+    <div class="acc polaroid-acc" style="bottom:120px;left:-30px;">
+      <div class="photo"><div class="ball"></div></div>
+      <div class="cap">La Bombonera '23</div>
+      <span class="pushpin" style="top:-7px;left:50%;"></span>
+    </div>
+    <span class="washi" style="--tape:rgba(200,153,47,.55);top:-12px;right:118px;"></span>
+    <div class="acc stamp-acc" style="top:96px;right:-22px;">Lisboa<br>★ ★ ★<br>06·25</div>
+    <span class="pushpin" style="top:46px;right:200px;"></span>
+  </div><!-- /mock -->
+
+  <!-- ===== KEY MESSAGE ===== -->
+  <div class="keymsg">
+    <div class="h">◆ THE COHESION RULE</div>
+    <p>The globe stays <b>minimal, dark, and legible</b> — navy ocean, green land, faint graticule, one volt "you-are-here" dot. The bold World-Cup &amp; scrapbook system (bunting, kraft, Polaroids, stamps, scoreboard) lives entirely <b>around</b> that calm panel. Personality wraps the map; the map never fights for attention. This is how every page composes: collage on the edges, clarity at the core.</p>
+  </div>
+
+  <!-- ===== SELF-DOCUMENTING RATIONALE ===== -->
+  <div class="legend-note" style="margin-top:30px;">// WHY THESE CHOICES — drop-in notes for Claude Design</div>
+  <div class="why-grid">
+    <div class="why"><span class="tag">Anton</span>Stadium-banner display for the hero headline, brand mark, scoreboard labels &amp; country names — the loud, uppercase signature voice.</div>
+    <div class="why"><span class="tag">Navy panel</span>The globe sits on globe-navy with a green graticule so the mock matches the real interactive globe exactly — cohesion, not decoration.</div>
+    <div class="why"><span class="tag">Volt ×1</span>The single electric spark is the pulsing you-are-here dot, echoed only as the active nav chip + live-miles glow + ghost-link underline. Never two competing.</div>
+    <div class="why"><span class="tag">Space Mono</span>All coordinates, gate/seat fields, the barcode label and scoreboard digits — data reads as boarding-pass / scoreboard telemetry.</div>
+    <div class="why"><span class="tag">Caveat</span>Hand sub-note &amp; Polaroid captions add the journal warmth without shouting — kept off the structural type.</div>
+    <div class="why"><span class="tag">Kraft + grid</span>Warm paper carries a faint modern grid underneath the collage: tactile texture on a sharp, intentional structure — bold, current, not twee.</div>
+    <div class="why"><span class="tag">Overlap</span>The destination card breaks the globe panel edge with a torn deckle + rotation so layers feel physically stacked — scrapbook depth.</div>
+    <div class="why"><span class="tag">Zones labeled</span>Black tags mark each region (masthead → globe → peek → scoreboard → footer) so the page-assembly recipe is explicit.</div>
+    <div class="why"><span class="tag">Higgsfield slot</span>The hand-drawn soccer-ball fly-through near the globe is a generated transparent WebM — never CSS-coded (SPEC §7/§8). The system leaves a clean labeled slot; the static b/w ball glyph in the Polaroid stays as a flat motif only.</div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!-- @dsCard group="Motion & Interactions" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agustins Portfolio — Motion: Map & Data</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&family=Permanent+Marker&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --paper:#F2E8CF; --paper-2:#E8D9B5; --paper-edge:#CDB789; --paper-line:#C7B488;
+  --paper-shadow:rgba(58,42,18,0.18);
+  --ink:#1C1712; --ink-2:#4A4034; --ink-faint:#8A7E68; --navy:#0A1422; --navy-2:#14233A;
+  --pitch:#1E7A46; --globe-green:#3EA96B; --ocean:#14598C; --stamp-red:#C0362C; --gold:#C8992F;
+  --volt:#CDFF3D; --volt-deep:#A6D400;
+  --font-display:"Anton","Arial Narrow",sans-serif;
+  --font-body:"Plus Jakarta Sans",system-ui,sans-serif;
+  --font-hand:"Caveat",cursive; --font-marker:"Permanent Marker",cursive;
+  --font-mono:"Space Mono",ui-monospace,monospace;
+  /* Motion tokens — pasted from §7 so previews use the real timing contract */
+  --ease-thunk:cubic-bezier(.18,.89,.32,1.28); --ease-paper:cubic-bezier(.2,.7,.2,1);
+  --ease-draw:cubic-bezier(.65,0,.35,1);
+  --t-micro:120ms; --t-quick:240ms; --t-base:400ms; --t-tear:520ms; --t-slow:700ms;
+}
+
+body{
+  background-color:#F2E8CF;
+  background-image:
+    radial-gradient(120% 130% at 0% 0%, rgba(255,250,235,0.55) 0%, transparent 42%),
+    radial-gradient(120% 130% at 100% 100%, rgba(150,118,64,0.20) 0%, transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  font-family:var(--font-body); color:var(--ink); padding:48px;
+}
+
+.stage{max-width:1100px;margin:0 auto}
+
+/* ---------- Header ---------- */
+.eyebrow{
+  font-family:var(--font-mono); font-weight:700; font-size:12px; text-transform:uppercase;
+  letter-spacing:.14em; color:var(--ink-faint); display:flex; align-items:center; gap:10px;
+}
+.eyebrow .dot{ width:9px; height:9px; border-radius:50%; background:var(--volt-deep);
+  box-shadow:0 0 0 3px rgba(166,212,0,.22); }
+h1{ font-family:var(--font-display); text-transform:uppercase; letter-spacing:.02em;
+  line-height:1.02; font-size:clamp(48px,6.4vw,84px); color:var(--ink); margin:14px 0 10px; }
+h1 .live{ color:var(--ocean); }
+.lede{ font-size:18px; line-height:1.55; font-weight:500; color:var(--ink-2); max-width:62ch; }
+.hand-note{ font-family:var(--font-hand); font-size:27px; color:var(--ink-2); transform:rotate(-2.4deg);
+  display:inline-block; }
+
+/* faint ruled grid under the header to nod to the journal page */
+.head{ position:relative; padding-bottom:26px; margin-bottom:38px;
+  border-bottom:1.5px dashed var(--paper-edge); }
+
+/* ---------- Panel chrome ---------- */
+.grid{ display:grid; gap:30px; grid-template-columns:1fr 1fr; }
+.panel{ position:relative; background:var(--navy); border-radius:14px; padding:26px 26px 22px;
+  box-shadow:0 18px 40px rgba(10,20,34,.28), inset 0 0 0 1px rgba(110,227,160,.08);
+  overflow:hidden; }
+.panel.full{ grid-column:1 / -1; }
+/* navy graticule overlay per §4.7 (dark variant) */
+.panel::before{ content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(110,227,160,.10) 1px,transparent 1px),
+    linear-gradient(90deg, rgba(110,227,160,.10) 1px,transparent 1px);
+  background-size:42px 42px; opacity:.6; }
+.panel > *{ position:relative; z-index:1; }
+
+.p-eyebrow{ font-family:var(--font-mono); font-weight:700; font-size:11px; text-transform:uppercase;
+  letter-spacing:.14em; color:rgba(205,255,61,.85); display:flex; gap:8px; align-items:center; }
+.p-title{ font-family:var(--font-display); text-transform:uppercase; color:#F4ECD9;
+  font-size:30px; letter-spacing:.025em; line-height:1.1; margin:10px 0 6px; }
+.p-sub{ font-size:13.5px; color:#A9B6C4; line-height:1.5; font-weight:500; max-width:46ch; }
+.p-sub em{ font-style:normal; color:#86F0B5; font-family:var(--font-mono); font-size:11.5px; }
+
+/* The live preview viewport inside each panel */
+.viewport{ background:var(--navy-2); border-radius:10px; margin:18px 0 16px; padding:22px;
+  position:relative; box-shadow:inset 0 0 0 1px rgba(255,255,255,.05); overflow:hidden; }
+
+/* Space Mono spec strip — drops straight into the React build */
+.spec{ font-family:var(--font-mono); font-size:11px; line-height:1.7; color:#86F0B5;
+  background:rgba(0,0,0,.28); border-radius:8px; padding:12px 14px;
+  border-left:3px solid var(--volt-deep); }
+.spec b{ color:#F4ECD9; font-weight:700; }
+.spec .k{ color:#7FB0E0; }
+
+/* ============================================================
+   1 · ROUTE LINE DRAW
+   ============================================================ */
+.routebox{ height:150px; }
+.route-svg{ width:100%; height:100%; display:block; overflow:visible; }
+.route-line{
+  stroke:var(--volt); stroke-width:2.6; fill:none; stroke-linecap:round;
+  stroke-dasharray:1 9; /* round-dot travel line per §4.8 */
+  /* draw: a solid overlay path masks the dotted path via a second animated path */
+}
+/* The animated "drawing" stroke: one continuous segment whose dashoffset reveals it */
+.route-draw{
+  stroke:var(--stamp-red); stroke-width:2.6; fill:none; stroke-linecap:round;
+  stroke-dasharray:420; stroke-dashoffset:420;
+  animation:draw 4.2s var(--ease-draw) infinite;
+}
+@keyframes draw{
+  0%   { stroke-dashoffset:420; }
+  28%  { stroke-dashoffset:0;   } /* ~1.2s of the cycle is the actual draw */
+  72%  { stroke-dashoffset:0;   }
+  100% { stroke-dashoffset:420; }
+}
+/* plane riding the path */
+.plane{ font-size:18px; offset-path:path("M28 110 Q 250 -8 472 70");
+  offset-rotate:auto; animation:fly 4.2s var(--ease-draw) infinite; fill:#F4ECD9; }
+@keyframes fly{
+  0%   { offset-distance:0%;   opacity:0; }
+  6%   { opacity:1; }
+  28%  { offset-distance:100%; opacity:1; }
+  34%  { opacity:0; }
+  100% { offset-distance:100%; opacity:0; }
+}
+/* endpoint dots pop */
+.dot-pop{ transform-box:fill-box; transform-origin:center; }
+.dot-a{ animation:popA 4.2s var(--ease-thunk) infinite; }
+.dot-b{ animation:popB 4.2s var(--ease-thunk) infinite; }
+@keyframes popA{ 0%{transform:scale(.2);opacity:.3} 6%{transform:scale(1.35)} 12%{transform:scale(1)} 100%{transform:scale(1)} }
+@keyframes popB{ 0%,24%{transform:scale(.2);opacity:.3} 30%{transform:scale(1.35);opacity:1} 36%{transform:scale(1)} 100%{transform:scale(1)} }
+.city-lbl{ font-family:var(--font-mono); font-size:9px; fill:#A9B6C4; letter-spacing:.08em; text-transform:uppercase; }
+.coord-lbl{ font-family:var(--font-mono); font-size:8px; fill:var(--ink-faint); }
+
+/* ============================================================
+   2 · SCOREBOARD COUNT-UP (digit reels via @property + steps)
+   ============================================================ */
+@property --n1{ syntax:"<integer>"; inherits:false; initial-value:0; }
+@property --n2{ syntax:"<integer>"; inherits:false; initial-value:0; } /* miles, thousands group */
+@property --n3{ syntax:"<integer>"; inherits:false; initial-value:0; } /* miles, hundreds group */
+
+.scorebar{ display:flex; gap:26px; flex-wrap:wrap; }
+.statblock{ flex:1; min-width:150px; }
+.stat-label{ font-family:var(--font-display); text-transform:uppercase; color:#A9B6C4;
+  font-size:13px; letter-spacing:.02em; line-height:1.1; margin-bottom:6px; }
+
+/* Approach A — @property tabular count, drives a counter() readout that visibly ticks */
+.count{ font-family:var(--font-mono); font-weight:700; color:var(--volt);
+  font-size:46px; line-height:1; text-shadow:0 0 16px rgba(205,255,61,.35); }
+.count.gold{ color:var(--gold); text-shadow:0 0 16px rgba(200,153,47,.3); }
+.count::after{ content:counter(c); }
+.count.countries{ counter-reset:c var(--n1);
+  animation:tick1 4.4s var(--ease-draw) infinite; }
+/* miles ticks up as a comma-grouped figure: thousands group + "," + zero-padded hundreds */
+.count.miles{ counter-reset:hi var(--n2) lo var(--n3); }
+.count.miles::after{ content:counter(hi) "," counter(lo); }
+.count.miles{ animation:tickHi 4.4s var(--ease-draw) infinite, tickLo 4.4s var(--ease-draw) infinite; }
+@keyframes tick1{ 0%{--n1:0} 25%{--n1:23} 100%{--n1:23} }      /* 0 -> 23 countries */
+@keyframes tickHi{ 0%,4%{--n2:0} 30%{--n2:88}  100%{--n2:88}  } /* staggered, thousands -> 88 */
+@keyframes tickLo{ 0%,4%{--n3:0} 30%{--n3:402} 100%{--n3:402} } /* hundreds -> 402  => 88,402 mi */
+.count-unit{ font-family:var(--font-mono); font-size:13px; color:#A9B6C4; margin-left:6px; }
+
+/* Approach B — visible mechanical DIGIT REEL (a strip of 0-9 slid by steps()) */
+.reel-demo{ display:flex; align-items:baseline; gap:2px; margin-top:18px; }
+.reel-demo .pre{ font-family:var(--font-mono); font-size:13px; color:#86F0B5; align-self:center;
+  letter-spacing:.1em; margin-right:8px; }
+.reel{ display:inline-block; height:38px; width:24px; overflow:hidden; position:relative;
+  background:rgba(0,0,0,.3); border-radius:4px; box-shadow:inset 0 0 0 1px rgba(255,255,255,.06); }
+.reel .strip{ display:flex; flex-direction:column; font-family:var(--font-mono); font-weight:700;
+  font-size:28px; line-height:38px; color:var(--volt); text-align:center; }
+.reel .strip span{ height:38px; }
+/* each reel lands on its target digit via steps(); staggered so it reads like a real counter */
+.r1 .strip{ animation:reel 4.4s steps(1,end) infinite; --land:-152px; }  /* -> 4 (×38) */
+.r2 .strip{ animation:reel 4.4s steps(1,end) infinite; animation-delay:.08s; --land:-266px; } /* -> 7 */
+@keyframes reel{
+  0%   { transform:translateY(0); }
+  6%   { transform:translateY(calc(var(--land) * .5)); }
+  12%  { transform:translateY(calc(var(--land) * .85)); }
+  18%  { transform:translateY(var(--land)); }
+  100% { transform:translateY(var(--land)); }
+}
+.reel-cap{ font-family:var(--font-hand); font-size:21px; color:#86F0B5; margin-left:10px; align-self:center; transform:rotate(-3deg); }
+
+/* ---------- footer captions ---------- */
+.rationale{ margin-top:30px; display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.rcard{ background:var(--paper-2); border:1px solid var(--paper-edge); border-radius:10px;
+  padding:14px 16px; box-shadow:0 3px 8px var(--paper-shadow); }
+.rcard .rk{ font-family:var(--font-mono); font-size:10px; font-weight:700; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--stamp-red); }
+.rcard .rv{ font-size:13px; line-height:1.5; color:var(--ink-2); margin-top:5px; font-weight:500; }
+
+.foot{ margin-top:26px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  font-family:var(--font-mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--ink-faint); }
+.foot .chip{ background:var(--ink); color:var(--paper); padding:4px 9px; border-radius:5px;
+  letter-spacing:.06em; }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none !important; }
+  .route-draw{ stroke-dashoffset:0; }
+}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <header class="head">
+    <div class="eyebrow"><span class="dot"></span>40.4168&deg; N, 3.7038&deg; W &nbsp;·&nbsp; Motion Spec 07 / Map &amp; Data</div>
+    <h1>Routes Draw,<br>Numbers <span class="live">Tick Up</span>.</h1>
+    <p class="lede">The map and the scoreboard are alive. Routes ink themselves point-to-point and stats reel up like a stadium board &mdash; the globe itself owns the hover-lift. <span class="hand-note">all on the globe's clock&nbsp;✦</span></p>
+  </header>
+
+  <div class="grid">
+
+    <!-- ============ 1 · ROUTE LINE DRAW ============ -->
+    <section class="panel">
+      <div class="p-eyebrow">● ROUTE.DRAW</div>
+      <h2 class="p-title">Route Line Draws</h2>
+      <p class="p-sub">A dashed travel route inks itself from Madrid to Tokyo. A tiny abstract marker rides the path; dots pop at each end. Loops. <em>In the app, the Higgsfield ball/plane asset can ride this same path.</em></p>
+
+      <div class="viewport routebox">
+        <svg class="route-svg" viewBox="0 0 500 150" preserveAspectRatio="xMidYMid meet" aria-label="Madrid to Tokyo route">
+          <!-- faint full dotted path (the printed map line) -->
+          <path class="route-line" d="M28 110 Q 250 -8 472 70" />
+          <!-- animated drawing stroke (the live ink) -->
+          <path class="route-draw" d="M28 110 Q 250 -8 472 70" />
+          <!-- origin dot + label : Madrid -->
+          <circle class="dot-pop dot-a" cx="28" cy="110" r="5.5" fill="var(--stamp-red)"/>
+          <text class="city-lbl" x="14" y="132">MAD</text>
+          <text class="coord-lbl" x="14" y="143">40.41N 3.70W</text>
+          <!-- destination dot + label : Tokyo -->
+          <circle class="dot-pop dot-b" cx="472" cy="70" r="5.5" fill="var(--volt)"/>
+          <text class="city-lbl" x="438" y="48">HND</text>
+          <text class="coord-lbl" x="426" y="59">35.55N 139.78E</text>
+          <!-- tiny abstract marker riding the path (the Higgsfield ball/plane asset rides this same path in-app) -->
+          <text class="plane" x="0" y="0" text-anchor="middle" dominant-baseline="central">&#9992;</text>
+        </svg>
+      </div>
+
+      <div class="spec">
+<span class="k">trigger</span> <b>section in view</b> (idle loop in preview)<br>
+<span class="k">moves</span>   <b>stroke-dashoffset</b> 420&rarr;0 + marker rides path, end dots pop<br>
+<span class="k">duration</span> <b>1.2s</b> draw &nbsp; <span class="k">easing</span> --ease-draw<br>
+<span class="k">impl</span>  CSS <b>stroke-dashoffset</b> + offset-path &middot; Framer <b>pathLength</b> 0&rarr;1<br>
+<span class="k">dash</span>  1 9 round-dot travel line &nbsp; <span class="k">hf</span> Higgsfield ball/plane rides this path in-app
+      </div>
+    </section>
+
+    <!-- ============ 2 · SCOREBOARD COUNT-UP ============ -->
+    <section class="panel">
+      <div class="p-eyebrow">● SCORE.TICK</div>
+      <h2 class="p-title">Scoreboard Count-Up</h2>
+      <p class="p-sub">Stats reel from zero to their value, staggered. Two techniques shown live: a @property tabular count and a mechanical digit reel.</p>
+
+      <div class="viewport">
+        <div class="scorebar">
+          <div class="statblock">
+            <div class="stat-label">Countries</div>
+            <span class="count countries"></span>
+          </div>
+          <div class="statblock">
+            <div class="stat-label">Miles Flown</div>
+            <span class="count miles gold"></span><span class="count-unit">mi</span>
+          </div>
+        </div>
+
+        <!-- explicit digit-reel demo so the steps() mechanism is visible -->
+        <div class="reel-demo">
+          <span class="pre">MATCHES</span>
+          <div class="reel r1"><div class="strip"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div></div>
+          <div class="reel r2"><div class="strip"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div></div>
+          <span class="reel-cap">47 live at the Bernab&eacute;u!</span>
+        </div>
+      </div>
+
+      <div class="spec">
+<span class="k">trigger</span> <b>scoreboard in view</b> (idle loop in preview)<br>
+<span class="k">moves</span>   digits count <b>0&rarr;value</b> &middot; reel strip slides to target digit<br>
+<span class="k">duration</span> <b>1.1s</b> &nbsp; <span class="k">easing</span> --ease-draw &nbsp; <span class="k">stagger</span> 80ms<br>
+<span class="k">impl</span>  CSS <b>@property --n</b> + counter() &middot; reel translateY steps() &middot; Framer <b>useMotionValue + animate</b>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ---------- self-documenting rationale ---------- -->
+  <div class="rationale">
+    <div class="rcard">
+      <div class="rk">Why volt once</div>
+      <div class="rv">The single electric-lime spark lands on the live readout &mdash; the active dot, the count-up, the pulsing pin. One spark, never two competing.</div>
+    </div>
+    <div class="rcard">
+      <div class="rk">Why Space Mono</div>
+      <div class="rv">Mono = the data voice: coordinates, stats, ticket fields, scoreboard digits. It makes numbers feel measured and tabular, like a flight board.</div>
+    </div>
+    <div class="rcard">
+      <div class="rk">Why one motion clock</div>
+      <div class="rv">Route-draw and count-up ride --ease-draw and the 300/25 spring &mdash; the globe owns the hover-lift, so the coded UI moves with the centerpiece, not against it.</div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span class="chip">MOTION 07</span>
+    <span>MAP &amp; DATA</span> &middot;
+    <span>EASE-DRAW &middot; EASE-PAPER &middot; SPRING 300/25</span> &middot;
+    <span>RESPECTS PREFERS-REDUCED-MOTION</span>
+  </div>
+
+</div>
+</body>
+</html>

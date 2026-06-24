@@ -1,0 +1,400 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agustins Portfolio — Passport-Stamp Badge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&family=Permanent+Marker&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  :root{
+    --paper:#F2E8CF; --paper-2:#E8D9B5; --paper-edge:#CDB789; --paper-line:#C7B488;
+    --paper-shadow:rgba(58,42,18,0.18);
+    --ink:#1C1712; --ink-2:#4A4034; --ink-faint:#8A7E68; --navy:#0A1422; --navy-2:#14233A;
+    --pitch:#1E7A46; --globe-green:#3EA96B; --ocean:#14598C; --stamp-red:#C0362C; --gold:#C8992F;
+    --volt:#CDFF3D; --volt-deep:#A6D400;
+    --font-display:"Anton","Arial Narrow",sans-serif;
+    --font-body:"Plus Jakarta Sans",system-ui,sans-serif;
+    --font-hand:"Caveat",cursive; --font-marker:"Permanent Marker",cursive;
+    --font-mono:"Space Mono",ui-monospace,monospace;
+    --ease-thunk:cubic-bezier(.18,.89,.32,1.28); --ease-paper:cubic-bezier(.2,.7,.2,1);
+    --ease-draw:cubic-bezier(.65,0,.35,1);
+    --t-micro:120ms; --t-quick:240ms; --t-base:400ms; --t-tear:520ms; --t-slow:700ms;
+  }
+
+  body{
+    background-color:#F2E8CF;
+    background-image:
+      radial-gradient(120% 130% at 0% 0%, rgba(255,250,235,0.55) 0%, transparent 42%),
+      radial-gradient(120% 130% at 100% 100%, rgba(150,118,64,0.20) 0%, transparent 55%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    font-family:var(--font-body); color:var(--ink); padding:48px;
+  }
+
+  .stage{ max-width:1100px; margin:0 auto; }
+
+  /* ---------- header ---------- */
+  .eyebrow{
+    font-family:var(--font-mono); font-weight:700; font-size:12px; text-transform:uppercase;
+    letter-spacing:.14em; color:var(--ink-faint); display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow .dot{ color:var(--stamp-red); }
+  h1{
+    font-family:var(--font-display); text-transform:uppercase; font-weight:400;
+    font-size:clamp(40px,6vw,56px); line-height:1.04; letter-spacing:.02em;
+    color:var(--ink); margin-top:10px;
+  }
+  .sub{
+    font-family:var(--font-body); font-weight:500; font-size:16px; line-height:1.6;
+    color:var(--ink-2); max-width:560px; margin-top:14px;
+  }
+
+  /* ---------- the passport page ---------- */
+  .page{
+    position:relative; margin-top:40px; padding:54px 48px 64px;
+    background:
+      linear-gradient(0deg, rgba(120,90,40,.05), rgba(120,90,40,.05)),
+      var(--paper-2);
+    border-radius:3px;
+    box-shadow:0 18px 40px var(--paper-shadow), inset 0 0 0 1px rgba(120,90,40,.10);
+    /* faint passport-page ruled grid + visa graticule */
+    background-image:
+      repeating-linear-gradient(var(--paper-line) 0 1px, transparent 1px 34px),
+      linear-gradient(rgba(20,89,140,.06) 1px,transparent 1px),
+      linear-gradient(90deg, rgba(20,89,140,.06) 1px,transparent 1px);
+    background-size:auto, 46px 46px, 46px 46px;
+  }
+  /* torn deckle bottom edge of the page */
+  .page::after{
+    content:""; position:absolute; left:0; right:0; bottom:-1px; height:14px;
+    background:var(--paper-edge);
+    clip-path:polygon(0 0,5% 70%,12% 10%,20% 75%,28% 15%,36% 78%,44% 12%,52% 80%,
+      60% 14%,68% 76%,76% 18%,84% 72%,92% 12%,100% 70%,100% 100%,0 100%);
+    opacity:.5;
+  }
+
+  /* passport-book spine watermark, top-right, low-opacity */
+  .page-watermark{
+    position:absolute; top:22px; right:28px; text-align:right;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--ink-faint); opacity:.7; line-height:1.7;
+  }
+  .page-watermark b{ display:block; font-weight:700; color:var(--ink-2); letter-spacing:.22em; }
+
+  /* the overlapping stamp field */
+  .field{
+    position:relative; min-height:460px; margin-top:8px;
+  }
+
+  /* ===== BASE INK STAMP behaviour: multiply + rotate + opacity =====
+     Every variant inherits this so it reads as rubber-stamp ink on the page. */
+  .stamp{
+    position:absolute;
+    font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.06em;
+    mix-blend-mode:multiply;            /* ink sinks into the paper */
+    opacity:.86;                        /* faded press */
+    text-align:center; user-select:none;
+    transition:transform var(--t-base) var(--ease-thunk);
+  }
+
+  /* ---------- 1. CIRCULAR ENTRY STAMP (stamp-red) ---------- */
+  .stamp-circle{
+    width:178px; height:178px; border-radius:50%;
+    color:var(--stamp-red);
+    border:2.5px solid var(--stamp-red);
+    box-shadow:inset 0 0 0 4px rgba(192,54,44,.30);
+    display:grid; place-items:center;
+    left:38px; top:46px; transform:rotate(-12deg);
+  }
+  .stamp-circle .ring-text{
+    position:absolute; inset:0;
+    font-size:11px; font-weight:700; letter-spacing:.18em;
+  }
+  .stamp-circle .ring-text svg{ width:100%; height:100%; }
+  .stamp-circle .ring-text text{ fill:var(--stamp-red); font-family:var(--font-mono); font-weight:700; }
+  .stamp-circle .core{ display:grid; place-items:center; gap:5px; }
+  .stamp-circle .glyph{ font-size:20px; line-height:1; }
+  .stamp-circle .entry{ font-family:var(--font-display); font-size:26px; letter-spacing:.04em; line-height:1.05; }
+  .stamp-circle .date{ font-size:12px; font-weight:700; letter-spacing:.12em; }
+
+  /* ---------- 2. RECTANGULAR "ADMITTED" BOX (ocean) ---------- */
+  .stamp-rect{
+    color:var(--ocean); border:2.5px solid var(--ocean);
+    box-shadow:inset 0 0 0 1px var(--ocean), 0 0 0 6px rgba(20,89,140,.0);
+    padding:14px 22px 16px;
+    left:330px; top:24px; transform:rotate(6deg);
+    display:grid; gap:6px; justify-items:center; min-width:230px;
+  }
+  .stamp-rect::before{ /* double rule top+bottom = official box look */
+    content:""; position:absolute; inset:6px; border:1px solid var(--ocean); opacity:.55; pointer-events:none;
+  }
+  .stamp-rect .label{ font-size:10px; font-weight:700; letter-spacing:.2em; }
+  .stamp-rect .big{ font-family:var(--font-display); font-size:34px; letter-spacing:.05em; line-height:1.02; }
+  .stamp-rect .meta{ font-size:11px; font-weight:700; letter-spacing:.1em; }
+
+  /* ---------- 3. OVAL "CAPITAL" STAMP (gold) ---------- */
+  .stamp-oval{
+    color:var(--gold);
+    width:236px; height:128px; border-radius:50%/50%;
+    border:2.5px solid var(--gold);
+    box-shadow:inset 0 0 0 4px rgba(200,153,47,.28);
+    display:grid; place-items:center; gap:3px;
+    left:540px; top:232px; transform:rotate(-7deg);
+  }
+  .stamp-oval .core{ display:grid; place-items:center; gap:3px; }
+  .stamp-oval .label{ font-size:10px; font-weight:700; letter-spacing:.24em; }
+  .stamp-oval .big{ font-family:var(--font-display); font-size:30px; letter-spacing:.03em; line-height:1.02; }
+  .stamp-oval .meta{ font-size:11px; font-weight:700; letter-spacing:.1em; }
+  .stamp-oval .stars{ font-size:11px; letter-spacing:.3em; }
+
+  /* ---------- 4. SCALLOPED-EDGE STAMP (stamp-red) ---------- */
+  .stamp-scallop{
+    color:var(--stamp-red);
+    width:172px; height:172px;
+    left:150px; top:236px; transform:rotate(-4deg);
+    display:grid; place-items:center;
+    /* scallop ring via radial-gradient mask */
+    background:
+      radial-gradient(circle 9px at center, transparent 0 6px, var(--stamp-red) 6px 7.5px, transparent 7.6px) ,
+      transparent;
+    background:none;
+  }
+  .stamp-scallop .scallop-ring{ position:absolute; inset:0; }
+  .stamp-scallop .scallop-ring svg{ width:100%; height:100%; }
+  .stamp-scallop .core{ position:relative; display:grid; place-items:center; gap:4px; z-index:1; }
+  .stamp-scallop .label{ font-size:10px; font-weight:700; letter-spacing:.2em; }
+  .stamp-scallop .big{ font-family:var(--font-display); font-size:24px; letter-spacing:.03em; line-height:1.02; }
+  .stamp-scallop .meta{ font-size:11px; font-weight:700; letter-spacing:.1em; }
+  .stamp-scallop .glyph{ font-size:16px; }
+
+  /* a fifth faint overlap echo (ghost stamp) for the well-stamped density */
+  .stamp-ghost{
+    width:150px; height:150px; border-radius:50%;
+    border:2px solid var(--stamp-red); color:var(--stamp-red);
+    box-shadow:inset 0 0 0 3px rgba(192,54,44,.25);
+    opacity:.30; left:560px; top:30px; transform:rotate(14deg);
+    display:grid; place-items:center;
+  }
+  .stamp-ghost .core{ display:grid; place-items:center; gap:4px; font-size:11px; font-weight:700; letter-spacing:.12em; }
+  .stamp-ghost .big{ font-family:var(--font-display); font-size:18px; letter-spacing:.04em; line-height:1.05; }
+
+  /* a thin dotted route dash crossing the page (cartography motif, low key) */
+  .route{ position:absolute; left:30px; top:330px; width:540px; height:70px; pointer-events:none; opacity:.5; }
+
+  /* ---------- usage + spec notes ---------- */
+  .notes{ display:grid; grid-template-columns:1.3fr 1fr; gap:22px; margin-top:46px; }
+  @media (max-width:760px){ .notes{ grid-template-columns:1fr; } }
+
+  .note-card{
+    background:var(--paper); border:1px solid var(--paper-edge);
+    border-radius:4px; padding:22px 24px; position:relative;
+    box-shadow:0 6px 16px rgba(58,42,18,.10);
+  }
+  .note-card h3{
+    font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase;
+    letter-spacing:.16em; color:var(--ink-faint); margin-bottom:12px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .note-card h3 .pip{ width:8px; height:8px; border-radius:50%; background:var(--stamp-red); }
+  .usage-body{ font-size:15px; line-height:1.6; color:var(--ink-2); }
+  .usage-body b{ color:var(--ink); font-weight:700; }
+
+  /* volt = the single spark: highlighter swipe behind one phrase */
+  .spark{
+    position:relative; display:inline; font-weight:700; color:var(--ink);
+    background:linear-gradient(transparent 58%, var(--volt) 58% 92%, transparent 92%);
+    padding:0 2px;
+  }
+
+  /* spec note in mono, ticket-field grid */
+  .spec{ font-family:var(--font-mono); font-size:12px; color:var(--ink-2); }
+  .spec .row{ display:grid; grid-template-columns:96px 1fr; gap:8px; padding:6px 0;
+    border-bottom:1px dashed var(--paper-edge); }
+  .spec .row:last-child{ border-bottom:none; }
+  .spec .k{ text-transform:uppercase; letter-spacing:.1em; color:var(--ink-faint); font-weight:700; }
+  .spec .v{ font-weight:700; color:var(--ink); }
+  .swatch{ display:inline-block; width:10px; height:10px; border-radius:2px; vertical-align:-1px; margin-right:6px; }
+
+  /* handwritten margin note */
+  .margin-note{
+    font-family:var(--font-hand); font-size:26px; color:var(--ink-2);
+    position:absolute; transform:rotate(-4deg);
+  }
+  .margin-note .arrow{ display:block; font-size:18px; color:var(--stamp-red); }
+
+  /* tiny self-doc captions under the field */
+  .legend{
+    display:flex; flex-wrap:wrap; gap:18px; margin-top:20px;
+    font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.1em;
+    color:var(--ink-faint);
+  }
+  .legend span{ display:flex; align-items:center; gap:7px; }
+  .legend i{ width:11px; height:11px; border-radius:50%; display:inline-block; }
+
+  /* ambient idle: stamps settle on a loop (motion language: thunk overshoot) */
+  @keyframes settle{
+    0%,100%{ transform:var(--rest); }
+    50%{ transform:var(--press); }
+  }
+  .stamp-circle{ --rest:rotate(-12deg); --press:rotate(-12deg) scale(1.012); animation:settle 5s var(--ease-thunk) infinite; }
+  .stamp-oval{ --rest:rotate(-7deg); --press:rotate(-7deg) scale(1.012); animation:settle 5.6s var(--ease-thunk) infinite; }
+</style>
+</head>
+<body>
+  <div class="stage">
+
+    <!-- eyebrow: Space Mono + coordinate prefix per SPEC card-chrome rule -->
+    <div class="eyebrow"><span class="dot">●</span> 40.4168° N · 3.7038° W — COMPONENT / STAMP</div>
+    <!-- h1: Anton = the stadium-banner voice -->
+    <h1>Passport-Stamp Badge</h1>
+    <p class="sub">A reusable ink-stamp badge. Dropped onto a destination card when Agustin marks a
+      country <em>visited</em> — country, date, entry type. Built from pure CSS: border + <b>mix-blend-multiply</b>
+      + rotate + reduced opacity, so each one reads as real rubber ink pressed into kraft paper.</p>
+
+    <!-- the passport page: stamps overlap at varied rotations like a well-travelled book -->
+    <div class="page">
+      <div class="page-watermark">
+        <b>PASSPORT · AGUSTIN</b>
+        VISAS &amp; ENTRIES — PG 14
+      </div>
+
+      <div class="field">
+
+        <!-- dotted travel route under the stamps (cartography motif) -->
+        <svg class="route" viewBox="0 0 540 70" fill="none" aria-hidden="true">
+          <path d="M8 56 Q 260 -18 532 30" stroke="var(--stamp-red)" stroke-width="2.5"
+            stroke-dasharray="1 9" stroke-linecap="round"/>
+          <circle cx="8" cy="56" r="4" fill="var(--stamp-red)"/>
+          <circle cx="532" cy="30" r="4" fill="var(--stamp-red)"/>
+        </svg>
+
+        <!-- ===== 1. CIRCULAR ENTRY STAMP — MADRID — stamp-red ===== -->
+        <div class="stamp stamp-circle" aria-label="Madrid entry stamp">
+          <div class="ring-text" aria-hidden="true">
+            <svg viewBox="0 0 178 178">
+              <defs>
+                <path id="ringTop" d="M 24,89 A 65,65 0 0 1 154,89" />
+                <path id="ringBot" d="M 28,89 A 61,61 0 0 0 150,89" />
+              </defs>
+              <text font-size="13" letter-spacing="6">
+                <textPath href="#ringTop" startOffset="50%" text-anchor="middle">REINO DE ESPAÑA</textPath>
+              </text>
+              <text font-size="11" letter-spacing="5">
+                <textPath href="#ringBot" startOffset="50%" text-anchor="middle">MADRID · MAD ✈</textPath>
+              </text>
+            </svg>
+          </div>
+          <div class="core">
+            <div class="glyph">✈</div>
+            <div class="entry">ENTRY</div>
+            <div class="date">15 JUN 2026</div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.2em;">★</div>
+          </div>
+        </div>
+
+        <!-- ===== 2. RECTANGULAR "ADMITTED" BOX — ocean ===== -->
+        <div class="stamp stamp-rect" aria-label="Admitted box stamp">
+          <div class="label">IMMIGRATION · CONTROL</div>
+          <div class="big">ADMITTED</div>
+          <div class="meta">LIS — LISBOA · 03 APR 2026</div>
+          <div class="meta" style="opacity:.8">VALID 90 DAYS · ✦</div>
+        </div>
+
+        <!-- ===== 5. GHOST OVERLAP (Buenos Aires) — density ===== -->
+        <div class="stamp stamp-ghost" aria-label="Faint overlapping stamp">
+          <div class="core">
+            <div>EZE · ARG</div>
+            <div class="big">ENTRY</div>
+            <div>22 DEC 2025</div>
+          </div>
+        </div>
+
+        <!-- ===== 4. SCALLOPED-EDGE STAMP — TOKYO — stamp-red ===== -->
+        <div class="stamp stamp-scallop" aria-label="Tokyo scalloped stamp">
+          <div class="scallop-ring" aria-hidden="true">
+            <!-- scalloped border = a ring of small arcs, drawn as 36 dots on a circle -->
+            <svg viewBox="0 0 172 172">
+              <g fill="var(--stamp-red)">
+                <!-- generated scallop bumps around r=78 -->
+                <circle cx="86" cy="8" r="6"/><circle cx="113.7" cy="13.9" r="6"/>
+                <circle cx="137.5" cy="30.5" r="6"/><circle cx="153" cy="55" r="6"/>
+                <circle cx="158" cy="86" r="6"/><circle cx="153" cy="117" r="6"/>
+                <circle cx="137.5" cy="141.5" r="6"/><circle cx="113.7" cy="158.1" r="6"/>
+                <circle cx="86" cy="164" r="6"/><circle cx="58.3" cy="158.1" r="6"/>
+                <circle cx="34.5" cy="141.5" r="6"/><circle cx="19" cy="117" r="6"/>
+                <circle cx="14" cy="86" r="6"/><circle cx="19" cy="55" r="6"/>
+                <circle cx="34.5" cy="30.5" r="6"/><circle cx="58.3" cy="13.9" r="6"/>
+              </g>
+              <circle cx="86" cy="86" r="60" fill="none" stroke="var(--stamp-red)" stroke-width="2.5"/>
+            </svg>
+          </div>
+          <div class="core">
+            <div class="label">NARITA · NRT</div>
+            <div class="big">日本<br>NIPPON</div>
+            <div class="glyph">★</div>
+            <div class="meta">09 SEP 2025</div>
+          </div>
+        </div>
+
+        <!-- ===== 3. OVAL "CAPITAL" STAMP — gold (special visit) ===== -->
+        <div class="stamp stamp-oval" aria-label="Capital city gold stamp">
+          <div class="core">
+            <div class="stars">★ ★ ★</div>
+            <div class="label">CAPITAL VISIT</div>
+            <div class="big">EL BERNABÉU</div>
+            <div class="meta">MADRID · 15 JUN 2026</div>
+          </div>
+        </div>
+
+        <!-- handwritten margin note: Caveat = the journal voice -->
+        <div class="margin-note" style="right:6px; bottom:8px; text-align:center;">
+          first match at the Bernabéu —<br>stamped it twice on purpose
+          <span class="arrow">↖</span>
+        </div>
+      </div>
+
+      <!-- self-doc legend under the stamp field -->
+      <div class="legend">
+        <span><i style="background:var(--stamp-red)"></i> stamp-red = standard entry</span>
+        <span><i style="background:var(--ocean)"></i> ocean = admitted / control</span>
+        <span><i style="background:var(--gold)"></i> gold = capital / special</span>
+        <span>multiply + rotate + opacity = ink, not sticker</span>
+      </div>
+    </div>
+
+    <!-- ===== USAGE + SPEC NOTES ===== -->
+    <div class="notes">
+      <div class="note-card">
+        <h3><span class="pip"></span> Usage</h3>
+        <p class="usage-body">
+          Place a stamp badge on a <b>destination / country-story card</b> the moment a country flips to
+          <span class="spark">marked visited</span>. The variant encodes meaning: a
+          <b>circular stamp-red</b> for a normal entry, the <b>ocean ADMITTED box</b> for a border
+          crossing, the <b>gold oval</b> reserved for a once-in-a-lifetime stop (a match at the Bernabéu),
+          and the <b>scalloped edge</b> for far-flung passport pages. Lay 2–4 at varied rotations so a
+          well-travelled page reads as <i>collage, not catalog</i>. The badge is the static mark; the
+          live <b>stamp-thunk</b> motion (overshoot, <code>--ease-thunk</code>) plays once on first visit.
+        </p>
+      </div>
+
+      <div class="note-card">
+        <h3><span class="pip" style="background:var(--ocean)"></span> Spec — ink / rotate / opacity</h3>
+        <div class="spec">
+          <div class="row"><span class="k">Blend</span><span class="v">mix-blend-mode: multiply</span></div>
+          <div class="row"><span class="k">Opacity</span><span class="v">0.86 (ghost 0.30)</span></div>
+          <div class="row"><span class="k">Rotate</span><span class="v">−12° / +6° / −7° / −4°</span></div>
+          <div class="row"><span class="k"><span class="swatch" style="background:var(--stamp-red)"></span>Entry</span><span class="v">--stamp-red #C0362C</span></div>
+          <div class="row"><span class="k"><span class="swatch" style="background:var(--ocean)"></span>Admit</span><span class="v">--ocean #14598C</span></div>
+          <div class="row"><span class="k"><span class="swatch" style="background:var(--gold)"></span>Capital</span><span class="v">--gold #C8992F</span></div>
+          <div class="row"><span class="k">Type</span><span class="v">Space Mono + Anton</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

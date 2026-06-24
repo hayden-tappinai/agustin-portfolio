@@ -1,0 +1,358 @@
+<!-- @dsCard group="Type" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agustins Portfolio — Typography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&family=Permanent+Marker&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F2E8CF; --paper-2:#E8D9B5; --paper-edge:#CDB789; --paper-line:#C7B488;
+  --paper-shadow:rgba(58,42,18,0.18);
+  --ink:#1C1712; --ink-2:#4A4034; --ink-faint:#8A7E68; --navy:#0A1422; --navy-2:#14233A;
+  --pitch:#1E7A46; --globe-green:#3EA96B; --ocean:#14598C; --stamp-red:#C0362C; --gold:#C8992F;
+  --volt:#CDFF3D; --volt-deep:#A6D400;
+  --font-display:"Anton","Arial Narrow",sans-serif;
+  --font-body:"Plus Jakarta Sans",system-ui,sans-serif;
+  --font-hand:"Caveat",cursive; --font-marker:"Permanent Marker",cursive;
+  --font-mono:"Space Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  background-color:#F2E8CF;
+  background-image:
+    radial-gradient(120% 130% at 0% 0%, rgba(255,250,235,0.55) 0%, transparent 42%),
+    radial-gradient(120% 130% at 100% 100%, rgba(150,118,64,0.20) 0%, transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  font-family:var(--font-body);
+  color:var(--ink);
+  padding:48px;
+}
+
+.stage{max-width:1100px;margin:0 auto}
+
+/* ---------- header ---------- */
+.eyebrow{
+  font-family:var(--font-mono); font-weight:700; font-size:12px; text-transform:uppercase;
+  letter-spacing:.14em; color:var(--ink-faint); display:flex; align-items:center; gap:10px;
+}
+.eyebrow .dot{ width:8px; height:8px; border-radius:50%; background:var(--stamp-red); box-shadow:0 0 0 3px rgba(192,54,44,.18); }
+h1.title{
+  font-family:var(--font-display); text-transform:uppercase; letter-spacing:0.015em;
+  line-height:1.04; color:var(--ink); font-size:clamp(44px,5.2vw,72px); margin-top:14px;
+}
+.lede{
+  font-family:var(--font-body); font-weight:500; font-size:18px; line-height:1.55;
+  color:var(--ink-2); max-width:620px; margin-top:18px;
+}
+.lede b{ color:var(--ink); font-weight:800; }
+
+/* ---------- section scaffold ---------- */
+.row-label{
+  font-family:var(--font-mono); font-weight:700; font-size:11px; text-transform:uppercase;
+  letter-spacing:.14em; color:var(--ink-faint); margin-bottom:14px; display:flex; gap:10px; align-items:baseline;
+}
+.row-label .ix{ color:var(--stamp-red); }
+.divider{ height:1px; background:repeating-linear-gradient(90deg,var(--paper-edge) 0 8px,transparent 8px 16px); margin:0 0 26px; }
+
+section{ margin-top:54px; }
+
+.note{
+  font-family:var(--font-body); font-weight:500; font-size:13px; line-height:1.5; color:var(--ink-faint);
+}
+.note b{ color:var(--ink-2); font-weight:700; }
+
+/* ---------- Anton specimen ---------- */
+.anton-block{ position:relative; }
+.anton-giant{
+  font-family:var(--font-display); text-transform:uppercase; color:var(--ink);
+  font-size:clamp(72px,15vw,200px); line-height:.98; letter-spacing:0.01em;
+}
+.anton-giant .sub{ display:block; color:var(--pitch); }
+.anton-nums{
+  font-family:var(--font-display); font-size:clamp(40px,7vw,84px); letter-spacing:.04em;
+  color:var(--ink); margin-top:12px; display:flex; flex-wrap:wrap; gap:0 .18em;
+}
+.anton-nums span:nth-child(odd){ color:var(--ink-2); }
+.spec-side{
+  font-family:var(--font-mono); font-size:12px; line-height:1.7; color:var(--ink-2);
+  letter-spacing:.02em; margin-top:18px; border-left:2px solid var(--paper-edge); padding-left:14px;
+}
+.spec-side .k{ color:var(--ink-faint); }
+
+/* ---------- Jakarta weights ---------- */
+.grid2{ display:grid; grid-template-columns:1fr 1fr; gap:34px; }
+.jw{ font-family:var(--font-body); color:var(--ink); }
+.jw .w400{ font-weight:400; } .jw .w500{ font-weight:500; } .jw .w600{ font-weight:600; }
+.jw .w700{ font-weight:700; } .jw .w800{ font-weight:800; }
+.weight-row{ display:flex; align-items:baseline; gap:14px; margin-bottom:10px; }
+.weight-row .lab{ font-family:var(--font-mono); font-size:11px; color:var(--ink-faint); letter-spacing:.1em; width:48px; flex:none; }
+.weight-row .smp{ font-size:24px; }
+.para{ font-family:var(--font-body); font-weight:400; font-size:16px; line-height:1.6; color:var(--ink-2); margin-top:8px; }
+.ui-chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
+.chip{
+  font-family:var(--font-body); font-weight:700; font-size:13px; letter-spacing:.01em;
+  padding:8px 14px; border-radius:999px; background:var(--paper-2); border:1px solid var(--paper-edge); color:var(--ink-2);
+}
+.chip.fill{ background:var(--pitch); color:#fff; border-color:transparent; }
+.chip .vd{ color:var(--volt-deep); }
+
+/* ---------- Caveat ---------- */
+.caveat-card{
+  background:var(--paper-2); border:1px solid var(--paper-edge); border-radius:4px;
+  padding:30px 32px; box-shadow:0 8px 22px var(--paper-shadow); position:relative;
+  background-image:repeating-linear-gradient(transparent 0 39px, rgba(199,180,136,.6) 39px 40px);
+  background-position:0 18px;
+}
+.hand{ font-family:var(--font-hand); color:var(--ink); }
+.caveat-card .big{ font-size:38px; line-height:40px; font-weight:700; color:var(--ink); }
+.caveat-card .med{ font-size:26px; line-height:38px; font-weight:600; color:var(--ink-2); margin-top:0; }
+.washi{
+  position:absolute; width:120px; height:32px; top:-14px; right:34px;
+  background:
+    repeating-linear-gradient(46deg, rgba(255,255,255,.22) 0 7px, transparent 7px 14px),
+    rgba(20,89,140,.55);
+  box-shadow:0 2px 4px rgba(0,0,0,.14);
+  clip-path:polygon(3% 0,97% 5%,100% 95%,0 100%);
+  transform:rotate(-4deg); opacity:.9;
+}
+
+/* ---------- Permanent Marker ---------- */
+.marker-block{ display:flex; align-items:center; gap:34px; flex-wrap:wrap; }
+.goal{
+  font-family:var(--font-marker); color:var(--stamp-red); font-size:clamp(60px,10vw,120px);
+  transform:rotate(-6deg); line-height:.9; text-shadow:2px 3px 0 rgba(192,54,44,.18);
+}
+.goal .ex{ color:var(--ink); }
+
+/* ---------- Space Mono data ---------- */
+.mono-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+.mono-cell{
+  background:var(--navy); border-radius:6px; padding:20px 18px; color:#E9EEF4;
+  position:relative; overflow:hidden;
+  background-image:
+    linear-gradient(rgba(110,227,160,.08) 1px,transparent 1px),
+    linear-gradient(90deg, rgba(110,227,160,.08) 1px,transparent 1px);
+  background-size:22px 22px;
+}
+.mono-cell .ml{ font-family:var(--font-mono); font-weight:700; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#7E94A8; }
+.mono-cell .mv{ font-family:var(--font-mono); font-weight:700; font-size:22px; letter-spacing:.02em; color:#F2E8CF; margin-top:8px; }
+.mono-cell .mv .live{ color:var(--volt); animation:livepulse 2.6s ease-in-out infinite; }
+@keyframes livepulse{ 0%,100%{ text-shadow:0 0 0 rgba(205,255,61,0); opacity:.92; } 50%{ text-shadow:0 0 14px rgba(205,255,61,.55); opacity:1; } }
+@media (prefers-reduced-motion:reduce){ .mono-cell .mv .live{ animation:none; } }
+.mono-cell.score .mv{ font-size:30px; letter-spacing:.06em; }
+
+/* ---------- Type scale ---------- */
+.scale-row{
+  display:grid; grid-template-columns:1fr 300px; gap:24px; align-items:baseline;
+  padding:18px 0; border-bottom:1px solid var(--paper-edge);
+}
+.scale-row:last-child{ border-bottom:none; }
+.scale-spec{ font-family:var(--font-mono); font-size:11px; line-height:1.7; color:var(--ink-2); letter-spacing:.02em; }
+.scale-spec .k{ color:var(--ink-faint); }
+.s-dxl{ font-family:var(--font-display); text-transform:uppercase; font-size:clamp(56px,7vw,104px); letter-spacing:0.01em; line-height:1.0; color:var(--ink); }
+.s-dl{ font-family:var(--font-display); text-transform:uppercase; font-size:64px; letter-spacing:0.015em; line-height:1.04; color:var(--ink); }
+.s-dm{ font-family:var(--font-display); text-transform:uppercase; font-size:40px; letter-spacing:0.02em; line-height:1.1; color:var(--ink); }
+.s-title{ font-family:var(--font-body); font-weight:800; font-size:28px; letter-spacing:0; color:var(--ink); }
+.s-bodyl{ font-family:var(--font-body); font-weight:500; font-size:18px; line-height:1.55; color:var(--ink-2); }
+.s-body{ font-family:var(--font-body); font-weight:400; font-size:16px; line-height:1.6; color:var(--ink-2); }
+.s-cap{ font-family:var(--font-body); font-weight:500; font-size:13px; color:var(--ink-2); }
+.s-mono{ font-family:var(--font-mono); font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:.12em; color:var(--ink-2); }
+.s-hand{ font-family:var(--font-hand); font-weight:600; font-size:28px; color:var(--ink-2); }
+
+/* ---------- Pairing example ---------- */
+.pairing{
+  position:relative; background:var(--paper-2); border:1px solid var(--paper-edge);
+  padding:40px 44px 46px; box-shadow:0 14px 30px var(--paper-shadow);
+  clip-path:polygon(0 0,100% 0,100% 92%,96% 96%,90% 92%,83% 97%,76% 92%,68% 97%,60% 92%,52% 97%,44% 92%,36% 97%,28% 92%,20% 97%,12% 92%,5% 96%,0 92%);
+}
+.pairing::before{
+  content:""; position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(20,89,140,.07) 1px,transparent 1px),
+    linear-gradient(90deg, rgba(20,89,140,.07) 1px,transparent 1px);
+  background-size:46px 46px; pointer-events:none;
+}
+.pairing .coord{ font-family:var(--font-mono); font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--stamp-red); position:relative; }
+.pairing .head{ font-family:var(--font-display); text-transform:uppercase; font-size:clamp(40px,6vw,68px); line-height:1.04; letter-spacing:0.015em; color:var(--ink); margin-top:8px; position:relative; }
+.pairing .body{ font-family:var(--font-body); font-weight:400; font-size:16px; line-height:1.6; color:var(--ink-2); max-width:560px; margin-top:16px; position:relative; }
+.pairing .hand{ font-family:var(--font-hand); font-weight:600; font-size:30px; color:var(--ocean); transform:rotate(-3deg); display:inline-block; margin-top:18px; position:relative; }
+.pin{
+  position:absolute; top:-9px; left:38px; width:18px; height:18px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #ef6a60, var(--stamp-red) 60%, #7e231c);
+  box-shadow:0 4px 6px rgba(0,0,0,.3); z-index:3;
+}
+.pairing .stamp{
+  position:absolute; right:40px; top:34px; font-family:var(--font-mono); font-weight:700;
+  color:var(--stamp-red); border:2.5px solid var(--stamp-red); border-radius:50%;
+  width:104px; height:104px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  transform:rotate(-13deg); opacity:.82; mix-blend-mode:multiply; letter-spacing:.06em; text-transform:uppercase;
+  box-shadow:inset 0 0 0 3px rgba(192,54,44,.35); font-size:11px; line-height:1.4; text-align:center;
+}
+.pairing .stamp .c{ font-size:18px; }
+
+.foot{ margin-top:56px; font-family:var(--font-mono); font-size:11px; color:var(--ink-faint); letter-spacing:.08em; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; border-top:1px solid var(--paper-edge); padding-top:18px; }
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- ===== HEADER ===== -->
+  <div class="eyebrow"><span class="dot"></span>40.4168° N · 3.7038° W · TYPE SYSTEM</div>
+  <h1 class="title">Four Voices,<br>One Sketchbook</h1>
+  <p class="lede">The type system is a fusion — <b>stadium banner</b>, <b>boarding-pass data</b>, and <b>margin scribble</b> living on the same kraft page. Each family does one job and never the others. That discipline is what makes the collage read as sharp, not noisy.</p>
+
+  <!-- ===== ANTON ===== -->
+  <section class="anton-block">
+    <div class="row-label"><span class="ix">01</span> ANTON — DISPLAY / BANNER</div>
+    <div class="divider"></div>
+    <div class="anton-giant">HALA<span class="sub">MADRID</span></div>
+    <div class="anton-nums">
+      <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+    </div>
+    <div class="grid2" style="margin-top:24px;">
+      <div class="spec-side">
+        <span class="k">family</span> &nbsp;Anton<br>
+        <span class="k">case</span> &nbsp;&nbsp;&nbsp;UPPERCASE<br>
+        <span class="k">tracking</span> +0.01–0.03em<br>
+        <span class="k">leading</span> &nbsp;0.98–1.12<br>
+        <span class="k">used-for</span> banners · jersey #s · country names
+      </div>
+      <p class="note"><b>Why Anton.</b> It's the loudest voice on the page — a vinyl stadium banner draped over the kraft. Reserve it for the moment that should shout: a country name, a scoreline header, the jersey number on a player card. Numerals are wide and confident, built for scoreboards. <b>Loosened per review — Anton gets positive tracking (+0.01–0.03em) and open leading (≥1.0, the lone hero may sit at 0.98) so the bold display can breathe; never tight negative tracking again.</b></p>
+    </div>
+  </section>
+
+  <!-- ===== PLUS JAKARTA ===== -->
+  <section>
+    <div class="row-label"><span class="ix">02</span> PLUS JAKARTA SANS — BODY / UI · THE HOUSE FONT</div>
+    <div class="divider"></div>
+    <div class="grid2">
+      <div class="jw">
+        <div class="weight-row"><span class="lab">400</span><span class="smp w400">Lisbon, late August</span></div>
+        <div class="weight-row"><span class="lab">500</span><span class="smp w500">Lisbon, late August</span></div>
+        <div class="weight-row"><span class="lab">600</span><span class="smp w600">Lisbon, late August</span></div>
+        <div class="weight-row"><span class="lab">700</span><span class="smp w700">Lisbon, late August</span></div>
+        <div class="weight-row"><span class="lab">800</span><span class="smp w800">Lisbon, late August</span></div>
+        <p class="para">Got off the night train into Santa Apolónia with no plan and a half-charged phone. Found a tasca behind the cathedral, ate too much bacalhau, and watched Sporting draw 1–1 on a TV older than me. Best non-plan I've ever had.</p>
+      </div>
+      <div>
+        <p class="note"><b>Why Plus Jakarta.</b> It's the connective tissue — every paragraph, label, and button across the whole site. It's also the body font for the globe app, so the system and the product feel like one thing. Calm, modern, gets out of the way.</p>
+        <div class="ui-chips">
+          <span class="chip fill">VIEW TRIP →</span>
+          <span class="chip">23 COUNTRIES</span>
+          <span class="chip">NEXT: TOKYO</span>
+          <span class="chip">Read the story <span class="vd">↘</span></span>
+        </div>
+        <p class="note" style="margin-top:14px;"><b>UI labels</b> stay sentence-weight (600–700); the lone <span style="color:var(--volt-deep);font-weight:700;">volt-deep</span> arrow is the single spark.</p>
+        <p class="note" style="margin-top:14px;"><b>Note (review).</b> Loosened per review — Anton gets positive tracking + open leading so the bold display can breathe.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CAVEAT ===== -->
+  <section>
+    <div class="row-label"><span class="ix">03</span> CAVEAT — HANDWRITING · NOTES &amp; STORY</div>
+    <div class="divider"></div>
+    <div class="grid2" style="align-items:start;">
+      <div class="caveat-card">
+        <div class="washi"></div>
+        <div class="hand big">What a city! Never leaving…</div>
+        <div class="hand med">(said that in Buenos Aires too. and Tokyo.)</div>
+      </div>
+      <p class="note" style="align-self:center;"><b>Why Caveat.</b> The human hand in the margins — the thing Agustin actually felt, scrawled next to the data. It carries captions, journal asides, and the little confessions under a Polaroid. Set it 24–34px so it stays loose, never formal.</p>
+    </div>
+  </section>
+
+  <!-- ===== PERMANENT MARKER ===== -->
+  <section>
+    <div class="row-label"><span class="ix">04</span> PERMANENT MARKER — USE ONCE · MARKER ACCENT</div>
+    <div class="divider"></div>
+    <div class="marker-block">
+      <div class="goal">GOAL<span class="ex">!</span></div>
+      <p class="note" style="max-width:420px;"><b>Why — and why rarely.</b> The thick marker is a shout, not a voice. One per card, max: a circled word, an arrow-and-note, a "GOAL!" stamped over a match photo. Overuse it and the whole page turns into a craft-fair poster. Here it earns its single appearance.</p>
+    </div>
+  </section>
+
+  <!-- ===== SPACE MONO ===== -->
+  <section>
+    <div class="row-label"><span class="ix">05</span> SPACE MONO — COORDINATES / STATS / TICKETS</div>
+    <div class="divider"></div>
+    <div class="mono-grid">
+      <div class="mono-cell"><div class="ml">Coordinates</div><div class="mv">40.4168° N<br>3.7038° W</div></div>
+      <div class="mono-cell"><div class="ml">Date</div><div class="mv">15 · JUN<br>2026</div></div>
+      <div class="mono-cell"><div class="ml">ISO Code</div><div class="mv">ESP</div></div>
+      <div class="mono-cell score"><div class="ml">Bernabéu · Live</div><div class="mv"><span class="live">03</span> : 01</div></div>
+    </div>
+    <p class="note" style="margin-top:18px;"><b>Why Space Mono.</b> Monospace reads instantly as <em>instrument data</em> — coordinates, boarding-pass fields, scoreboard digits, ISO codes. Tracked +0.12em for labels. Set on navy here to echo the globe and the LED scoreboard; the live figure gets the <span style="color:var(--volt-deep);font-weight:700;">volt</span> pulse — its single spark.</p>
+  </section>
+
+  <!-- ===== TYPE SCALE ===== -->
+  <section>
+    <div class="row-label"><span class="ix">06</span> TYPE SCALE — RENDERED AT TRUE SIZE</div>
+    <div class="divider"></div>
+
+    <div class="scale-row">
+      <div class="s-dxl">MADRID</div>
+      <div class="scale-spec"><span class="k">Display XL</span><br>Anton · clamp(56–104px)<br>ls +0.01em · lh 1.0 · UPPER<br><span class="k">(only the single giant hero drops to 0.98)</span></div>
+    </div>
+    <div class="scale-row">
+      <div class="s-dl">BERNABÉU</div>
+      <div class="scale-spec"><span class="k">Display L</span><br>Anton · 64px · ls +0.015em · lh 1.04 · UPPER</div>
+    </div>
+    <div class="scale-row">
+      <div class="s-dm">MATCHDAY</div>
+      <div class="scale-spec"><span class="k">Display M</span><br>Anton · 40px · ls +0.02em · lh 1.1 · UPPER</div>
+    </div>
+    <div class="scale-row">
+      <div class="s-title">Buenos Aires, 2026</div>
+      <div class="scale-spec"><span class="k">Title</span><br>Plus Jakarta 800 · 28px · ls 0</div>
+    </div>
+    <div class="scale-row">
+      <div class="s-bodyl">The 02:10 to Lisbon, window seat, no regrets.</div>
+      <div class="scale-spec"><span class="k">Body L</span><br>Plus Jakarta 500 · 18px · lh 1.55</div>
+    </div>
+    <div class="scale-row">
+      <div class="s-body">Twenty-three countries, forty-seven matches, one passport nearly full.</div>
+      <div class="scale-spec"><span class="k">Body</span><br>Plus Jakarta 400 · 16px · lh 1.6</div>
+    </div>
+    <div class="scale-row">
+      <div class="s-cap">Shot on a disposable outside the Estádio da Luz.</div>
+      <div class="scale-spec"><span class="k">Small / caption</span><br>Plus Jakarta 500 · 13px</div>
+    </div>
+    <div class="scale-row">
+      <div class="s-mono">GATE 14 · SEAT 22A · BOARDING</div>
+      <div class="scale-spec"><span class="k">Mono label</span><br>Space Mono 700 · 12px · ls 0.12em · UPPER</div>
+    </div>
+    <div class="scale-row">
+      <div class="s-hand">couldn't sleep — too excited for kickoff</div>
+      <div class="scale-spec"><span class="k">Hand note</span><br>Caveat 600 · 24–30px</div>
+    </div>
+  </section>
+
+  <!-- ===== PAIRING ===== -->
+  <section>
+    <div class="row-label"><span class="ix">07</span> PAIRING — ALL FOUR, WORKING TOGETHER</div>
+    <div class="divider"></div>
+    <div class="pairing">
+      <div class="pin"></div>
+      <div class="stamp"><span class="c">MAD</span>ENTRY<br>15·06·26</div>
+      <div class="coord">40.4168° N, 3.7038° W</div>
+      <div class="head">A Night at<br>the Bernabéu</div>
+      <p class="body">Eighty-one thousand people and somehow it goes silent before the free kick. Then it doesn't. I've chased footy across four continents and nothing — nothing — sounds like this place when it decides to roar.</p>
+      <span class="hand">third time here. still get chills.</span>
+    </div>
+    <p class="note" style="margin-top:18px;"><b>How the hierarchy reads.</b> Space Mono coordinate sets the place (data, smallest). Anton headline shouts the moment (banner, biggest). Plus Jakarta carries the story (body, calm). Caveat adds the human aftertaste (note, intimate). Four jobs, zero overlap — framed on a torn kraft journal page with a pushpin and a passport stamp so the page feels real.</p>
+  </section>
+
+  <div class="foot">
+    <span>AGUSTINS PORTFOLIO — DESIGN SYSTEM · §2 TYPOGRAPHY</span>
+    <span>ANTON · PLUS JAKARTA SANS · CAVEAT · PERMANENT MARKER · SPACE MONO</span>
+  </div>
+
+</div>
+</body>
+</html>

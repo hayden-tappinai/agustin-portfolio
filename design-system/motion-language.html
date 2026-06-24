@@ -1,0 +1,470 @@
+<!-- @dsCard group="Motion & Interactions" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agustins Portfolio — Motion Language</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&family=Permanent+Marker&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --paper:#F2E8CF; --paper-2:#E8D9B5; --paper-edge:#CDB789; --paper-line:#C7B488;
+  --paper-shadow:rgba(58,42,18,0.18);
+  --ink:#1C1712; --ink-2:#4A4034; --ink-faint:#8A7E68; --navy:#0A1422; --navy-2:#14233A;
+  --pitch:#1E7A46; --globe-green:#3EA96B; --ocean:#14598C; --stamp-red:#C0362C; --gold:#C8992F;
+  --volt:#CDFF3D; --volt-deep:#A6D400;
+  --font-display:"Anton","Arial Narrow",sans-serif;
+  --font-body:"Plus Jakarta Sans",system-ui,sans-serif;
+  --font-hand:"Caveat",cursive; --font-marker:"Permanent Marker",cursive;
+  --font-mono:"Space Mono",ui-monospace,monospace;
+  /* motion contract — §7 (ball roll dropped: it's a Higgsfield asset, not coded) */
+  --ease-thunk:cubic-bezier(.18,.89,.32,1.28); --ease-paper:cubic-bezier(.2,.7,.2,1);
+  --ease-draw:cubic-bezier(.65,0,.35,1);
+  --t-micro:120ms; --t-quick:240ms; --t-base:400ms; --t-tear:520ms; --t-slow:700ms;
+}
+body{
+  background-color:#F2E8CF;
+  background-image:
+    radial-gradient(120% 130% at 0% 0%, rgba(255,250,235,0.55) 0%, transparent 42%),
+    radial-gradient(120% 130% at 100% 100%, rgba(150,118,64,0.20) 0%, transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  font-family:var(--font-body); color:var(--ink); padding:48px;
+}
+.stage{max-width:1100px;margin:0 auto}
+
+/* ---- header ---- */
+.eyebrow{font-family:var(--font-mono);font-weight:700;font-size:12px;text-transform:uppercase;
+  letter-spacing:.14em;color:var(--ink-faint);display:flex;align-items:center;gap:10px}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--volt-deep);box-shadow:0 0 0 3px rgba(166,212,0,.22)}
+h1{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(48px,7vw,92px);
+  line-height:.98;letter-spacing:.02em;color:var(--ink);margin:14px 0 8px}
+.sub{max-width:620px;font-size:18px;line-height:1.55;font-weight:500;color:var(--ink-2)}
+.sub b{color:var(--ink)}
+.hand-note{font-family:var(--font-hand);font-size:27px;color:var(--stamp-red);line-height:1.05;
+  transform:rotate(-3deg);display:inline-block}
+
+/* ---- bunting (static header motif — sway is de-emphasized per §7, not a featured loop) ---- */
+.bunting{display:flex;gap:0;height:26px;margin:0 0 28px;align-items:flex-start;
+  border-top:2px dashed var(--paper-edge);padding-top:0;position:relative}
+.bunting span{flex:1;height:22px;clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top center}
+
+/* ---- section scaffolding ---- */
+.sec-label{font-family:var(--font-mono);font-weight:700;font-size:12px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:10px;margin:0 0 16px}
+.sec-label::before{content:"";width:26px;height:2px;background:var(--ink-faint)}
+.why{font-family:var(--font-mono);font-size:11px;line-height:1.5;color:var(--ink-faint);
+  letter-spacing:.02em;margin-top:10px}
+.why b{color:var(--ink-2)}
+
+/* ---- principles ---- */
+.principles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:30px 0 56px}
+.prin{background:var(--paper-2);border:1px solid var(--paper-edge);padding:18px 16px 16px;
+  position:relative;box-shadow:0 6px 16px var(--paper-shadow)}
+.prin .n{font-family:var(--font-display);font-size:34px;color:var(--gold);line-height:1.05;letter-spacing:.02em}
+.prin h3{font-family:var(--font-body);font-weight:800;font-size:15px;margin:8px 0 6px;
+  text-transform:uppercase;letter-spacing:.01em}
+.prin p{font-size:13.5px;line-height:1.5;color:var(--ink-2);font-weight:500}
+
+.divider{height:0;border-top:2px dashed var(--paper-edge);margin:0 0 44px}
+
+/* ---- focused coded set ---- */
+.coded-set{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 12px}
+.cd{display:inline-flex;align-items:center;gap:8px;background:var(--paper-2);
+  border:1px solid var(--paper-edge);box-shadow:0 4px 12px var(--paper-shadow);
+  padding:9px 14px;font-family:var(--font-body);font-weight:700;font-size:13px;color:var(--ink)}
+.cd b{font-family:var(--font-mono);font-weight:700;font-size:11px;color:var(--ink-faint);
+  background:var(--paper);border:1px solid var(--paper-edge);border-radius:3px;
+  width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center}
+.cd.hero{background:var(--pitch);color:#fff;border-color:var(--pitch)}
+.cd.hero b{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.3);color:#fff}
+.cd em{font-family:var(--font-mono);font-style:normal;font-weight:700;font-size:9.5px;
+  letter-spacing:.14em;background:var(--volt);color:var(--ink);padding:2px 6px;border-radius:3px}
+
+/* ---- Higgsfield slot (§8) ---- */
+.hf-slot{position:relative;display:grid;place-items:center;gap:8px;min-height:180px;
+  border:2px dashed var(--ink-faint);border-radius:14px;margin-bottom:10px;
+  background:repeating-linear-gradient(45deg,rgba(28,23,18,.03) 0 10px,transparent 10px 20px);
+  color:var(--ink-2)}
+.hf-tag{font-family:var(--font-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--ink);color:var(--paper);padding:5px 10px;border-radius:4px}
+.hf-meta{font-family:var(--font-mono);font-size:11px;color:var(--ink-faint);letter-spacing:.02em;text-align:center}
+
+/* ---- ticket rip-off (HERO interaction, §7.1) — live ambient loop ---- */
+.tear-wrap{display:grid;grid-template-columns:1fr 360px;gap:34px;align-items:start;margin-bottom:18px}
+.tear-demo{position:relative;background:var(--paper-2);border:1px solid var(--paper-edge);
+  padding:30px 26px;box-shadow:0 6px 16px var(--paper-shadow);min-height:230px;
+  display:flex;align-items:center;justify-content:center;overflow:hidden}
+.ticket{position:relative;width:300px;height:108px;filter:drop-shadow(0 10px 20px var(--paper-shadow))}
+/* two clip-path halves of one ticket — the seam splits between them (§7.1) */
+.ticket .half{position:absolute;inset:0;background:var(--pitch);color:#fff;
+  display:flex;flex-direction:column;justify-content:center;padding:0 22px;font-family:var(--font-mono)}
+.ticket .main{clip-path:inset(0 28% 0 0)}
+.ticket .stub{clip-path:inset(0 0 0 72%);align-items:center;justify-content:center;padding:0;
+  transform-origin:left center;animation:tearoff 4.2s var(--ease-thunk) infinite}
+.ticket .label{font-weight:700;font-size:9px;letter-spacing:.18em;text-transform:uppercase;opacity:.75}
+.ticket .route{font-family:var(--font-display);font-size:26px;letter-spacing:.03em;line-height:1.0;margin-top:3px}
+.ticket .arr{font-size:13px;opacity:.8;margin-top:5px;letter-spacing:.3em}
+.ticket .stub .s-lbl{font-weight:700;font-size:8px;letter-spacing:.16em;writing-mode:vertical-rl;
+  transform:rotate(180deg);opacity:.8}
+/* perforation: round punched notches + dashed tear line down the seam */
+.ticket .seam{position:absolute;top:0;bottom:0;left:72%;width:2px;
+  background:repeating-linear-gradient(180deg,rgba(255,255,255,.85) 0 5px,transparent 5px 11px);z-index:3}
+.ticket .notch{position:absolute;left:72%;width:14px;height:14px;border-radius:50%;
+  background:var(--paper-2);transform:translateX(-50%);z-index:2}
+.ticket .notch.t{top:-7px}.ticket .notch.b{bottom:-7px}
+.ticket .punch{position:absolute;top:50%;left:86%;width:13px;height:13px;border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.5);transform:translate(-50%,-50%);z-index:3}
+@keyframes tearoff{
+  0%,30%{transform:translate(0,0) rotate(0)}
+  /* split + fall + rotate + fade, then reset (hover/click fires this in prod) */
+  46%{transform:translate(6px,8px) rotate(4deg)}
+  74%,86%{transform:translate(34px,86px) rotate(26deg);opacity:0}
+  87%{opacity:0}
+  88%,100%{transform:translate(0,0) rotate(0);opacity:1}
+}
+.tear-tag{position:absolute;top:12px;left:14px;font-family:var(--font-mono);font-weight:700;
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)}
+
+/* ---- spring block ---- */
+.spring-wrap{display:grid;grid-template-columns:1fr 360px;gap:34px;align-items:start;margin-bottom:18px}
+.code-chip{background:var(--navy);border-radius:10px;padding:20px 22px;position:relative;
+  box-shadow:0 12px 30px rgba(10,20,34,.4);overflow:hidden}
+.code-chip::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(110,227,160,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(110,227,160,.06) 1px,transparent 1px);background-size:32px 32px}
+.code-chip .tag{font-family:var(--font-mono);font-weight:700;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--globe-green);margin-bottom:12px}
+.code-chip pre{font-family:var(--font-mono);font-size:13.5px;line-height:1.7;color:#E8E2D2;position:relative;z-index:1}
+.code-chip .k{color:#7FB7E0}.code-chip .s{color:var(--volt)}.code-chip .num{color:var(--gold)}
+.code-chip .c{color:#5C6B7A}
+
+/* live spring demo card */
+.spring-demo{position:relative;background:var(--paper-2);border:1px solid var(--paper-edge);
+  padding:26px;box-shadow:0 6px 16px var(--paper-shadow);min-height:230px;
+  display:flex;align-items:center;justify-content:center}
+.lift-card{width:200px;background:#fdfdfb;padding:11px 11px 38px;box-shadow:0 8px 18px var(--paper-shadow);
+  position:relative;animation:springlift 3.4s var(--ease-thunk) infinite}
+.lift-card .photo{aspect-ratio:1.5/1;border-radius:2px;position:relative;overflow:hidden;
+  background:linear-gradient(160deg,#0c2a1c 0%,#1E7A46 55%,#3EA96B 100%)}
+.lift-card .photo svg{position:absolute;inset:0}
+.lift-card .cap{font-family:var(--font-hand);font-size:22px;color:var(--ink-2);
+  position:absolute;bottom:6px;left:14px}
+.lift-card .coord{position:absolute;top:14px;right:11px;font-family:var(--font-mono);
+  font-weight:700;font-size:8.5px;letter-spacing:.06em;color:#fff;background:rgba(10,20,34,.55);
+  padding:2px 5px;border-radius:2px}
+@keyframes springlift{
+  0%,18%{transform:translateY(0) rotate(-3deg);box-shadow:0 8px 18px var(--paper-shadow)}
+  40%,72%{transform:translateY(-22px) rotate(-1deg);box-shadow:0 26px 40px rgba(58,42,18,.32)}
+  90%,100%{transform:translateY(0) rotate(-3deg);box-shadow:0 8px 18px var(--paper-shadow)}
+}
+.demo-tag{position:absolute;top:12px;left:14px;font-family:var(--font-mono);font-weight:700;
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)}
+/* single Permanent Marker accent — the one marker shout on the card (§2: 1 per card) */
+.marker-shout{position:absolute;bottom:14px;right:16px;font-family:var(--font-marker);
+  font-size:26px;color:var(--stamp-red);transform:rotate(-7deg);line-height:.9;pointer-events:none;
+  text-shadow:0 1px 0 rgba(255,255,255,.4)}
+.marker-shout::after{content:"";position:absolute;left:-6px;right:-8px;bottom:-3px;height:60%;
+  border:2.5px solid var(--stamp-red);border-radius:48% 52% 50% 50%/60% 55% 45% 50%;
+  border-top-color:transparent;transform:rotate(-2deg);opacity:.8}
+.washi{position:absolute;width:96px;height:28px;top:-10px;right:24px;
+  background:repeating-linear-gradient(46deg,rgba(255,255,255,.22) 0 7px,transparent 7px 14px),rgba(205,255,61,.6);
+  box-shadow:0 2px 4px rgba(0,0,0,.14);clip-path:polygon(3% 0,97% 5%,100% 95%,0 100%);transform:rotate(-5deg)}
+
+/* ---- easing demos ---- */
+.ease-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:8px 0 16px}
+.ease{background:var(--paper-2);border:1px solid var(--paper-edge);padding:16px 16px 18px;
+  box-shadow:0 6px 16px var(--paper-shadow);position:relative}
+.ease h4{font-family:var(--font-mono);font-weight:700;font-size:13px;letter-spacing:.04em;
+  color:var(--ink);margin-bottom:2px}
+.ease .bez{font-family:var(--font-mono);font-size:10px;color:var(--stamp-red);letter-spacing:.01em;
+  word-break:break-all;margin-bottom:3px}
+.ease .use{font-size:12px;color:var(--ink-2);font-weight:600;margin-bottom:14px;min-height:30px}
+.track{height:54px;border-bottom:1.5px dashed var(--paper-edge);position:relative;
+  background:repeating-linear-gradient(90deg,transparent 0 23px,rgba(199,180,136,.5) 23px 24px)}
+.runner{position:absolute;top:9px;left:0;width:34px;height:34px}
+/* the SAME movement (translateX 0 -> 100%) under each curve, in sync */
+.runner.thunk{animation:run 2.8s var(--ease-thunk) infinite}
+.runner.paper{animation:run 2.8s var(--ease-paper) infinite}
+.runner.draw{animation:run 2.8s var(--ease-draw) infinite}
+@keyframes run{0%,8%{left:0}54%,62%{left:calc(100% - 34px)}100%{left:0}}
+/* per-curve runner identity */
+.chip-stamp{width:34px;height:34px;border:2.2px solid var(--stamp-red);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-weight:700;
+  font-size:8px;color:var(--stamp-red);transform:rotate(-12deg);text-align:center;line-height:.9;
+  box-shadow:inset 0 0 0 2px rgba(192,54,44,.3)}
+.chip-poly{width:34px;height:34px;background:#fdfdfb;box-shadow:0 4px 9px var(--paper-shadow);
+  transform:rotate(-4deg)}
+.chip-poly i{display:block;height:64%;background:linear-gradient(160deg,#1E7A46,#3EA96B)}
+/* draw runner: dotted route draws in behind the plane (§4.8), in step with the runner */
+.track .route{position:absolute;left:0;top:26px;width:100%;height:2px;pointer-events:none}
+.track .route line{stroke:var(--stamp-red);stroke-width:2;stroke-linecap:round;stroke-dasharray:1 8;
+  stroke-dashoffset:0;animation:draw 2.8s var(--ease-draw) infinite}
+@keyframes draw{0%,8%{stroke-dashoffset:300}54%,62%,100%{stroke-dashoffset:0}}
+
+/* ---- duration scale ---- */
+.dur{display:grid;grid-template-columns:140px 1fr 92px;gap:0;border:1px solid var(--paper-edge);
+  background:var(--paper-2);box-shadow:0 6px 16px var(--paper-shadow)}
+.dur .row{display:contents}
+.dur .cell{padding:12px 16px;border-bottom:1px solid var(--paper-edge);display:flex;align-items:center}
+.dur .row:last-child .cell{border-bottom:0}
+.dur .tk{font-family:var(--font-mono);font-weight:700;font-size:12px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink)}
+.dur .bar-cell{position:relative}
+.dur .bar{height:9px;background:var(--ink);border-radius:5px;animation:fill 4s var(--ease-draw) infinite}
+.dur .bar.micro{width:8%}.dur .bar.quick{width:16%;background:var(--ocean)}
+.dur .bar.base{width:28%;background:var(--pitch)}
+.dur .bar.tear{width:38%;background:var(--stamp-red)}.dur .bar.slow{width:48%;background:var(--gold)}
+.dur .bar.amb{width:100%;background:repeating-linear-gradient(90deg,var(--stamp-red) 0 10px,transparent 10px 18px)}
+.dur .ms{font-family:var(--font-mono);font-weight:700;font-size:12px;color:var(--ink-2);justify-content:flex-end}
+@keyframes fill{0%{opacity:.25}10%{opacity:1}80%{opacity:1}100%{opacity:.25}}
+
+.footnote{margin-top:46px;display:flex;justify-content:space-between;align-items:flex-end;
+  border-top:2px dashed var(--paper-edge);padding-top:16px;gap:20px;flex-wrap:wrap}
+.coord-tag{font-family:var(--font-mono);font-weight:700;font-size:11px;letter-spacing:.1em;color:var(--ink-faint)}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- flag bunting tops the header (§4.13) — STATIC motif; sway is de-emphasized per §7 -->
+  <div class="bunting" aria-hidden="true">
+    <span style="background:var(--pitch)"></span>
+    <span style="background:var(--stamp-red)"></span>
+    <span style="background:var(--ocean)"></span>
+    <span style="background:var(--gold)"></span>
+    <span style="background:var(--pitch)"></span>
+    <span style="background:var(--stamp-red)"></span>
+    <span style="background:var(--ocean)"></span>
+    <span style="background:var(--gold)"></span>
+    <span style="background:var(--pitch)"></span>
+    <span style="background:var(--stamp-red)"></span>
+  </div>
+
+  <div class="eyebrow"><span class="dot"></span> 40.4168° N · 3.7038° W &nbsp;//&nbsp; SPEC §7 · MOTION CONTRACT</div>
+  <h1>Motion<br>Language</h1>
+  <div style="display:flex;gap:26px;align-items:flex-end;margin-top:14px;flex-wrap:wrap">
+    <p class="sub">The shared timing vocabulary every other motion card references. Things have <b>mass</b> — they drop and <b>settle</b>. The <b>globe already owns the main hover motion</b> (countries lift on hover), so the system stays focused on a small set of <b>distinct coded interactions</b> plus <b>Higgsfield slots</b> for drawn motion — never generic hover padding.</p>
+    <span class="hand-note">spring it, don't<br>slide it →</span>
+  </div>
+
+  <!-- PRINCIPLES -->
+  <div class="principles">
+    <div class="prin">
+      <div class="n">01</div>
+      <h3>Paper-weighted</h3>
+      <p>Physical mass. A stamp lands and rebounds; a polaroid drops and rocks. Nothing floats.</p>
+    </div>
+    <div class="prin">
+      <div class="n">02</div>
+      <h3>Spring &gt; linear</h3>
+      <p>Lifts, drops and settles use a spring — never a flat linear ease. Same physics as the globe.</p>
+    </div>
+    <div class="prin">
+      <div class="n">03</div>
+      <h3>One spark</h3>
+      <p>Energy, not noise. A single volt pulse or count-up per view. Never flashy, never competing.</p>
+    </div>
+    <div class="prin">
+      <div class="n">04</div>
+      <h3>Globe owns hover</h3>
+      <p>The 3D globe already provides the main hover-lift. No generic hover padding — we code only distinct interactions + Higgsfield slots.</p>
+    </div>
+  </div>
+
+  <!-- THE FOCUSED CODED SET -->
+  <div class="sec-label">What we code — the focused set</div>
+  <div class="coded-set">
+    <span class="cd hero"><b>1</b> Ticket rip-off <em>HERO</em></span>
+    <span class="cd"><b>2</b> Washi stick-on</span>
+    <span class="cd"><b>3</b> Polaroid develops</span>
+    <span class="cd"><b>4</b> Passport-stamp thunk</span>
+    <span class="cd"><b>5</b> Pushpin / paperclip drop</span>
+    <span class="cd"><b>6</b> Page-corner peel</span>
+    <span class="cd"><b>7</b> Route-line draw</span>
+    <span class="cd"><b>8</b> Scoreboard count-up</span>
+  </div>
+  <p class="why" style="margin-bottom:40px"><b>Eight coded interactions, full stop.</b> Drawn / character motion (the soccer-ball fly-through, any hand-drawn figure) is <b>not</b> coded here — it's a Higgsfield asset dropped into a labeled slot (see below). A flat <span style="font-family:var(--font-mono)">b/w ball glyph</span> may sit as a static motif, but it never animates.</p>
+
+  <!-- HIGGSFIELD SLOT (§8) — drawn / character motion lives here, never coded -->
+  <div class="sec-label">Drawn motion → Higgsfield slot (§8)</div>
+  <div class="hf-slot" role="img" aria-label="Higgsfield asset slot">
+    <span class="hf-tag">HIGGSFIELD ASSET — added later</span>
+    <span class="hf-meta">soccer-ball fly-through · b/w hand-drawn · transparent WebM · ~480×480 · loops</span>
+    <span class="hf-meta">sits near the cursor / over a lifting country on the globe · trigger: hover a country</span>
+  </div>
+  <p class="why" style="margin-bottom:46px"><b>Why a slot, not CSS:</b> Claude-coded character animation looks bad. Drawn motion is generated in Higgsfield (start frame + end frame on green → animated → background stripped) and dropped in later. The design system reserves the space and specs the asset; it never fakes it.</p>
+
+  <!-- TICKET RIP-OFF — HERO CODED INTERACTION (§7.1) -->
+  <div class="sec-label">Ticket rip-off — the hero coded interaction (§7.1)</div>
+  <div class="tear-wrap">
+    <div class="code-chip">
+      <div class="tag">CSS · two clip-path halves + tear keyframe</div>
+<pre><span class="c">// the signature micro-interaction</span>
+.ticket .main { clip-path: <span class="s">inset(0 28% 0 0)</span> }
+.ticket .stub { clip-path: <span class="s">inset(0 0 0 72%)</span> }
+
+<span class="c">// on .torn — stub detaches at the seam</span>
+.stub.torn {
+  transform: <span class="k">translateY</span>(86px) <span class="k">rotate</span>(26deg);
+  opacity: <span class="num">0</span>;            <span class="c">// falls + spins + fades</span>
+  transition: <span class="num">520ms</span> var(--ease-thunk);
+}</pre>
+      <p class="why" style="position:relative;z-index:1;color:#9aa7b5;margin-top:16px"><b style="color:var(--globe-green)">WHY</b> the whole system runs on the boarding-pass motif, so its tear is the showcase. <b>Framer Motion:</b> <span style="font-family:var(--font-mono);color:#cdd9df">AnimatePresence</span> on the stub, spring <span style="font-family:var(--font-mono);color:#cdd9df">{stiffness:300,damping:25}</span>, exit on y / rotate / opacity.</p>
+    </div>
+
+    <div class="tear-demo">
+      <div class="tear-tag">LIVE · auto-loop</div>
+      <div class="ticket" aria-label="boarding-pass ticket that tears along its perforation">
+        <div class="half main">
+          <span class="label">Visited · Matchday</span>
+          <span class="route">MAD&nbsp;→&nbsp;BUE</span>
+          <span class="arr">✈ &nbsp; GATE 23 · SEAT 10</span>
+        </div>
+        <div class="seam"></div>
+        <div class="notch t"></div>
+        <div class="notch b"></div>
+        <div class="half stub">
+          <span class="s-lbl">STUB · 047</span>
+        </div>
+        <div class="punch"></div>
+      </div>
+    </div>
+  </div>
+  <p class="why" style="margin-bottom:46px"><b>The stub above tears off on an ambient loop</b> — it splits along the dashed perforation, then <b>falls + rotates + fades</b> (<span style="font-family:var(--font-mono)">--t-tear 520ms</span>, <span style="font-family:var(--font-mono)">--ease-thunk</span> on the split, <span style="font-family:var(--font-mono)">--ease-paper</span> on the fall). In production this fires on click/tap of any ticket, tag or VISITED stub — never on a timer.</p>
+
+  <!-- SPRING -->
+  <div class="sec-label">The spring — house standard</div>
+  <div class="spring-wrap">
+    <div class="code-chip">
+      <div class="tag">Framer Motion · lifts / drops / settles</div>
+<pre><span class="c">// every hover-lift, stamp-thunk, polaroid drop</span>
+transition<span class="k">=</span>{{
+  type: <span class="s">"spring"</span>,
+  stiffness: <span class="num">300</span>,
+  damping: <span class="num">25</span>
+}}
+
+<span class="c">// matches the globe country rise:</span>
+<span class="c">// altitude 0.008 → 0.06 on hover</span></pre>
+      <p class="why" style="position:relative;z-index:1;color:#9aa7b5;margin-top:16px"><b style="color:var(--globe-green)">WHY</b> one spring config across the whole site = a single felt "hand". Stiffness 300 keeps it snappy; damping 25 gives a small settle, not a wobble.</p>
+    </div>
+
+    <div class="spring-demo">
+      <div class="demo-tag">LIVE · auto-loop</div>
+      <div class="washi"></div>
+      <div class="lift-card">
+        <div class="photo">
+          <span class="coord">40.4530°N</span>
+          <svg viewBox="0 0 200 130" preserveAspectRatio="none" aria-hidden="true">
+            <!-- Bernabéu pitch lines (§4.9) -->
+            <rect x="14" y="14" width="172" height="102" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="2"/>
+            <line x1="100" y1="14" x2="100" y2="116" stroke="rgba(255,255,255,.85)" stroke-width="2"/>
+            <circle cx="100" cy="65" r="22" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="2"/>
+            <circle cx="100" cy="65" r="2.5" fill="rgba(255,255,255,.9)"/>
+          </svg>
+        </div>
+        <div class="cap">Bernabéu, matchday</div>
+      </div>
+      <div class="marker-shout">settle!</div>
+    </div>
+  </div>
+  <p class="why" style="margin-bottom:46px"><b>The card above is the live demo</b> — it springs up and settles on an ambient loop (hover can't be captured in a static render). In production this fires on hover/tap, not on a timer.</p>
+
+  <div class="divider"></div>
+
+  <!-- EASING TOKENS -->
+  <div class="sec-label">Easing tokens — same move, three curves, side by side</div>
+  <div class="ease-grid">
+
+    <div class="ease">
+      <h4>--ease-thunk</h4>
+      <div class="bez">cubic-bezier(.18,.89,.32,1.28)</div>
+      <div class="use">Overshoot — ticket tear (hero), stamp thunk, pushpin drop, washi settle</div>
+      <div class="track">
+        <div class="runner thunk">
+          <div class="chip-stamp">MAD<br>2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ease">
+      <h4>--ease-paper</h4>
+      <div class="bez">cubic-bezier(.2,.7,.2,1)</div>
+      <div class="use">Paper glide — corner peel, polaroid develop</div>
+      <div class="track">
+        <div class="runner paper">
+          <div class="chip-poly"><i></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ease">
+      <h4>--ease-draw</h4>
+      <div class="bez">cubic-bezier(.65,0,.35,1)</div>
+      <div class="use">Route draw / count-up — dotted flight path, stat tally</div>
+      <div class="track">
+        <svg class="route" viewBox="0 0 300 2" preserveAspectRatio="none" aria-hidden="true">
+          <line x1="0" y1="1" x2="300" y2="1"/>
+        </svg>
+        <div class="runner draw">
+          <svg viewBox="0 0 34 34" width="34" height="34" aria-hidden="true">
+            <circle cx="17" cy="17" r="6" fill="var(--stamp-red)"/>
+            <text x="17" y="11" font-family="Space Mono" font-size="9" fill="var(--stamp-red)" text-anchor="middle">✈</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="why"><b>Read it like a race:</b> all three runners launch together and travel the same distance in 2.8s, so the curve's character is visible side-by-side — thunk overshoots past the line and snaps back, paper glides in clean, draw eases out hard like a count-up landing on its final number. These are the <b>three featured easing tokens</b> (the old ball-roll curve is gone — ball motion is a Higgsfield asset, not coded). <b>Tokens live in <span style="font-family:var(--font-mono)">:root</span></b> so React reads the identical bezier.</p>
+
+  <div class="divider" style="margin-top:44px"></div>
+
+  <!-- DURATION SCALE -->
+  <div class="sec-label">Duration scale</div>
+  <div class="dur">
+    <div class="row">
+      <div class="cell tk">--t-micro</div>
+      <div class="cell bar-cell"><div class="bar micro"></div></div>
+      <div class="cell ms">120ms</div>
+    </div>
+    <div class="row">
+      <div class="cell tk">--t-quick</div>
+      <div class="cell bar-cell"><div class="bar quick"></div></div>
+      <div class="cell ms">240ms</div>
+    </div>
+    <div class="row">
+      <div class="cell tk">--t-base</div>
+      <div class="cell bar-cell"><div class="bar base"></div></div>
+      <div class="cell ms">400ms</div>
+    </div>
+    <div class="row">
+      <div class="cell tk">--t-tear</div>
+      <div class="cell bar-cell"><div class="bar tear"></div></div>
+      <div class="cell ms">520ms</div>
+    </div>
+    <div class="row">
+      <div class="cell tk">--t-slow</div>
+      <div class="cell bar-cell"><div class="bar slow"></div></div>
+      <div class="cell ms">700ms</div>
+    </div>
+    <div class="row">
+      <div class="cell tk">ambient</div>
+      <div class="cell bar-cell"><div class="bar amb"></div></div>
+      <div class="cell ms">2.5–6s</div>
+    </div>
+  </div>
+  <p class="why"><b>Micro</b> = taps & toggles · <b>quick</b> = link/underline reveals · <b>base</b> = the standard lift/drop · <b>tear</b> = the hero ticket rip-off (§7.1, <span style="font-family:var(--font-mono)">--ease-thunk</span> on the split, <span style="font-family:var(--font-mono)">--ease-paper</span> on the fall) · <b>slow</b> = polaroid develop, page-corner peel · <b>ambient</b> = idle loops (the abstract easing demos on this card; the globe's own spin lives in the globe). Bar length ≈ relative feel; ambient is dashed because it never "finishes".</p>
+
+  <div class="footnote">
+    <div class="coord-tag">AGUSTÍN · MADRID → BUENOS AIRES → LISBON → TOKYO</div>
+    <span class="hand-note" style="color:var(--ink-2);transform:rotate(2deg);font-size:22px">one spark, never flashy.</span>
+  </div>
+
+</div>
+</body>
+</html>

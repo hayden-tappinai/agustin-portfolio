@@ -1,0 +1,455 @@
+<!-- @dsCard group="Motion & Interactions" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agustins Portfolio — Ticket Rip-Off</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&family=Permanent+Marker&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F2E8CF; --paper-2:#E8D9B5; --paper-edge:#CDB789; --paper-line:#C7B488;
+    --paper-shadow:rgba(58,42,18,0.18);
+    --ink:#1C1712; --ink-2:#4A4034; --ink-faint:#8A7E68; --navy:#0A1422; --navy-2:#14233A;
+    --pitch:#1E7A46; --globe-green:#3EA96B; --ocean:#14598C; --stamp-red:#C0362C; --gold:#C8992F;
+    --volt:#CDFF3D; --volt-deep:#A6D400;
+    --font-display:"Anton","Arial Narrow",sans-serif;
+    --font-body:"Plus Jakarta Sans",system-ui,sans-serif;
+    --font-hand:"Caveat",cursive; --font-marker:"Permanent Marker",cursive;
+    --font-mono:"Space Mono",ui-monospace,monospace;
+    /* §7 motion tokens */
+    --ease-thunk:cubic-bezier(.18,.89,.32,1.28); --ease-paper:cubic-bezier(.2,.7,.2,1);
+    --ease-draw:cubic-bezier(.65,0,.35,1);
+    --t-micro:120ms; --t-quick:240ms; --t-base:400ms; --t-tear:520ms; --t-slow:700ms;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  body{
+    background-color:#F2E8CF;
+    background-image:
+      radial-gradient(120% 130% at 0% 0%, rgba(255,250,235,0.55) 0%, transparent 42%),
+      radial-gradient(120% 130% at 100% 100%, rgba(150,118,64,0.20) 0%, transparent 55%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    font-family:var(--font-body);
+    color:var(--ink);
+    padding:48px;
+  }
+
+  .stage{max-width:1100px;margin:0 auto}
+
+  /* ---------- Header ---------- */
+  .eyebrow{
+    font-family:var(--font-mono); font-weight:700; font-size:12px;
+    text-transform:uppercase; letter-spacing:0.14em; color:var(--ink-faint);
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .eyebrow .spark{ color:var(--volt-deep); font-size:13px; }
+  .eyebrow .coord{ color:var(--ink-2); }
+
+  h1{
+    font-family:var(--font-display); text-transform:uppercase; color:var(--ink);
+    font-size:clamp(44px,6vw,72px); letter-spacing:0.02em; line-height:1.04;
+    /* Anton = stadium banner; BREATHES per §2 revision — positive tracking, open line-height */
+  }
+  .subhead{
+    margin-top:14px; max-width:680px; font-size:17px; line-height:1.55;
+    color:var(--ink-2); font-weight:500;
+  }
+  .signature-flag{
+    display:inline-flex; align-items:center; gap:8px; margin-top:18px;
+    background:var(--ink); color:var(--paper); padding:7px 13px; border-radius:5px;
+    font-family:var(--font-mono); font-size:11px; font-weight:700;
+    letter-spacing:0.12em; text-transform:uppercase;
+  }
+  .signature-flag .dot{ width:8px; height:8px; border-radius:50%; background:var(--volt); /* the ONE spark */ }
+
+  /* ---------- Layout ---------- */
+  .demo-grid{
+    margin-top:42px; display:grid; grid-template-columns:1fr 1fr; gap:28px;
+  }
+  @media (max-width:880px){ .demo-grid{ grid-template-columns:1fr; } }
+
+  .panel{
+    background:var(--paper-2);
+    border:1px solid var(--paper-edge);
+    border-radius:16px;
+    padding:30px 26px 34px;
+    box-shadow:0 14px 30px var(--paper-shadow);
+    position:relative;
+  }
+  .panel-label{
+    font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase;
+    letter-spacing:0.12em; color:var(--ink-faint); margin-bottom:6px;
+  }
+  .panel-note{
+    font-family:var(--font-hand); font-size:23px; color:var(--ink-2); line-height:1.1;
+    margin-bottom:22px;
+  }
+
+  .ticket-frame{ display:grid; place-items:center; min-height:300px; }
+
+  /* ---------- THE TICKET ---------- */
+  /* Two clip-path halves of ONE ticket sharing a perforated seam.
+     .stub is the left "VISITED" tab; .main is the boarding pass body.
+     The seam sits at 32% of the ticket width. */
+  .ticket{
+    --w:420px; --h:200px; --seam:32%;
+    position:relative; width:var(--w); height:var(--h);
+    font-family:var(--font-mono); cursor:pointer;
+    filter:drop-shadow(0 16px 28px var(--paper-shadow));
+  }
+  .ticket-half{
+    position:absolute; inset:0; border-radius:14px; overflow:hidden;
+  }
+  /* MAIN piece — boarding pass body, fills from the seam to the right edge */
+  .ticket .main{
+    clip-path:inset(0 0 0 var(--seam));
+    background:var(--pitch);
+    z-index:1;
+  }
+  /* STUB — the detachable left tab up to the seam */
+  .ticket .stub{
+    clip-path:inset(0 calc(100% - var(--seam)) 0 0);
+    background:var(--ink);
+    z-index:2;
+    transform-origin:right center; /* pivots at the seam notch */
+  }
+
+  /* Perforation seam: dashed tear line + round punched notches, drawn over both halves */
+  .seam{
+    position:absolute; top:0; bottom:0; left:var(--seam);
+    width:0; z-index:3; pointer-events:none;
+    border-left:2px dashed rgba(242,232,207,0.7);
+  }
+  .notch{
+    position:absolute; left:var(--seam); width:20px; height:20px; border-radius:50%;
+    background:var(--paper-2); transform:translateX(-50%); z-index:4; pointer-events:none;
+    box-shadow:inset 0 1px 2px rgba(0,0,0,0.25);
+  }
+  .notch.top{ top:-10px; }
+  .notch.bottom{ bottom:-10px; }
+  /* small punched circle on the stub (per §5) */
+  .punch{
+    position:absolute; left:calc(var(--seam) / 2); top:50%; transform:translate(-50%,-50%);
+    width:16px; height:16px; border-radius:50%;
+    border:2px dashed rgba(242,232,207,0.55); z-index:5; pointer-events:none;
+  }
+
+  /* STUB face content */
+  .stub-inner{
+    position:absolute; inset:0; width:var(--seam);
+    display:flex; flex-direction:column; justify-content:space-between;
+    padding:16px 14px; color:var(--paper);
+  }
+  .stub-admit{ font-size:10px; letter-spacing:0.16em; opacity:0.7; }
+  .stub-visited{
+    font-family:var(--font-display); font-size:30px; letter-spacing:0.02em; line-height:1.0;
+    color:var(--paper); text-transform:uppercase;
+  }
+  .stub-sub{ font-size:10px; letter-spacing:0.14em; color:var(--gold); /* warm gold, not volt — keeps one spark per composition */ }
+
+  /* MAIN face content */
+  .main-inner{
+    position:absolute; inset:0; left:var(--seam);
+    padding:18px 22px 18px 30px; color:var(--paper);
+    display:grid; grid-template-columns:1fr auto; grid-template-rows:auto 1fr auto;
+    gap:6px 18px; align-items:start;
+  }
+  .field{ display:flex; flex-direction:column; gap:3px; }
+  .field .k{ font-size:9px; letter-spacing:0.14em; opacity:0.65; }
+  .field .v{ font-size:15px; font-weight:700; letter-spacing:0.03em; }
+  .main-title{
+    grid-column:1 / -1; font-family:var(--font-display); font-size:24px;
+    letter-spacing:0.02em; line-height:1.05; text-transform:uppercase;
+  }
+  .main-title .arrow{ color:var(--gold); } /* warm gold travel arrow — NOT volt; the single volt spark is the seam flash on tear */
+  .barcode{
+    grid-column:1 / -1; height:26px; align-self:end;
+    background:repeating-linear-gradient(90deg,
+      var(--paper) 0 2px, transparent 2px 4px,
+      var(--paper) 4px 5px, transparent 5px 9px,
+      var(--paper) 9px 12px, transparent 12px 13px);
+    opacity:0.9; border-radius:1px;
+  }
+
+  /* ---------- THE LIVE LOOP (ambient cycle) ---------- */
+  /* whole -> tear(split, --ease-thunk) -> fall(--ease-paper) -> gone -> pause -> reset.
+     The stub detaches, drops, rotates, fades. The main piece nudges + settles. */
+  @keyframes stub-rip{
+    0%, 22%   { transform:translate(0,0) rotate(0deg); opacity:1; }              /* whole */
+    30%       { transform:translate(-4px,2px) rotate(-3deg); opacity:1; }        /* split — thunk overshoot */
+    62%       { transform:translate(-30px,150px) rotate(-26deg); opacity:0.12; } /* fall + rotate + fade */
+    70%, 90%  { transform:translate(-30px,170px) rotate(-30deg); opacity:0; }    /* stub gone, pause */
+    100%      { transform:translate(0,0) rotate(0deg); opacity:1; }              /* reset */
+  }
+  @keyframes main-settle{
+    0%, 22%   { transform:translateX(0); }
+    30%       { transform:translateX(5px); }   /* recoil as the stub releases */
+    44%       { transform:translateX(-1px); }  /* settle back */
+    62%,100%  { transform:translateX(0); }
+  }
+  @keyframes seam-flash{
+    0%, 24%, 64%, 100%{ opacity:0; }
+    30%{ opacity:1; }                          /* the tear line flashes as it splits */
+  }
+  .ticket.live .stub{
+    animation:stub-rip 4.2s var(--ease-paper) infinite;
+  }
+  .ticket.live .main{
+    animation:main-settle 4.2s var(--ease-thunk) infinite;
+  }
+  .ticket.live .seam-tear{
+    position:absolute; top:0; bottom:0; left:var(--seam); width:0; z-index:6;
+    border-left:2px solid var(--volt-deep); pointer-events:none;
+    animation:seam-flash 4.2s linear infinite;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .ticket.live .stub,.ticket.live .main,.ticket.live .seam-tear{ animation:none; }
+  }
+
+  .caption{
+    margin-top:18px; font-size:13px; line-height:1.5; color:var(--ink-2); font-weight:500;
+  }
+  .caption b{ color:var(--ink); font-weight:700; }
+
+  /* ---------- SPEC STRIP ---------- */
+  .spec{
+    margin-top:34px; background:var(--navy); color:var(--paper);
+    border-radius:16px; padding:28px 30px;
+    background-image:
+      linear-gradient(rgba(110,227,160,.08) 1px,transparent 1px),
+      linear-gradient(90deg, rgba(110,227,160,.08) 1px,transparent 1px);
+    background-size:40px 40px;
+  }
+  .spec-head{
+    font-family:var(--font-mono); font-size:12px; font-weight:700; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--volt); margin-bottom:20px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .spec-rows{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px 36px; }
+  @media (max-width:880px){ .spec-rows{ grid-template-columns:1fr; } }
+  .spec-row{ font-family:var(--font-mono); font-size:13px; line-height:1.5; }
+  .spec-row .k{
+    display:block; font-size:10px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--globe-green); margin-bottom:4px;
+  }
+  .spec-row .v{ color:var(--paper); }
+  .spec-row code{ color:var(--volt); background:rgba(205,255,61,0.08); padding:1px 5px; border-radius:3px; }
+
+  .impl{ grid-column:1 / -1; margin-top:6px; display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  @media (max-width:880px){ .impl{ grid-template-columns:1fr; } }
+  .impl-block .k{
+    display:block; font-family:var(--font-mono); font-size:10px; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--globe-green); margin-bottom:8px;
+  }
+  pre{
+    font-family:var(--font-mono); font-size:11.5px; line-height:1.6; color:var(--paper-2);
+    background:var(--navy-2); border:1px solid rgba(110,227,160,0.12);
+    border-radius:10px; padding:14px 16px; overflow-x:auto; white-space:pre;
+  }
+  pre .c{ color:var(--ink-faint); } /* comment */
+  pre .t{ color:var(--volt); }      /* token / key value */
+
+  /* ---------- WHY footer ---------- */
+  .why{
+    margin-top:30px; display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+  }
+  @media (max-width:880px){ .why{ grid-template-columns:1fr; } }
+  .why-card{
+    border-left:3px solid var(--paper-edge); padding-left:14px;
+  }
+  .why-card .k{
+    font-family:var(--font-mono); font-size:10px; font-weight:700; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--ink-faint); margin-bottom:5px;
+  }
+  .why-card p{ font-size:13.5px; line-height:1.5; color:var(--ink-2); }
+</style>
+</head>
+<body>
+  <main class="stage">
+
+    <p class="eyebrow">
+      <span class="spark">✦</span>
+      <span>MOTION &amp; INTERACTIONS</span>
+      <span class="coord">/ 40.4530° N, 3.6883° W — BERNABÉU</span>
+    </p>
+
+    <h1>The Ticket Rip-Off</h1>
+
+    <p class="subhead">
+      The signature coded interaction of the whole system. Clicking a match ticket tears
+      it along its perforation — the stub detaches, falls, rotates and fades while the
+      boarding pass settles back into place. Built for real in CSS, looped here so it stays
+      alive in the preview.
+    </p>
+
+    <span class="signature-flag"><span class="dot"></span>HERO INTERACTION — THE SIGNATURE MOTIF</span>
+
+    <section class="demo-grid">
+
+      <!-- LIVE ANIMATION -->
+      <div class="panel">
+        <div class="panel-label">LIVE · AMBIENT LOOP</div>
+        <div class="panel-note">it tears itself off, over &amp; over</div>
+        <div class="ticket-frame">
+          <div class="ticket live" aria-label="Match ticket tearing along its perforation, looping">
+            <!-- MAIN boarding-pass half -->
+            <div class="ticket-half main">
+              <div class="main-inner">
+                <div class="main-title">REAL MADRID <span class="arrow">→</span> ESPAÑA</div>
+                <div class="field"><span class="k">FLIGHT</span><span class="v">AG-2026</span></div>
+                <div class="field"><span class="k">SEAT</span><span class="v">10A</span></div>
+                <div class="field"><span class="k">GATE / BERNABÉU</span><span class="v">MAD · S.B.</span></div>
+                <div class="barcode"></div>
+              </div>
+            </div>
+            <!-- STUB detachable half -->
+            <div class="ticket-half stub">
+              <div class="stub-inner">
+                <span class="stub-admit">ADMIT ONE</span>
+                <span class="stub-visited">VISITED</span>
+                <span class="stub-sub">· ESPAÑA ·</span>
+              </div>
+            </div>
+            <!-- shared perforated seam -->
+            <span class="seam"></span>
+            <span class="seam-tear"></span>
+            <span class="notch top"></span>
+            <span class="notch bottom"></span>
+            <span class="punch"></span>
+          </div>
+        </div>
+        <p class="caption">
+          <b>What you're seeing:</b> two <code style="font-family:var(--font-mono);font-size:12px">clip-path</code>
+          halves of one ticket sharing a perforated seam. The stub pivots at the notch, drops on
+          <b>--ease-paper</b>, the body recoils + settles on <b>--ease-thunk</b>.
+        </p>
+      </div>
+
+      <!-- WHOLE / PRE-TEAR STATE -->
+      <div class="panel">
+        <div class="panel-label">WHOLE · PRE-TEAR STATE</div>
+        <div class="panel-note">one piece — seam intact</div>
+        <div class="ticket-frame">
+          <div class="ticket" aria-label="Whole match ticket, perforation intact">
+            <div class="ticket-half main">
+              <div class="main-inner">
+                <div class="main-title">REAL MADRID <span class="arrow">→</span> ESPAÑA</div>
+                <div class="field"><span class="k">FLIGHT</span><span class="v">AG-2026</span></div>
+                <div class="field"><span class="k">SEAT</span><span class="v">10A</span></div>
+                <div class="field"><span class="k">GATE / BERNABÉU</span><span class="v">MAD · S.B.</span></div>
+                <div class="barcode"></div>
+              </div>
+            </div>
+            <div class="ticket-half stub">
+              <div class="stub-inner">
+                <span class="stub-admit">ADMIT ONE</span>
+                <span class="stub-visited">VISITED</span>
+                <span class="stub-sub">· ESPAÑA ·</span>
+              </div>
+            </div>
+            <span class="seam"></span>
+            <span class="notch top"></span>
+            <span class="notch bottom"></span>
+            <span class="punch"></span>
+          </div>
+        </div>
+        <p class="caption">
+          <b>Reference state.</b> The dashed seam, the two round punched notches at top &amp; bottom,
+          and the small punched circle make the tear point obvious before anything moves. Stub fills
+          <b>--ink</b>, body fills <b>--pitch</b>, both in cream text — boarding-pass styling.
+        </p>
+      </div>
+
+    </section>
+
+    <!-- SPEC STRIP -->
+    <section class="spec">
+      <div class="spec-head"><span>◆</span> SPEC — TICKET RIP-OFF (HERO)</div>
+      <div class="spec-rows">
+
+        <div class="spec-row">
+          <span class="k">Trigger</span>
+          <span class="v">Click the ticket / tag / "VISITED" stub.</span>
+        </div>
+        <div class="spec-row">
+          <span class="k">What moves</span>
+          <span class="v">Stub detaches at the seam, falls + rotates + fades; main piece recoils &amp; settles.</span>
+        </div>
+        <div class="spec-row">
+          <span class="k">Duration</span>
+          <span class="v"><code>~520ms</code> · token <code>--t-tear</code> (ambient loop runs slower so it reads in the preview).</span>
+        </div>
+        <div class="spec-row">
+          <span class="k">Easing</span>
+          <span class="v"><code>--ease-thunk</code> on the split · <code>--ease-paper</code> on the fall.</span>
+        </div>
+
+        <div class="impl">
+          <div class="impl-block">
+            <span class="k">IMPL — CSS (clip-path halves + @keyframes)</span>
+<pre><span class="c">/* two halves of one ticket, shared seam */</span>
+.stub{ clip-path:inset(0 68% 0 0);
+       transform-origin:right center; }
+.main{ clip-path:inset(0 0 0 32%); }
+
+.ticket.torn .stub{
+  animation:rip <span class="t">var(--t-tear)</span>
+            <span class="t">var(--ease-paper)</span> forwards; }
+
+@keyframes rip{
+  0%  { transform:translate(0,0) rotate(0);
+        opacity:1; }
+  30% { transform:translate(-4px,2px)
+        rotate(-3deg); }            <span class="c">/* split */</span>
+  100%{ transform:translate(-30px,160px)
+        rotate(-30deg); opacity:0; }<span class="c">/* fall */</span>
+}</pre>
+          </div>
+          <div class="impl-block">
+            <span class="k">IMPL — Framer Motion (AnimatePresence)</span>
+<pre><span class="c">// stub unmounts on tear -> exit animates</span>
+&lt;AnimatePresence&gt;
+  {!torn &amp;&amp; (
+    &lt;motion.div
+      style={{ transformOrigin:"right center" }}
+      transition={{ type:<span class="t">"spring"</span>,
+        stiffness:<span class="t">300</span>, damping:<span class="t">25</span> }}
+      exit={{ y:<span class="t">160</span>, rotate:<span class="t">-30</span>,
+              opacity:<span class="t">0</span> }}
+    /&gt;
+  )}
+&lt;/AnimatePresence&gt;
+<span class="c">// main piece: spring back to x:0 on release</span></pre>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- WHY (self-documenting) -->
+    <section class="why">
+      <div class="why-card">
+        <div class="k">WHY — the motif</div>
+        <p>The ticket is the system's recurring shape: primary button, boarding-pass nav, tags,
+        back-to-globe control. Tearing it is the one interaction everyone remembers.</p>
+      </div>
+      <div class="why-card">
+        <div class="k">WHY — paper physics</div>
+        <p>Spring over linear. Things have mass: the stub <i>drops and settles</i> rather than slides.
+        <b>--ease-thunk</b> gives the split an overshoot; <b>--ease-paper</b> a weighted glide.</p>
+      </div>
+      <div class="why-card">
+        <div class="k">WHY — one spark</div>
+        <p>Volt appears exactly once as the focal accent — the <b>seam flash</b> at the moment of the
+        tear. The travel arrow and stub line are warm gold; everything else stays pitch-green and ink on kraft.</p>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>
