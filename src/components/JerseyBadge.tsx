@@ -55,7 +55,7 @@ export function JerseyBadge({ className }: JerseyBadgeProps) {
         </div>
 
         <div className="absolute bottom-[18px] right-[18px] font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-white/70">
-          EST · MADRID · 03
+          EST · 2003
         </div>
       </div>
 
@@ -67,17 +67,18 @@ export function JerseyBadge({ className }: JerseyBadgeProps) {
         </div>
 
         <div className="mt-4 flex flex-wrap gap-y-2 border-t border-dashed border-paper-edge pt-4 font-mono text-[13px] font-bold tracking-[0.06em] text-ink-2">
-          <Stat label="Caps" value="47" />
+          <Stat label="Stadiums" value="10" />
           <Sep />
-          <Stat label="Cities" value="31" />
+          <Stat label="Leagues" value="20" />
           <Sep />
-          <Stat label="Countries" value="23" spark />
+          <Stat label="Countries" value="17" spark />
         </div>
 
-        <div className="mt-[18px] inline-flex items-center gap-2 rounded-full bg-paper px-[14px] py-[7px] pl-[9px]" style={{ border: '1px solid var(--paper-edge)', boxShadow: '0 2px 5px var(--paper-shadow)' }}>
-          <span className="h-5 w-[30px] rounded-[3px]" style={{ background: 'linear-gradient(180deg,#c0362c 0 30%,#c8992f 30% 70%,#c0362c 70% 100%)' }} />
-          <span className="font-mono text-[12px] font-bold uppercase tracking-[0.1em] text-ink">España</span>
-          <span className="font-mono text-[11px] tracking-[0.04em] text-ink-faint">40.42° N, 3.70° W</span>
+        <div className="mt-[18px] inline-flex items-center gap-2 rounded-full bg-paper px-[14px] py-[7px] pl-[12px]" style={{ border: '1px solid var(--paper-edge)', boxShadow: '0 2px 5px var(--paper-shadow)' }}>
+          <span className="text-[18px] leading-none" aria-hidden>🇦🇷</span>
+          <span className="text-[18px] leading-none" aria-hidden>🇺🇸</span>
+          <span className="font-mono text-[12px] font-bold uppercase tracking-[0.1em] text-ink">Dual Citizen</span>
+          <span className="font-mono text-[11px] tracking-[0.04em] text-ink-faint">ARG · USA</span>
         </div>
       </div>
     </div>

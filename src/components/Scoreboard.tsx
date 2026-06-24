@@ -74,11 +74,6 @@ function StatWell({ stat }: { stat: Stat }) {
   )
 }
 
-const FLAG_BG: Record<string, string> = {
-  esp: 'linear-gradient(180deg,#c0362c 0 30%,#c8992f 30% 70%,#c0362c 70% 100%)',
-  arg: 'linear-gradient(180deg,#6cb7e6 0 33%,#fff 33% 67%,#6cb7e6 67% 100%)',
-}
-
 export function Scoreboard({ className }: { className?: string }) {
   return (
     <div
@@ -97,12 +92,12 @@ export function Scoreboard({ className }: { className?: string }) {
           <div className="flex items-center gap-3">
             <BallMark />
             <span className="font-display text-[clamp(22px,4vw,30px)] uppercase tracking-[0.025em]" style={{ color: '#eaf2ea' }}>
-              Season Totals
+              By The Numbers
             </span>
           </div>
           <div className="text-right font-mono text-[11px] uppercase leading-[1.7] tracking-[0.12em]" style={{ color: 'rgba(180,196,190,0.7)' }}>
-            <div>2024 — 2026</div>
-            <div>ALL COMPS</div>
+            <div>EST. 2010</div>
+            <div>FOOTY + FLAGS</div>
           </div>
         </div>
 
@@ -115,7 +110,7 @@ export function Scoreboard({ className }: { className?: string }) {
         {/* Fixture strip */}
         <div className="mt-7 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-5">
           <div className="flex items-center gap-3">
-            <span className="h-[18px] w-[26px] rounded-[2px]" style={{ background: FLAG_BG[FIXTURE.home.flag] }} />
+            <span className="text-[20px] leading-none" aria-hidden>{FIXTURE.home.flag}</span>
             <span className="font-display text-[clamp(24px,4vw,34px)]" style={{ color: '#eaf2ea' }}>{FIXTURE.home.code}</span>
             <span
               className="rounded-lg px-[18px] py-[6px] font-mono text-[clamp(26px,4vw,40px)] font-bold tracking-[0.04em]"
@@ -126,7 +121,7 @@ export function Scoreboard({ className }: { className?: string }) {
               {FIXTURE.score.split(':')[1]}
             </span>
             <span className="font-display text-[clamp(24px,4vw,34px)]" style={{ color: '#eaf2ea' }}>{FIXTURE.away.code}</span>
-            <span className="h-[18px] w-[26px] rounded-[2px]" style={{ background: FLAG_BG[FIXTURE.away.flag] }} />
+            <span className="text-[20px] leading-none" aria-hidden>{FIXTURE.away.flag}</span>
           </div>
 
           <div className="flex flex-col gap-2 text-right">

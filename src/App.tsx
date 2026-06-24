@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { BoardingPassNav } from './components/BoardingPassNav'
 import { GlobeStage } from './components/GlobeStage'
+import { About } from './components/About'
 import { Scoreboard } from './components/Scoreboard'
 import { Scrapbook } from './components/Scrapbook'
 import { Footer } from './components/Footer'
@@ -37,6 +38,11 @@ function App() {
 
       <PerforatedDivider />
 
+      {/* the story — his full bio, readable */}
+      <About />
+
+      <PerforatedDivider />
+
       {/* taped-down scoreboard — placed, not boxed */}
       <section id="scoreboard" className="mx-auto w-full max-w-[1180px] px-6 py-16 sm:px-10 sm:py-20">
         <Reveal>
@@ -47,7 +53,7 @@ function App() {
         </Reveal>
       </section>
 
-      <Scrapbook visitedCount={visitedCount} />
+      <Scrapbook visitedCount={visitedCount} onSelect={setSelected} />
 
       <PerforatedDivider className="mb-2" />
 

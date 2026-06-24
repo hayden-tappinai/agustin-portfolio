@@ -4,7 +4,7 @@ import * as THREE from 'three'
 import type { CountryFeature, SelectedCountry } from '../types/country'
 import { useCountries } from '../hooks/useCountries'
 import { SoccerBallOverlay } from './soccer-ball/SoccerBallOverlay'
-import { countryKey, toSelectedCountry } from '../lib/countries'
+import { countryIso3, countryKey, toSelectedCountry } from '../lib/countries'
 import { altitude, palette } from '../lib/theme'
 import { VISITED_ISO3 } from '../data/stories'
 
@@ -60,7 +60,7 @@ export function GlobeHero({ selected, onSelect }: GlobeHeroProps) {
       const f = obj as CountryFeature
       if (f === hovered) return palette.landHover
       if (selected && countryKey(f) === selected.key) return palette.landHover
-      const iso3 = f.properties.ISO_A3
+      const iso3 = countryIso3(f)
       if (iso3 && VISITED_ISO3.has(iso3)) return palette.landVisited
       return palette.land
     },

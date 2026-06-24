@@ -1,310 +1,338 @@
 import type { CountryStory, SelectedCountry } from '../types/country'
 
 /**
- * Agustin's stories, keyed by ISO alpha-3. These are the places he's been —
- * footy grounds and far-flung cities. Real, specific copy (the Bernabéu, La
- * Bombonera, Maracanã…). Real photos + an optional `file` per Polaroid arrive
- * from `~/tappinai/assets/agustin/photo-map.json`; until then each Polaroid
- * draws a tasteful vector `scene`, never a broken image.
+ * Agustin's real stories, keyed by ISO alpha-3 — the 17 countries he's been to.
+ * Six carry rich match memories from his bio (Spain, Argentina, Italy, France,
+ * USA, Iceland); the rest get an authentic short entry from a geography-and-footy
+ * obsessive who can name every league, derby and capital. Stadium photos load
+ * from `public/agustin/stadiums/<slug>.jpg` when they land; tasteful vector
+ * scenes stand in until then.
  *
- * The keys of this map are also the "visited" set: the globe lights those
- * countries brighter and the scoreboard counts them.
+ * The keys of this map are also the "visited" set: the globe highlights only
+ * these countries and the stat blocks count them.
  */
 export const STORIES: Record<string, CountryStory> = {
   ESP: {
-    title: 'Bernabéu, under the lights',
-    coords: '40.4530° N, 3.6883° W',
-    routeFrom: 'LISBON',
-    body: 'Real Madrid at home. The roar when the teams walked out is the kind of sound you feel in your chest before you hear it. Stayed a week, ate late, walked everywhere.',
+    title: 'El Clásico at the Camp Nou',
+    coords: '40.4168° N, 3.7038° W',
+    capital: 'Madrid',
+    body: 'I watched the MSN front three — Messi, Suárez and Neymar — take on the Real Madrid side that went on to win three straight Champions Leagues. I came back for a Champions League quarter-final against Atlético and heard that anthem in person for the first time. Later I stood inside the Bernabéu too.',
     photos: [
-      { caption: 'Bernabéu, full house', date: '07.MAY.2026', scene: 'stadium' },
-      { caption: 'Gran Vía at night', date: '08.MAY.2026', scene: 'skyline' },
+      { caption: 'El Clásico, Camp Nou', scene: 'stadium' },
+      { caption: 'Barcelona', scene: 'skyline' },
     ],
-    stamp: { entry: 'ENTRY · MADRID', city: 'MADRID', date: '06 MAY 2026' },
-    margin: "best night of the trip — and we still had Sevilla to go →",
+    stadiums: [
+      { name: 'Camp Nou', club: 'Barcelona', city: 'Barcelona', slug: 'camp-nou', file: 'IMG_2759.webp', visited: true, scene: 'stadium' },
+      { name: 'Santiago Bernabéu', club: 'Real Madrid', city: 'Madrid', slug: 'santiago-bernabeu', file: 'IMG_2942.webp', visited: true, scene: 'stadium' },
+      { name: 'Reale Arena', club: 'Real Sociedad', city: 'San Sebastián', slug: 'reale-arena', file: 'IMG_2988.webp', visited: true, scene: 'stadium' },
+    ],
+    facts: [
+      { label: 'Match', value: 'EL CLÁSICO' },
+      { label: 'Venue', value: 'CAMP NOU' },
+      { label: 'Trio', value: 'MSN', live: true },
+    ],
+    margin: 'the MSN trio in the flesh — unreal ↗',
   },
   ARG: {
-    title: 'La Bombonera shakes',
-    coords: '34.6354° S, 58.3648° W',
-    routeFrom: 'MADRID',
-    body: 'They say the stadium trembles when Boca scores. It does — you feel it through your feet. Spent the afternoon in La Boca, then found a parrilla that did not stop bringing food.',
+    title: 'The Tucumán Derby & La Bombonera',
+    coords: '34.6037° S, 58.3816° W',
+    capital: 'Buenos Aires',
+    body: "Half of me is from here. I went to the Tucumán Derby — Atlético against San Martín, the biggest rivalry in the north — and ate the best stadium food of my life: panchuques and choripán. I've also stood inside La Bombonera, home of Boca and one half of the Superclásico I'm still dying to see.",
     photos: [
-      { caption: 'La Bombonera, half-time', date: '14.MAR.2026', scene: 'stadium' },
-      { caption: 'Caminito colours', date: '15.MAR.2026', scene: 'street' },
+      { caption: 'Tucumán Derby', scene: 'stadium' },
+      { caption: 'Buenos Aires', scene: 'street' },
     ],
-    stamp: { entry: 'ENTRY · EZE', city: 'BUENOS AIRES', date: '13 MAR 2026' },
-    margin: 'the asado alone was worth the flight ↘',
-  },
-  BRA: {
-    title: 'Beach football at golden hour',
-    coords: '22.9519° S, 43.2105° W',
-    routeFrom: 'BUENOS AIRES',
-    body: 'Pickup games on Copacabana until the light went. Nobody keeps score and everybody does. The Maracanã the next day — cathedral-sized, and somehow louder.',
-    photos: [
-      { caption: 'Copacabana, golden hour', date: '20.JAN.2026', scene: 'coast' },
-      { caption: 'Maracanã', date: '21.JAN.2026', scene: 'stadium' },
+    stadiums: [
+      { name: 'La Bombonera', club: 'Boca Juniors', city: 'Buenos Aires', slug: 'la-bombonera', file: 'IMG_1379.webp', visited: true, scene: 'stadium' },
+      { name: 'Estadio J. Fierro', club: 'Atlético Tucumán', city: 'Tucumán', slug: 'jose-fierro', file: 'IMG_2019.webp', visited: true, scene: 'stadium' },
+      { name: 'La Ciudadela', club: 'San Martín de Tucumán', city: 'Tucumán', slug: 'la-ciudadela', file: 'IMG_4024.webp', visited: true, scene: 'stadium' },
     ],
-    stamp: { entry: 'ENTRY · GIG', city: 'RIO', date: '19 JAN 2026' },
-    margin: 'sand in my boots for a week ↗',
-  },
-  GBR: {
-    title: 'Matchday in the rain',
-    coords: '51.5549° N, 0.1084° W',
-    routeFrom: 'PARIS',
-    body: 'Pints before kickoff, a scarf bought on the walk in, ninety minutes of weather and noise. The away end never sat down once.',
-    photos: [
-      { caption: 'The terraces, full', date: '02.NOV.2025', scene: 'stadium' },
-      { caption: 'Pub before kickoff', date: '02.NOV.2025', scene: 'street' },
+    facts: [
+      { label: 'Derby', value: 'TUCUMÁN' },
+      { label: 'Ate', value: 'CHORIPÁN' },
+      { label: 'Ground', value: 'BOMBONERA' },
     ],
-    stamp: { entry: 'ENTRY · LHR', city: 'LONDON', date: '01 NOV 2025' },
-    margin: 'never did warm up — worth it →',
+    margin: "dual citizen — this one's home 🇦🇷",
   },
   ITA: {
-    title: 'San Siro at dusk',
-    coords: '45.4781° N, 9.1240° E',
-    routeFrom: 'MADRID',
-    body: 'The spiral ramps, the smoke, a tifo unfurling across a whole stand. Then pasta somewhere small with no menu and no English.',
+    title: 'Roma vs Salernitana, Stadio Olimpico',
+    coords: '41.9028° N, 12.4964° E',
+    capital: 'Rome',
+    body: 'A Serie A night at the Stadio Olimpico, Roma against Salernitana. I ended up right by the traveling Salernitana support — ninety minutes of singing, chanting and waving flags, an absolutely electric away end. The San Siro is high on my list before they tear it down.',
     photos: [
-      { caption: 'San Siro, the tifo', date: '18.OCT.2025', scene: 'stadium' },
-      { caption: 'Duomo at dusk', date: '19.OCT.2025', scene: 'skyline' },
+      { caption: 'Stadio Olimpico', scene: 'stadium' },
+      { caption: 'Rome', scene: 'skyline' },
     ],
-    stamp: { entry: 'ENTRY · MXP', city: 'MILANO', date: '17 OCT 2025' },
-    margin: 'go for the football, stay for the food ↘',
+    stadiums: [
+      { name: 'Stadio Olimpico', club: 'Roma', city: 'Rome', slug: 'stadio-olimpico', file: 'IMG_1766.webp', visited: true, scene: 'stadium' },
+      { name: 'Curva Sud', club: 'Roma · matchday', city: 'Rome', slug: 'olimpico-curva', file: 'IMG_1469.webp', visited: true, scene: 'stadium' },
+      { name: 'San Siro', club: 'Milan · Inter', city: 'Milan', slug: 'san-siro', visited: false, scene: 'stadium' },
+    ],
+    facts: [
+      { label: 'Match', value: 'ROMA · SAL' },
+      { label: 'Venue', value: 'OLIMPICO' },
+      { label: 'Next', value: 'SAN SIRO' },
+    ],
+    margin: 'the Salernitana away end was unreal ↘',
   },
   FRA: {
-    title: 'A long weekend in Paris',
-    coords: '48.8414° N, 2.2530° E',
-    routeFrom: 'BARCELONA',
-    body: 'Parc des Princes on Saturday, the rest of the time just walking the river. Coffee standing up at the bar like a local trying a bit too hard.',
+    title: 'Inside the Parc des Princes',
+    coords: '48.8566° N, 2.3522° E',
+    capital: 'Paris',
+    body: "I stood inside the Parc des Princes, home of Paris Saint-Germain. There's a real weight to grounds like this — you feel the history of the club in the concrete before a ball is even kicked.",
     photos: [
-      { caption: 'Parc des Princes', date: '12.SEP.2025', scene: 'stadium' },
-      { caption: 'Along the Seine', date: '13.SEP.2025', scene: 'skyline' },
+      { caption: 'Parc des Princes', scene: 'stadium' },
+      { caption: 'Paris', scene: 'skyline' },
     ],
-    stamp: { entry: 'ENTRY · CDG', city: 'PARIS', date: '11 SEP 2025' },
-    margin: 'three days, eight thousand steps a day ↗',
-  },
-  PRT: {
-    title: 'Lisbon, all downhill to the water',
-    coords: '38.7528° N, 9.1847° W',
-    routeFrom: 'MADRID',
-    body: 'Trams that shouldn’t make those corners, custard tarts twice a day, and the Estádio da Luz lit up red over the rooftops. Everything in Lisbon runs downhill to the river.',
-    photos: [
-      { caption: 'Estádio da Luz', date: '04.JUN.2025', scene: 'stadium' },
-      { caption: 'Alfama rooftops', date: '05.JUN.2025', scene: 'skyline' },
+    stadiums: [
+      { name: 'Parc des Princes', club: 'Paris Saint-Germain', city: 'Paris', slug: 'parc-des-princes', file: 'IMG_1454.webp', visited: true, scene: 'stadium' },
     ],
-    stamp: { entry: 'ENTRY · LIS', city: 'LISBOA', date: '03 JUN 2025' },
-    margin: 'the 28 tram is a rollercoaster ↘',
-  },
-  JPN: {
-    title: 'Tokyo, neon and quiet',
-    coords: '35.6762° N, 139.6503° E',
-    routeFrom: 'LONDON',
-    body: 'Loudest city I’ve been to and the most polite. Watched a J-League game where the crowd sang for ninety straight minutes, then the whole stand bowed and tidied up after.',
-    photos: [
-      { caption: 'Shibuya crossing', date: '22.APR.2025', scene: 'skyline' },
-      { caption: 'Matchday, Tokyo', date: '23.APR.2025', scene: 'stadium' },
+    facts: [
+      { label: 'Club', value: 'PSG' },
+      { label: 'Ground', value: 'PARC DES PRINCES' },
+      { label: 'City', value: 'PARIS' },
     ],
-    stamp: { entry: 'ENTRY · HND', city: 'TOKYO', date: '21 APR 2025' },
-    margin: 'jet-lag worth every minute ↗',
-  },
-  DEU: {
-    title: 'The Yellow Wall',
-    coords: '51.4926° N, 7.4518° E',
-    routeFrom: 'AMSTERDAM',
-    body: 'Eighty thousand people and one giant wall of yellow that never stopped moving. Bratwurst at half time, a stein the size of my head, a train home full of singing.',
-    photos: [
-      { caption: 'Signal Iduna, südtribüne', date: '15.FEB.2025', scene: 'stadium' },
-      { caption: 'Old town, snow', date: '16.FEB.2025', scene: 'street' },
-    ],
-    stamp: { entry: 'ENTRY · DTM', city: 'DORTMUND', date: '14 FEB 2025' },
-    margin: 'the Yellow Wall is real and it is loud →',
-  },
-  NLD: {
-    title: 'Amsterdam by bike and canal',
-    coords: '52.3144° N, 4.9419° E',
-    routeFrom: 'BERLIN',
-    body: 'Rented a bike on day one and never gave it back. Johan Cruyff Arena on Sunday, canals the rest of the time, and the best chips of my life with too much mayo.',
-    photos: [
-      { caption: 'Cruyff Arena', date: '08.DEC.2024', scene: 'stadium' },
-      { caption: 'Canal ring at dusk', date: '09.DEC.2024', scene: 'skyline' },
-    ],
-    stamp: { entry: 'ENTRY · AMS', city: 'AMSTERDAM', date: '07 DEC 2024' },
-    margin: 'bikes always win here ↘',
+    margin: 'Paris does football history right ↗',
   },
   USA: {
-    title: 'Lights on a Tuesday in New York',
-    coords: '40.7128° N, 74.0060° W',
-    routeFrom: 'LONDON',
-    body: 'Walked it end to end. Caught a match across the river under floodlights, ate a slice at 1am, and the city never once went quiet.',
+    title: 'Ball boy, and a Copa América summer',
+    coords: '38.2527° N, 85.7585° W',
+    capital: 'Washington, D.C.',
+    body: "I grew up supporting Louisville City through USL — my best night was being a ball boy in the final when we hosted Didier Drogba's Phoenix Rising. That same summer I followed Argentina through the Copa América Centenario: Messi's second-half hat-trick against Panama at Soldier Field, his free kick against the US at NRG in Houston, then the heartbreak of the final against Chile.",
     photos: [
-      { caption: 'Downtown skyline', date: '03.OCT.2024', scene: 'skyline' },
-      { caption: 'Midweek, under lights', date: '04.OCT.2024', scene: 'stadium' },
+      { caption: 'Copa América', scene: 'stadium' },
+      { caption: 'Louisville', scene: 'skyline' },
     ],
-    stamp: { entry: 'ENTRY · JFK', city: 'NEW YORK', date: '02 OCT 2024' },
-    margin: 'a slice at 1am fixes everything ↗',
+    stadiums: [
+      { name: 'Lynn Family Stadium', club: 'Louisville City FC', city: 'Louisville', slug: 'lynn-family-stadium', file: 'IMG_1172.webp', visited: true, scene: 'stadium' },
+      { name: 'NRG Stadium', club: 'Copa América 2016', city: 'Houston', slug: 'nrg-stadium', file: 'IMG_0128.webp', visited: true, scene: 'stadium' },
+      { name: 'Hard Rock Stadium', club: 'Copa América 2024', city: 'Miami', slug: 'hard-rock', file: 'IMG_2348.webp', visited: true, scene: 'stadium' },
+    ],
+    facts: [
+      { label: 'Club', value: 'LOU CITY' },
+      { label: 'Cup', value: "COPA AM '16" },
+      { label: 'Moment', value: 'HAT-TRICK', live: true },
+    ],
+    margin: 'ball boy in a final — wild 🇺🇸',
   },
-  MEX: {
-    title: 'El Tri at altitude',
-    coords: '19.3029° N, 99.1505° W',
-    routeFrom: 'NEW YORK',
-    body: 'The Azteca sits high enough that the ball flies and your lungs notice. Tacos al pastor from a cart afterward, green and red everywhere, a city that does noise properly.',
+  ISL: {
+    title: 'KR Reykjavík vs Valur',
+    coords: '64.1466° N, 21.9426° W',
+    capital: 'Reykjavík',
+    body: "Most recently I caught an Icelandic top-flight match between KR Reykjavík and Valur, two of the oldest clubs in the country. There's something pure about football this far north — small grounds, real community, the volcanoes never far off.",
     photos: [
-      { caption: 'Estadio Azteca', date: '11.AUG.2024', scene: 'stadium' },
-      { caption: 'Centro Histórico', date: '12.AUG.2024', scene: 'street' },
+      { caption: 'KR vs Valur', scene: 'stadium' },
+      { caption: 'Reykjavík', scene: 'coast' },
     ],
-    stamp: { entry: 'ENTRY · MEX', city: 'CDMX', date: '10 AUG 2024' },
-    margin: 'altitude is no joke ↘',
+    stadiums: [
+      { name: 'KR-völlur', club: 'KR Reykjavík', city: 'Reykjavík', slug: 'kr-vollur', file: 'IMG_8997.webp', visited: true, scene: 'stadium' },
+      { name: 'KR vs Valur', club: 'Matchday', city: 'Reykjavík', slug: 'kr-matchday', file: 'IMG_0742.webp', visited: true, scene: 'stadium' },
+    ],
+    facts: [
+      { label: 'Match', value: 'KR · VALUR' },
+      { label: 'League', value: 'BESTA DEILD' },
+      { label: 'City', value: 'REYKJAVÍK' },
+    ],
+    margin: 'football at the edge of the Arctic ❄',
   },
-  BEL: {
-    title: 'Frites, Trappist & a midweek match',
-    coords: '50.8466° N, 4.3528° E',
-    routeFrom: 'AMSTERDAM',
-    body: 'Bruges by canal, then a floodlit midweek game in Brussels. Frites with too many sauces, a Trappist beer brewed by actual monks, cobblestones the whole way home.',
+  AUT: {
+    title: 'Vienna & the Wiener Derby',
+    coords: '48.2082° N, 16.3738° E',
+    capital: 'Vienna',
+    body: 'Vienna, where the Wiener Derby between Rapid and Austria Wien is one of the oldest rivalries on the continent, and Red Bull Salzburg keep exporting talent to the rest of Europe. A city that takes its football seriously under all that imperial grandeur.',
     photos: [
-      { caption: 'Brussels, under lights', date: '10.DEC.2024', scene: 'stadium' },
-      { caption: 'Bruges canals', date: '11.DEC.2024', scene: 'street' },
+      { caption: 'Vienna', scene: 'skyline' },
+      { caption: 'Old town', scene: 'street' },
     ],
-    stamp: { entry: 'ENTRY · BRU', city: 'BRUSSELS', date: '09 DEC 2024' },
-    margin: 'the sauces are a whole menu ↗',
+    facts: [
+      { label: 'Derby', value: 'WIENER' },
+      { label: 'Club', value: 'RAPID WIEN' },
+      { label: 'Ground', value: 'ERNST HAPPEL' },
+    ],
+    margin: 'the Ernst Happel still hosts finals ↗',
   },
-  TUR: {
-    title: 'They call it hell',
-    coords: '41.0082° N, 28.9784° E',
-    routeFrom: 'ATHENS',
-    body: 'Galatasaray at home, and the banner that says "welcome to hell" is not joking. The call to prayer over the Bosphorus the next morning brought the volume right back down.',
+  BHS: {
+    title: 'Island football in the Bahamas',
+    coords: '25.0443° N, 77.3504° W',
+    capital: 'Nassau',
+    body: "Turquoise water and not much of a pyramid — the Bahamas are a CONCACAF minnow where the BFA league plays on a handful of pitches. Still, I'll take any country off the map, and I can place this one without looking.",
     photos: [
-      { caption: 'Galatasaray, the kop', date: '14.OCT.2024', scene: 'stadium' },
-      { caption: 'Bosphorus at dawn', date: '15.OCT.2024', scene: 'coast' },
+      { caption: 'Bahamas', scene: 'coast' },
+      { caption: 'Nassau', scene: 'street' },
     ],
-    stamp: { entry: 'ENTRY · IST', city: 'ISTANBUL', date: '13 OCT 2024' },
-    margin: 'loudest stadium on earth, easily →',
+    facts: [
+      { label: 'Conf', value: 'CONCACAF' },
+      { label: 'Capital', value: 'NASSAU' },
+      { label: 'Map', value: 'PLACED ✓' },
+    ],
+    margin: 'every flag, every capital — even this one ↘',
   },
-  MAR: {
-    title: 'Wydad red, then the souks',
-    coords: '33.5731° N, 7.5898° W',
-    routeFrom: 'LISBON',
-    body: 'Wydad Casablanca turned the whole stand red. Then the train down to Marrakech, mint tea in the square, and a souk you could happily get lost in for a week.',
+  DNK: {
+    title: 'Copenhagen & Danish Dynamite',
+    coords: '55.6761° N, 12.5683° E',
+    capital: 'Copenhagen',
+    body: "Copenhagen, home of the New Firm derby between FC København and Brøndby at Parken. This is the land of the 'Danish Dynamite' side and the fairytale Euro '92 win — a small country that punches far above its weight.",
     photos: [
-      { caption: 'Casablanca derby', date: '02.SEP.2024', scene: 'stadium' },
-      { caption: 'Marrakech souk', date: '03.SEP.2024', scene: 'street' },
+      { caption: 'Parken', scene: 'stadium' },
+      { caption: 'Copenhagen', scene: 'skyline' },
     ],
-    stamp: { entry: 'ENTRY · CMN', city: 'CASABLANCA', date: '01 SEP 2024' },
-    margin: 'mint tea, three a day ↘',
+    facts: [
+      { label: 'Derby', value: 'NEW FIRM' },
+      { label: 'Ground', value: 'PARKEN' },
+      { label: 'Glory', value: 'EURO 92' },
+    ],
+    margin: 'Euro 92 still the best underdog story ↗',
   },
-  URY: {
-    title: 'Where it all started',
-    coords: '34.8941° S, 56.1626° W',
-    routeFrom: 'BUENOS AIRES',
-    body: 'The Estadio Centenario, where the very first World Cup was won in 1930. You can feel the history in the concrete. Then a chivito the size of my head on the rambla.',
+  DOM: {
+    title: 'Santo Domingo, an island warming to football',
+    coords: '18.4861° N, 69.9312° W',
+    capital: 'Santo Domingo',
+    body: "Baseball is king here, but football is climbing — the Liga Dominicana de Fútbol is young and Cibao FC have started turning up in the CONCACAF cups. I love a country where the game is still finding its feet.",
     photos: [
-      { caption: 'Estadio Centenario', date: '16.MAR.2026', scene: 'stadium' },
-      { caption: 'The rambla', date: '17.MAR.2026', scene: 'coast' },
+      { caption: 'Santo Domingo', scene: 'coast' },
+      { caption: 'Zona Colonial', scene: 'street' },
     ],
-    stamp: { entry: 'ENTRY · MVD', city: 'MONTEVIDEO', date: '16 MAR 2026' },
-    margin: 'football started right here ↗',
-  },
-  COL: {
-    title: 'Eternal spring, a sea of yellow',
-    coords: '6.2476° N, 75.5658° W',
-    routeFrom: 'RIO',
-    body: "Medellín really is spring all year. A cable car up the hillside, salsa that doesn't stop, and a sea of yellow shirts at the game that sang from minute one.",
-    photos: [
-      { caption: 'Medellín hillside', date: '22.JAN.2026', scene: 'skyline' },
-      { caption: 'A sea of yellow', date: '23.JAN.2026', scene: 'stadium' },
+    facts: [
+      { label: 'League', value: 'LDF' },
+      { label: 'Club', value: 'CIBAO FC' },
+      { label: 'Conf', value: 'CONCACAF' },
     ],
-    stamp: { entry: 'ENTRY · MDE', city: 'MEDELLÍN', date: '22 JAN 2026' },
-    margin: 'the cable cars are the best transit ↘',
+    margin: "football's only growing here ↘",
   },
   GRC: {
-    title: 'Sunset over the Acropolis',
-    coords: '37.9755° N, 23.7348° E',
-    routeFrom: 'ROME',
-    body: 'The Acropolis at golden hour, then a derby that needed a police escort to leave the ground. Souvlaki at midnight, the Aegean blue the next day.',
+    title: 'Athens & the Derby of the Eternal Enemies',
+    coords: '37.9838° N, 23.7275° E',
+    capital: 'Athens',
+    body: "Athens, where Olympiacos and Panathinaikos contest the 'Derby of the Eternal Enemies' — maybe the most ferocious atmosphere in Europe. Ancient ruins on one hill, a football war on the other.",
     photos: [
-      { caption: 'Acropolis, golden hour', date: '20.OCT.2025', scene: 'skyline' },
-      { caption: 'Derby night', date: '21.OCT.2025', scene: 'stadium' },
+      { caption: 'Athens', scene: 'skyline' },
+      { caption: 'Matchday', scene: 'stadium' },
     ],
-    stamp: { entry: 'ENTRY · ATH', city: 'ATHENS', date: '20 OCT 2025' },
-    margin: 'history on every corner →',
+    facts: [
+      { label: 'Derby', value: 'ETERNAL' },
+      { label: 'Clubs', value: 'OSFP · PAO' },
+      { label: 'Ground', value: 'KARAISKAKIS' },
+    ],
+    margin: 'loudest derby in Europe, easily ↗',
   },
-  HRV: {
-    title: 'The Adriatic & Dinamo in the rain',
-    coords: '43.5081° N, 16.4402° E',
-    routeFrom: 'MILAN',
-    body: 'Split on the Adriatic — swam in the morning, watched Hajduk in the afternoon. The checkerboard everywhere, the sea impossibly clear, the ultras impossibly loud.',
+  HUN: {
+    title: 'Budapest & the ghost of Puskás',
+    coords: '47.4979° N, 19.0402° E',
+    capital: 'Budapest',
+    body: 'Budapest, where Ferencváros carry the torch and the gleaming Puskás Aréna honors the Mighty Magyars — the side that humbled England 6–3 at Wembley and rewrote how the game could be played. History runs deep on the Danube.',
     photos: [
-      { caption: 'Split harbour', date: '24.OCT.2025', scene: 'coast' },
-      { caption: 'Hajduk, Torcida end', date: '25.OCT.2025', scene: 'stadium' },
+      { caption: 'Puskás Aréna', scene: 'stadium' },
+      { caption: 'Budapest', scene: 'skyline' },
     ],
-    stamp: { entry: 'ENTRY · SPU', city: 'SPLIT', date: '24 OCT 2025' },
-    margin: 'cleanest sea I have ever swum in ↗',
+    facts: [
+      { label: 'Club', value: 'FERENCVÁROS' },
+      { label: 'Ground', value: 'PUSKÁS' },
+      { label: 'Era', value: 'MAGYARS' },
+    ],
+    margin: 'the Mighty Magyars changed the game ↘',
   },
-  POL: {
-    title: "Kraków's square, a freezing night match",
-    coords: '50.0647° N, 19.9450° E',
-    routeFrom: 'BERLIN',
-    body: "Kraków's old square at night, pierogi by the dozen, and a match so cold I could see my breath singing. The away end didn't seem to notice the temperature at all.",
+  PAN: {
+    title: 'Panama — the canal and a Copa memory',
+    coords: '8.9824° N, 79.5199° W',
+    capital: 'Panama City',
+    body: "Panama City, where the canal splits two oceans and Los Canaleros reached their first World Cup in 2018. Funny enough, the Panama I'll never forget is the one Messi hit a hat-trick against at Soldier Field — but it was special to stand in the country too.",
     photos: [
-      { caption: 'Kraków, the square', date: '17.FEB.2025', scene: 'street' },
-      { caption: 'Freezing night match', date: '18.FEB.2025', scene: 'stadium' },
+      { caption: 'Panama City', scene: 'skyline' },
+      { caption: 'The canal', scene: 'coast' },
     ],
-    stamp: { entry: 'ENTRY · KRK', city: 'KRAKÓW', date: '17 FEB 2025' },
-    margin: 'pierogi fix everything ↘',
+    facts: [
+      { label: 'NT', value: 'CANALEROS' },
+      { label: 'Ground', value: 'R. FERNÁNDEZ' },
+      { label: 'World Cup', value: '2018' },
+    ],
+    margin: 'where the oceans meet 🌊',
   },
-  AUS: {
-    title: 'Harbour at dawn, A-League Saturday',
-    coords: '33.8688° S, 151.2093° E',
-    routeFrom: 'TOKYO',
-    body: 'Landed on a red-eye, watched the harbour go pink at dawn, then a Saturday A-League game in the sun. Furthest I have ever been from Madrid and it felt like another planet.',
+  PER: {
+    title: 'Lima & the Clásico Peruano',
+    coords: '12.0464° S, 77.0428° W',
+    capital: 'Lima',
+    body: 'Lima, home of the Clásico between Alianza Lima and Universitario at the Estadio Nacional — passionate, colorful, and proudly its own. Peru\'s football has real soul, and the Libertadores nights here are something else.',
     photos: [
-      { caption: 'Sydney harbour, dawn', date: '26.APR.2025', scene: 'coast' },
-      { caption: 'Saturday in the sun', date: '27.APR.2025', scene: 'stadium' },
+      { caption: 'Lima', scene: 'skyline' },
+      { caption: 'Estadio Nacional', scene: 'stadium' },
     ],
-    stamp: { entry: 'ENTRY · SYD', city: 'SYDNEY', date: '26 APR 2025' },
-    margin: 'the long way round, worth it ↗',
+    facts: [
+      { label: 'Clásico', value: 'PERUANO' },
+      { label: 'Clubs', value: 'ALIANZA · U' },
+      { label: 'Cup', value: 'LIBERTADORES' },
+    ],
+    margin: 'South American football just hits different 🇵🇪',
   },
-  IRL: {
-    title: 'Guinness that tastes different',
-    coords: '53.3331° N, 6.2489° W',
-    routeFrom: 'LONDON',
-    body: 'They are right — the Guinness does taste different here. Ninety minutes at the Aviva in horizontal rain, then a session in a pub with a fiddle going in the corner.',
+  SWE: {
+    title: "Stockholm's three-way derby",
+    coords: '59.3293° N, 18.0686° E',
+    capital: 'Stockholm',
+    body: 'Stockholm, where AIK, Djurgården and Hammarby share a city and a grudge — a rare three-club derby in the Allsvenskan. Cold, well-run and tactically sharp; Scandinavian football is wildly underrated.',
     photos: [
-      { caption: 'Aviva, full house', date: '05.NOV.2025', scene: 'stadium' },
-      { caption: 'A proper session', date: '05.NOV.2025', scene: 'street' },
+      { caption: 'Stockholm', scene: 'stadium' },
+      { caption: 'Gamla Stan', scene: 'skyline' },
     ],
-    stamp: { entry: 'ENTRY · DUB', city: 'DUBLIN', date: '04 NOV 2025' },
-    margin: 'the fiddle never stopped →',
+    facts: [
+      { label: 'Derby', value: 'STOCKHOLM' },
+      { label: 'Clubs', value: 'AIK · DIF' },
+      { label: 'League', value: 'ALLSVENSKAN' },
+    ],
+    margin: 'three clubs, one city, zero peace ↗',
   },
-  EGY: {
-    title: "Al Ahly's red wall, then the pyramids",
-    coords: '30.0444° N, 31.2357° E',
-    routeFrom: 'ATHENS',
-    body: 'Al Ahly painted the stadium red and the noise never dipped. The next morning the pyramids sat right at the edge of the city, like they had always been the suburbs.',
+  CHE: {
+    title: 'Switzerland — Basel, Bern & the Alps',
+    coords: '46.9480° N, 7.4474° E',
+    capital: 'Bern',
+    body: 'Switzerland, where FC Basel have punched into the Champions League and Young Boys rule the Super League from the Wankdorf in Bern. Pristine, alpine, and quietly producing players for the biggest stages in Europe.',
     photos: [
-      { caption: 'Al Ahly, red wall', date: '08.OCT.2025', scene: 'stadium' },
-      { caption: 'Pyramids at the edge', date: '09.OCT.2025', scene: 'skyline' },
+      { caption: 'The Alps', scene: 'skyline' },
+      { caption: 'Old town', scene: 'street' },
     ],
-    stamp: { entry: 'ENTRY · CAI', city: 'CAIRO', date: '07 OCT 2025' },
-    margin: 'the pyramids are basically downtown ↘',
+    facts: [
+      { label: 'Club', value: 'FC BASEL' },
+      { label: 'League', value: 'SUPER LG' },
+      { label: 'Ground', value: 'WANKDORF' },
+    ],
+    margin: 'the Alps make a hell of a backdrop ⛰',
+  },
+  VAT: {
+    title: 'Vatican City — the smallest country with a league',
+    coords: '41.9029° N, 12.4534° E',
+    capital: 'Vatican City',
+    body: 'The smallest country on earth, and yes, it has football — the Vatican even runs the Clericus Cup for its seminary teams. As a kid I learned every flag and capital; the tiniest state on the map was never going to escape me.',
+    photos: [
+      { caption: "St. Peter's", scene: 'skyline' },
+      { caption: 'Rome', scene: 'street' },
+    ],
+    facts: [
+      { label: 'Rank', value: 'SMALLEST' },
+      { label: 'Cup', value: 'CLERICUS' },
+      { label: 'Inside', value: 'ROME' },
+    ],
+    margin: 'smallest flag on the floor, still drawn ✦',
   },
 }
 
-/** Visited ISO alpha-3 set — drives the globe tint and the scoreboard count. */
+/** Visited ISO alpha-3 set — drives the globe highlight and the stat counts. */
 export const VISITED_ISO3: ReadonlySet<string> = new Set(Object.keys(STORIES))
 
-/** Deterministic placeholder for any country without a hand-written story. */
+/** Deterministic entry for any country clicked that isn't one of the 17. */
 export function getStory(country: SelectedCountry): CountryStory {
   const known = country.iso3 ? STORIES[country.iso3] : undefined
   if (known) return known
   return {
-    title: `Somewhere in ${country.name}`,
+    title: 'Not yet — but I know it',
     coords: formatCoords(country.lat, country.lng),
-    body: `A chapter from ${country.name} — a match, a city, a long walk to the ground. The real story and photos land here soon, pulled straight from Agustin's travels.`,
+    body: `Haven't made it to ${country.name} yet — but ask me its capital, its flag, or where it sits on the map and I'll have it instantly. It's on the list; the qualifiers I used to simulate on my floor always came back around to places like this.`,
     photos: [
       { caption: `${country.name} · I`, scene: 'skyline' },
-      { caption: `${country.name} · II`, scene: 'stadium' },
+      { caption: `${country.name} · II`, scene: 'street' },
     ],
-    stamp: { entry: 'NEXT TRIP', city: country.name.toUpperCase(), date: 'PENDING' },
+    facts: [
+      { label: 'Status', value: 'NOT YET' },
+      { label: 'Flag', value: 'KNOWN ✓' },
+      { label: 'On the', value: 'LIST' },
+    ],
     margin: 'one for the list ↗',
   }
 }

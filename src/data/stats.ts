@@ -1,9 +1,11 @@
 import { VISITED_ISO3 } from './stories'
 
 /**
- * Scoreboard figures (SPEC §5 scoreboard stat block). `countries` is derived
- * from the visited set so it never drifts from the globe; the rest are Agustin's
- * running totals. `miles` is the live, volt-glowing LED figure that counts up.
+ * The numbers behind Agustin's football life (the scoreboard / "by the numbers"
+ * block). `countries` is derived from the visited set so it never drifts from
+ * the globe. `flags` — the count of the world's countries, every one of which he
+ * can identify by flag — is the live, volt-glowing figure that counts up (a nod
+ * to the kid who drew all 32 World Cup flags and never stopped).
  */
 export interface Stat {
   label: string
@@ -17,17 +19,20 @@ export interface Stat {
 }
 
 export const STATS: readonly Stat[] = [
-  { label: 'Countries', value: VISITED_ISO3.size, sub: 'STAMPED' },
-  { label: 'Matches', value: 47, sub: 'IN PERSON' },
-  { label: 'Cities', value: 31, sub: 'WALKED' },
-  { label: 'Miles Flown', value: 88402, sub: 'AND COUNTING', live: true, thousands: true },
+  { label: 'Countries', value: VISITED_ISO3.size, sub: 'VISITED' },
+  { label: 'Stadiums', value: 10, sub: 'STOOD IN' },
+  { label: 'Leagues', value: 20, sub: 'FOLLOWED' },
+  { label: 'Flags', value: 195, sub: 'MEMORIZED', live: true },
 ]
 
-/** The fixture strip beneath the scoreboard — a recent, real-feeling result. */
+/**
+ * The fixture strip beneath the scoreboard — a real match Agustin attended:
+ * Argentina 5–0 Panama, Copa América Centenario, Soldier Field, Messi hat-trick.
+ */
 export const FIXTURE = {
-  home: { code: 'ESP', flag: 'esp' as const },
-  away: { code: 'ARG', flag: 'arg' as const },
-  score: '3:1',
-  clock: '78:14 · 2ND HALF',
-  note: ['BERNABÉU · MADRID', 'ATT 81,044'],
+  home: { code: 'ARG', flag: '🇦🇷' },
+  away: { code: 'PAN', flag: '🇵🇦' },
+  score: '5:0',
+  clock: 'FT · COPA AMÉRICA',
+  note: ['SOLDIER FIELD · CHICAGO', 'MESSI HAT-TRICK'],
 } as const

@@ -55,20 +55,48 @@ export interface StoryPhoto {
   scene?: PhotoScene
 }
 
-/** A passport stamp's printed meta. */
+/** A passport stamp's printed meta (legacy; PassportStamp component only). */
 export interface StoryStamp {
-  /** Big Anton word — "ENTRY", "ADMITTED", a city. */
   city: string
-  /** Mono date line, e.g. "15 JUN 2026". */
   date: string
-  /** Small label above, e.g. "ENTRY · MADRID". */
   entry?: string
 }
 
 /**
+ * A football ground Agustin has visited (or a bucket-list one). Rendered as a
+ * clickable image slot in the country panel — the real photo is read from
+ * `public/agustin/stadiums/<slug>.jpg`, with a tasteful vector scene until it
+ * lands. `visited: false` marks a bucket-list ground.
+ */
+export interface Stadium {
+  /** Ground name, e.g. "Camp Nou". */
+  name: string
+  /** Home club, e.g. "Barcelona". */
+  club?: string
+  /** City, e.g. "Barcelona". */
+  city: string
+  /** Slug → `public/agustin/stadiums/<slug>.jpg` (fallback path). */
+  slug: string
+  /** Real photo filename in `public/agustin/photos/` when one maps here. */
+  file?: string
+  /** False = bucket-list (not yet visited). */
+  visited: boolean
+  /** Vector scene drawn as the placeholder until the photo lands. */
+  scene?: PhotoScene
+}
+
+/** One cell in the country panel's mono stat strip. */
+export interface StoryFact {
+  label: string
+  value: string
+  /** The single volt-glowing figure. */
+  live?: boolean
+}
+
+/**
  * The content behind a country's scrapbook journal entry. Keyed by ISO alpha-3.
- * Hand-written for Agustin's footy/travel destinations; everything else falls
- * back to a deterministic placeholder so any clicked country still tells a story.
+ * Hand-written from Agustin's real travels; everything else falls back to a
+ * clean deterministic entry so any clicked country still tells a story.
  */
 export interface CountryStory {
   /** Short evocative title for the visit (also the route-line context). */
@@ -77,12 +105,16 @@ export interface CountryStory {
   body: string
   /** Display coordinates string, e.g. "40.4168° N, 3.7038° W". */
   coords: string
+  /** The capital city (shown in the panel meta). */
+  capital?: string
   /** Arriving-flight origin city for the route line, e.g. "LISBON". */
   routeFrom?: string
   /** Polaroids — real photos when available, vector scenes otherwise. */
   photos: StoryPhoto[]
-  /** Passport stamp meta. */
-  stamp?: StoryStamp
+  /** Football grounds — clickable image slots in the panel. */
+  stadiums?: Stadium[]
+  /** The mono stat strip (match / venue / year, etc.). */
+  facts?: StoryFact[]
   /** A short handwritten margin note (Caveat). */
   margin?: string
 }

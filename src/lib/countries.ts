@@ -14,6 +14,16 @@ const ISO2_OVERRIDES: Record<string, string> = {
   Norway: 'NO',
 }
 
+/**
+ * Natural Earth 110m codes a few sovereign states `ISO_A3 = "-99"` (France is
+ * the one that matters for us). Override by name so France still highlights as
+ * visited and resolves to its FRA story.
+ */
+const ISO3_OVERRIDES: Record<string, string> = {
+  France: 'FRA',
+  Norway: 'NOR',
+}
+
 /** Human-readable country name, with graceful fallbacks. */
 export function countryName(feature: CountryFeature): string {
   const p = feature.properties
@@ -32,9 +42,16 @@ export function countryIso2(feature: CountryFeature): string | null {
   return ISO2_OVERRIDES[countryName(feature)] ?? null
 }
 
+/** ISO alpha-3 for the feature, applying overrides for the "-99" cases. */
+export function countryIso3(feature: CountryFeature): string | null {
+  const direct = cleanIso(feature.properties.ISO_A3)
+  if (direct) return direct
+  return ISO3_OVERRIDES[countryName(feature)] ?? null
+}
+
 /** Stable identity key: ISO alpha-3 when valid, else a slug of the name. */
 export function countryKey(feature: CountryFeature): string {
-  const iso3 = cleanIso(feature.properties.ISO_A3)
+  const iso3 = countryIso3(feature)
   if (iso3) return iso3
   return countryName(feature)
     .toLowerCase()
@@ -67,7 +84,7 @@ export function toSelectedCountry(
     key: countryKey(feature),
     name: countryName(feature),
     iso2: countryIso2(feature),
-    iso3: cleanIso(feature.properties.ISO_A3),
+    iso3: countryIso3(feature),
     lat: coords.lat,
     lng: coords.lng,
   }

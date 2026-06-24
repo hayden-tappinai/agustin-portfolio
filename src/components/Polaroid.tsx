@@ -27,7 +27,7 @@ interface PolaroidProps {
  * photo when `photo.file` is present, otherwise a tasteful vector scene.
  */
 export function Polaroid({ photo, rotate = -3, fixing = 'washi', tape = 'tape-gold', width = '17rem', className, style }: PolaroidProps) {
-  const src = photo.file ? `${import.meta.env.BASE_URL}photos/${photo.file}` : null
+  const src = photo.file ? `${import.meta.env.BASE_URL}agustin/photos/${photo.file}` : null
 
   return (
     <motion.figure

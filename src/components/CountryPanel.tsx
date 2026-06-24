@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
-import type { SelectedCountry } from '../types/country'
+import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import type { SelectedCountry, Stadium } from '../types/country'
 import { getStory, isVisited } from '../data/stories'
 import { flagEmoji } from '../lib/countries'
 import { Polaroid } from './Polaroid'
-import { PassportStamp } from './PassportStamp'
 import { TicketStub } from './TicketStub'
+import { StadiumCard, StadiumLightbox } from './StadiumCard'
 
 const SPRING = { type: 'spring', stiffness: 300, damping: 25 } as const
 
@@ -17,11 +17,10 @@ interface CountryPanelProps {
 }
 
 /**
- * THE scrapbook journal entry (SPEC §5 destination card) — the centerpiece.
- * A torn, faintly-graticuled journal page on aged tan: the country name in
- * Anton, coordinates in Space Mono, a handwritten Caveat story, taped Polaroids,
- * a passport stamp, an arriving route line, and the ticket rip-off as the
- * "return to globe" control.
+ * THE scrapbook journal entry — the centerpiece. A torn, faintly-graticuled
+ * journal page: the country name in Anton, coordinates + capital in Space Mono,
+ * a handwritten Caveat story, the real country flag, clickable stadium photos,
+ * a mono fact strip, and the ticket rip-off as the "return to globe" control.
  */
 export function CountryPanel({ country, onClose }: CountryPanelProps) {
   const story = getStory(country)
@@ -29,15 +28,18 @@ export function CountryPanel({ country, onClose }: CountryPanelProps) {
   const flag = flagEmoji(country.iso2)
   const closeButtonRef = useRef<HTMLButtonElement>(null)
   const restoreFocusRef = useRef<HTMLElement | null>(null)
+  const [openStadium, setOpenStadium] = useState<Stadium | null>(null)
 
-  // Escape to close.
+  // Escape to close (the lightbox first, then the panel).
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key !== 'Escape') return
+      if (openStadium) setOpenStadium(null)
+      else onClose()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [onClose])
+  }, [onClose, openStadium])
 
   // Move focus into the panel on open, restore it on close.
   useEffect(() => {
@@ -48,7 +50,9 @@ export function CountryPanel({ country, onClose }: CountryPanelProps) {
     }
   }, [])
 
+  const stadiums = (story.stadiums ?? []).slice(0, 3)
   const photos = story.photos.slice(0, 2)
+  const facts = (story.facts ?? []).slice(0, 3)
 
   return (
     <motion.div
@@ -95,7 +99,7 @@ export function CountryPanel({ country, onClose }: CountryPanelProps) {
             </svg>
           </button>
 
-          <div className="grid gap-8 pl-0 sm:pl-6 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="grid gap-8 pl-0 sm:pl-6 lg:grid-cols-[1.12fr_0.88fr]">
             {/* LEFT — the country */}
             <div className="min-w-0">
               <div className="flex items-center gap-3">
@@ -106,38 +110,42 @@ export function CountryPanel({ country, onClose }: CountryPanelProps) {
                 {visited ? (
                   <span className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-pitch">● Visited</span>
                 ) : (
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-ink-faint">◌ Next trip</span>
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-ink-faint">◌ Not yet</span>
                 )}
               </div>
 
-              <h2 className="mt-3 font-display uppercase text-ink" style={{ fontSize: 'clamp(48px,7.4vw,88px)', lineHeight: 1.04, letterSpacing: '0.015em' }}>
+              <h2 className="mt-3 font-display uppercase text-ink" style={{ fontSize: 'clamp(44px,7vw,82px)', lineHeight: 1.04, letterSpacing: '0.015em' }}>
                 {country.name}
               </h2>
 
-              <p className="mt-2 flex items-center gap-2 font-mono text-[13px] font-bold tracking-[0.08em] text-ocean">
-                <svg width="11" height="14" viewBox="0 0 11 14" aria-hidden className="shrink-0">
-                  <path d="M5.5 0C2.46 0 0 2.46 0 5.5C0 9.6 5.5 14 5.5 14C5.5 14 11 9.6 11 5.5C11 2.46 8.54 0 5.5 0Z" fill="#c0362c" />
-                  <circle cx="5.5" cy="5.3" r="2" fill="#e8d9b5" />
-                </svg>
-                {story.coords}
+              <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[12px] font-bold tracking-[0.08em] text-ocean">
+                <span className="flex items-center gap-2">
+                  <svg width="11" height="14" viewBox="0 0 11 14" aria-hidden className="shrink-0">
+                    <path d="M5.5 0C2.46 0 0 2.46 0 5.5C0 9.6 5.5 14 5.5 14C5.5 14 11 9.6 11 5.5C11 2.46 8.54 0 5.5 0Z" fill="#c0362c" />
+                    <circle cx="5.5" cy="5.3" r="2" fill="#e8d9b5" />
+                  </svg>
+                  {story.coords}
+                </span>
+                {story.capital && <span className="text-ink-faint">· {story.capital.toUpperCase()}</span>}
               </p>
 
               <p className="mt-5 font-hand text-[22px] font-bold leading-tight text-pitch" style={{ transform: 'rotate(-1deg)' }}>
                 {story.title}
               </p>
 
-              <p className="mt-2 max-w-[34ch] font-hand text-[clamp(24px,3vw,29px)] leading-[1.32] text-ink-2">
+              <p className="mt-2 max-w-[42ch] font-hand text-[clamp(22px,2.6vw,27px)] leading-[1.34] text-ink-2">
                 {story.body}
               </p>
 
-              {/* mini navy stat strip */}
-              {story.stamp && (
+              {/* mono fact strip */}
+              {facts.length > 0 && (
                 <div className="mt-6 inline-flex flex-wrap items-center gap-x-6 gap-y-2 rounded-md px-[18px] py-[14px]" style={{ background: 'var(--navy)', boxShadow: '0 8px 20px rgba(10,20,34,0.3)' }}>
-                  <Stat label="Entry" value={story.stamp.date} />
-                  <span className="h-7 w-px bg-white/12" />
-                  <Stat label="City" value={story.stamp.city} />
-                  <span className="h-7 w-px bg-white/12" />
-                  <Stat label="Status" value={visited ? 'STAMPED' : 'PENDING'} live={visited} />
+                  {facts.map((f, i) => (
+                    <div key={f.label} className="flex items-center gap-6">
+                      {i > 0 && <span className="h-7 w-px bg-white/12" />}
+                      <Fact label={f.label} value={f.value} live={f.live} />
+                    </div>
+                  ))}
                 </div>
               )}
 
@@ -160,45 +168,38 @@ export function CountryPanel({ country, onClose }: CountryPanelProps) {
               </div>
             </div>
 
-            {/* RIGHT — the collage */}
-            <div className="relative min-h-[380px] pt-7">
-              {/* arriving route line — visibly lands on the photo collage */}
-              {story.routeFrom && (
-                <svg viewBox="0 0 300 64" className="pointer-events-none absolute left-0 top-[-6px] z-0 w-full" aria-hidden style={{ opacity: 0.9 }}>
-                  <text x="2" y="11" fontFamily="var(--font-mono)" fontSize="9" fill="#8a7e68" letterSpacing="1">{`FROM ${story.routeFrom} ✈`}</text>
-                  <path d="M8 18 Q150 60 286 32" stroke="#c0362c" strokeWidth="2.4" strokeDasharray="1 9" strokeLinecap="round" fill="none" />
-                  <circle cx="8" cy="18" r="4" fill="#c0362c" />
-                  <circle cx="286" cy="32" r="5" fill="none" stroke="#c0362c" strokeWidth="2" />
-                </svg>
-              )}
-
+            {/* RIGHT — the collage (stadiums when we have them, else scenes) */}
+            <div className="relative min-h-[360px] pt-2">
               {/* coffee ring */}
-              <span aria-hidden className="absolute left-1 top-3 hidden h-[58px] w-[58px] rounded-full sm:block" style={{ border: '3px solid rgba(120,82,38,0.18)', boxShadow: 'inset 0 0 0 2px rgba(120,82,38,0.07)' }} />
+              <span aria-hidden className="absolute right-2 top-0 hidden h-[56px] w-[56px] rounded-full sm:block" style={{ border: '3px solid rgba(120,82,38,0.18)', boxShadow: 'inset 0 0 0 2px rgba(120,82,38,0.07)' }} />
 
-              {/* first Polaroid — the passport stamp clips its bottom-left corner so
-                  the multiply blend soaks into the photo, not bare paper */}
-              {photos[0] && (
-                <div className="relative ml-auto w-[clamp(220px,82%,300px)]">
-                  <Polaroid photo={photos[0]} rotate={2.4} fixing="washi" tape="tape-ocean" width="100%" style={{ position: 'relative', zIndex: 10 }} />
-                  {story.stamp && (
-                    <PassportStamp
-                      stamp={story.stamp}
-                      tone={visited ? 'red' : 'gold'}
-                      rotate={-15}
-                      size={116}
-                      className="absolute -bottom-7 -left-9 z-30"
-                    />
+              {/* the country flag — the badge that replaces the passport stamp */}
+              <div className="absolute -left-2 -top-2 z-30 grid place-items-center" style={{ transform: 'rotate(-9deg)' }}>
+                <div className="rounded-md bg-[#fbf7ec] px-3 py-2 text-center" style={{ border: '1.5px solid var(--paper-edge)', boxShadow: '0 6px 14px var(--paper-shadow)' }}>
+                  <div className="text-[30px] leading-none" aria-hidden>{flag || '🏳️'}</div>
+                  <div className="mt-1 font-mono text-[8px] font-bold uppercase tracking-[0.12em] text-ink-faint">{visited ? 'Visited' : 'On the list'}</div>
+                </div>
+              </div>
+
+              {stadiums.length > 0 ? (
+                <div className="ml-auto flex w-[clamp(220px,86%,330px)] flex-col gap-4 pt-6">
+                  {stadiums.map((s, i) => (
+                    <StadiumCard key={s.slug} stadium={s} rotate={i % 2 === 0 ? 1.6 : -2.2} onOpen={() => setOpenStadium(s)} />
+                  ))}
+                </div>
+              ) : (
+                <div className="pt-6">
+                  {photos[0] && (
+                    <Polaroid photo={photos[0]} rotate={2.4} fixing="washi" tape="tape-ocean" width="clamp(220px,82%,300px)" className="ml-auto" style={{ position: 'relative', zIndex: 10 }} />
+                  )}
+                  {photos[1] && (
+                    <Polaroid photo={photos[1]} rotate={-4} fixing="pushpin" width="clamp(170px,58%,220px)" style={{ position: 'relative', zIndex: 20, marginTop: '-16px', marginLeft: '6px' }} />
                   )}
                 </div>
               )}
 
-              {/* second Polaroid, tucked below-left */}
-              {photos[1] && (
-                <Polaroid photo={photos[1]} rotate={-4} fixing="pushpin" width="clamp(170px, 58%, 220px)" style={{ position: 'relative', zIndex: 20, marginTop: '-16px', marginLeft: '6px' }} />
-              )}
-
               {story.margin && (
-                <p className="mt-4 max-w-[200px] font-hand text-[22px] leading-tight text-ink-faint" style={{ transform: 'rotate(4deg)' }}>
+                <p className="mt-5 max-w-[210px] font-hand text-[22px] leading-tight text-ink-faint" style={{ transform: 'rotate(3deg)' }}>
                   {story.margin}
                 </p>
               )}
@@ -206,17 +207,22 @@ export function CountryPanel({ country, onClose }: CountryPanelProps) {
           </div>
         </div>
       </motion.article>
+
+      {/* stadium photo lightbox */}
+      <AnimatePresence>
+        {openStadium && <StadiumLightbox stadium={openStadium} onClose={() => setOpenStadium(null)} />}
+      </AnimatePresence>
     </motion.div>
   )
 }
 
-function Stat({ label, value, live }: { label: string; value: string; live?: boolean }) {
+function Fact({ label, value, live }: { label: string; value: string; live?: boolean }) {
   return (
     <div className="leading-tight">
       <div className="font-mono text-[9.5px] font-bold uppercase tracking-[0.16em]" style={{ color: 'rgba(126,147,166,1)' }}>
         {label}
       </div>
-      <div className="font-display text-[20px] uppercase" style={{ color: live ? 'var(--volt)' : '#eaf1ec', textShadow: live ? '0 0 10px rgba(205,255,61,0.4)' : undefined }}>
+      <div className="font-display text-[18px] uppercase" style={{ color: live ? 'var(--volt)' : '#eaf1ec', textShadow: live ? '0 0 10px rgba(205,255,61,0.4)' : undefined }}>
         {value}
       </div>
     </div>
