@@ -36,12 +36,53 @@ export interface SelectedCountry {
   lng: number
 }
 
-/** Placeholder story content shown in the country panel (real content comes later). */
+/** Which vector scene a Polaroid draws when there's no real photo yet. */
+export type PhotoScene = 'stadium' | 'skyline' | 'pitch' | 'coast' | 'street'
+
+/**
+ * One Polaroid in a country story. When `file` is present (populated from
+ * `photo-map.json`) it renders as a real `<img>` from `public/photos/`;
+ * otherwise the tasteful vector `scene` is drawn — never a broken image.
+ */
+export interface StoryPhoto {
+  /** File under `public/photos/`, e.g. "esp-1.webp". Optional until ingested. */
+  file?: string
+  /** Handwritten caption shown in the Polaroid's bottom lip. */
+  caption: string
+  /** Mono date stamp in the Polaroid corner, e.g. "07.MAY.2026". */
+  date?: string
+  /** Vector scene to draw as the placeholder photo. */
+  scene?: PhotoScene
+}
+
+/** A passport stamp's printed meta. */
+export interface StoryStamp {
+  /** Big Anton word — "ENTRY", "ADMITTED", a city. */
+  city: string
+  /** Mono date line, e.g. "15 JUN 2026". */
+  date: string
+  /** Small label above, e.g. "ENTRY · MADRID". */
+  entry?: string
+}
+
+/**
+ * The content behind a country's scrapbook journal entry. Keyed by ISO alpha-3.
+ * Hand-written for Agustin's footy/travel destinations; everything else falls
+ * back to a deterministic placeholder so any clicked country still tells a story.
+ */
 export interface CountryStory {
-  /** Short evocative title for the visit. */
+  /** Short evocative title for the visit (also the route-line context). */
   title: string
-  /** A paragraph of placeholder narrative. */
+  /** The handwritten (Caveat) journal narrative. */
   body: string
-  /** Placeholder photo captions (images arrive from the Footy Drive folder later). */
-  photoCaptions: string[]
+  /** Display coordinates string, e.g. "40.4168° N, 3.7038° W". */
+  coords: string
+  /** Arriving-flight origin city for the route line, e.g. "LISBON". */
+  routeFrom?: string
+  /** Polaroids — real photos when available, vector scenes otherwise. */
+  photos: StoryPhoto[]
+  /** Passport stamp meta. */
+  stamp?: StoryStamp
+  /** A short handwritten margin note (Caveat). */
+  margin?: string
 }

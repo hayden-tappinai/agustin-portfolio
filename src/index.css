@@ -2,18 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Palette tokens — mirror of src/lib/theme.ts. THREE materials read theme.ts;
-   plain CSS reads these. Kept inside no @layer because they are only variable
-   declarations (no utilities to override). */
+/* ─────────────────────────────────────────────────────────────────────────
+   Design tokens — the single source of truth, mirrored into tailwind.config.js
+   (Tailwind utilities) and src/lib/theme.ts (THREE globe materials, which can't
+   read CSS vars). See design-system/SPEC.md §1–2, §7.
+   Light theme: warm kraft paper. The navy globe zone is the calm center.
+   ───────────────────────────────────────────────────────────────────────── */
 :root {
-  --navy: #0a1422;
-  --ocean: #14598c;
-  --land: #3ea96b;
-  --ink: #eef4f2;
-  --muted: #9bb0c2;
+  /* paper / surface */
+  --paper: #f2e8cf;
+  --paper-2: #e8d9b5;
+  --paper-edge: #cdb789;
+  --paper-line: #c7b488;
+  --paper-shadow: rgba(58, 42, 18, 0.18);
 
-  color-scheme: dark;
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  /* ink / structure */
+  --ink: #1c1712;
+  --ink-2: #4a4034;
+  --ink-faint: #8a7e68;
+  --navy: #0a1422;
+  --navy-2: #14233a;
+
+  /* fusion accents */
+  --pitch: #1e7a46;
+  --globe-green: #3ea96b;
+  --ocean: #14598c;
+  --stamp-red: #c0362c;
+  --gold: #c8992f;
+
+  /* electric — the single spark, used once per composition */
+  --volt: #cdff3d;
+  --volt-deep: #a6d400;
+
+  /* the green hue family shared between the globe and every navy graticule */
+  --globe-rgb: 110, 227, 160;
+
+  /* fonts */
+  --font-display: 'Anton', 'Arial Narrow', sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-hand: 'Caveat', cursive;
+  --font-marker: 'Permanent Marker', cursive;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+
+  /* motion — easing + duration scale (SPEC §7) */
+  --ease-thunk: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  --ease-paper: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-draw: cubic-bezier(0.65, 0, 0.35, 1);
+  --t-micro: 120ms;
+  --t-quick: 240ms;
+  --t-base: 400ms;
+  --t-tear: 520ms;
+  --t-slow: 700ms;
+
+  color-scheme: light;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -21,15 +63,245 @@
 
 @layer base {
   html,
-  body,
   #root {
-    height: 100%;
+    min-height: 100%;
   }
 
   body {
     margin: 0;
-    background: var(--navy);
     color: var(--ink);
+    /* kraft paper — warm cream base + two corner glows + faint fractal grain */
+    background-color: #f2e8cf;
+    background-image:
+      radial-gradient(120% 130% at 0% 0%, rgba(255, 250, 235, 0.55) 0%, transparent 42%),
+      radial-gradient(120% 130% at 100% 100%, rgba(150, 118, 64, 0.2) 0%, transparent 55%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--volt);
+    color: var(--ink);
+  }
+
+  /* Anton is condensed — give it air everywhere it appears. */
+  .font-display {
+    letter-spacing: 0.015em;
+  }
+}
+
+@layer components {
+  /* ── Navy panel (the globe zone / scoreboard) — the calm dark center.
+     Green graticule reuses the exact globe hue family for cohesion. ── */
+  .navy-panel {
+    background-color: var(--navy);
+    background-image:
+      linear-gradient(180deg, var(--navy-2) 0%, var(--navy) 70%),
+      linear-gradient(rgba(var(--globe-rgb), 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(var(--globe-rgb), 0.07) 1px, transparent 1px),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+    background-size: 100% 100%, 40px 40px, 40px 40px, 160px 160px;
+  }
+
+  /* ── Faint lat/long graticule overlays ── */
+  .graticule-paper {
+    background-image:
+      linear-gradient(rgba(20, 89, 140, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(20, 89, 140, 0.1) 1px, transparent 1px);
+    background-size: 46px 46px;
+  }
+  .graticule-navy {
+    background-image:
+      linear-gradient(rgba(var(--globe-rgb), 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(var(--globe-rgb), 0.1) 1px, transparent 1px);
+    background-size: 46px 46px;
+  }
+
+  /* ── Ruled journal lines ── */
+  .ruled-paper {
+    background-image: repeating-linear-gradient(
+      transparent 0 39px,
+      rgba(199, 180, 136, 0.6) 39px 40px
+    );
+    background-position: 0 18px;
+  }
+
+  /* ── Washi tape. Colorway set via --tape (default volt). ── */
+  .washi {
+    position: absolute;
+    width: 128px;
+    height: 34px;
+    background:
+      repeating-linear-gradient(46deg, rgba(255, 255, 255, 0.22) 0 7px, transparent 7px 14px),
+      var(--tape, rgba(205, 255, 61, 0.6));
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.14);
+    clip-path: polygon(3% 0, 97% 5%, 100% 95%, 0 100%);
+    opacity: 0.9;
+    pointer-events: none;
+  }
+  .tape-ocean {
+    --tape: rgba(20, 89, 140, 0.55);
+  }
+  .tape-red {
+    --tape: rgba(192, 54, 44, 0.5);
+  }
+  .tape-gold {
+    --tape: rgba(200, 153, 47, 0.55);
+  }
+  .tape-volt {
+    --tape: rgba(205, 255, 61, 0.6);
+  }
+
+  /* ── Polaroid frame — bottom-heavy lip is the tell ── */
+  .polaroid {
+    background: #fdfdfb;
+    padding: 12px 12px 46px;
+    box-shadow: 0 12px 26px var(--paper-shadow);
+    position: relative;
+  }
+  .polaroid-photo {
+    aspect-ratio: 1 / 1;
     overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, #cdd9df, #9bb0c2);
+  }
+  .polaroid-cap {
+    position: absolute;
+    bottom: 9px;
+    left: 16px;
+    right: 16px;
+    font-family: var(--font-hand);
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 1;
+    color: var(--ink-2);
+  }
+  .polaroid-date {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+  }
+
+  /* ── Pushpin ── */
+  .pushpin {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 33% 30%, #ff7a6e 0%, var(--stamp-red) 55%, #8c241d 100%);
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.32);
+    position: relative;
+  }
+  .pushpin::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 6px;
+    width: 6px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.65);
+  }
+
+  /* ── Passport / ink stamp ── */
+  .stamp-ink {
+    font-family: var(--font-mono);
+    color: var(--stamp-red);
+    border: 2.5px solid var(--stamp-red);
+    border-radius: 50%;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.84;
+    mix-blend-mode: multiply;
+    box-shadow: inset 0 0 0 3px rgba(192, 54, 44, 0.32);
+  }
+
+  /* ── Barcode (cream-on-dark or ink-on-paper variants set inline) ── */
+  .barcode-ink {
+    background: repeating-linear-gradient(
+      90deg,
+      var(--ink) 0 2px,
+      transparent 2px 4px,
+      var(--ink) 4px 7px,
+      transparent 7px 9px,
+      var(--ink) 9px 10px,
+      transparent 10px 13px
+    );
+  }
+  .barcode-cream {
+    background: repeating-linear-gradient(
+      90deg,
+      var(--paper) 0 2px,
+      transparent 2px 4px,
+      var(--paper) 4px 5px,
+      transparent 5px 9px,
+      var(--paper) 9px 12px,
+      transparent 12px 13px
+    );
+  }
+
+  /* ── Torn deckle edge ── */
+  .torn-deckle {
+    clip-path: polygon(
+      0 0, 100% 0, 100% 92%, 96% 96%, 90% 92%, 83% 97%, 76% 92%, 68% 97%,
+      60% 92%, 52% 97%, 44% 92%, 36% 97%, 28% 92%, 20% 97%, 12% 92%, 5% 96%, 0 92%
+    );
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Keyframes (ambient loops + the one volt spark). Real interaction motion is
+   handled by Framer Motion springs in the components.
+   ───────────────────────────────────────────────────────────────────────── */
+@keyframes volt-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(205, 255, 61, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(205, 255, 61, 0.45);
+  }
+}
+
+@keyframes led-glow {
+  0%,
+  100% {
+    text-shadow: 0 0 10px rgba(205, 255, 61, 0.55), 0 0 26px rgba(205, 255, 61, 0.3);
+    opacity: 0.95;
+  }
+  50% {
+    text-shadow: 0 0 16px rgba(205, 255, 61, 0.8), 0 0 38px rgba(205, 255, 61, 0.45);
+    opacity: 1;
+  }
+}
+
+@keyframes blip {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes route-dash {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
