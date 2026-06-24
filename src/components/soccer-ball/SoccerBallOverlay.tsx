@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react'
 import { useSoccerBall } from '../../hooks/useSoccerBall'
 
 interface SoccerBallOverlayProps {
@@ -6,28 +7,22 @@ interface SoccerBallOverlayProps {
 }
 
 /**
- * SEAM: renders the soccer-ball fly-through animation while a country is hovered.
- *
- * V1 intentionally renders nothing — the Higgsfield asset (a hand-drawn b/w
- * soccer ball, background stripped) hasn't been produced yet. The contract is
- * fully wired: `GlobeHero` passes a live `active` flag, and `useSoccerBall`
- * turns it into `playing`. Dropping the asset in is a one-component change here,
- * not a re-plumbing.
- *
- * When the asset arrives, render it on `playing`, e.g.:
- *
- *   if (!playing) return null
- *   return (
- *     <img
- *       src={`${import.meta.env.BASE_URL}soccer-ball.gif`}
- *       aria-hidden
- *       className="pointer-events-none fixed inset-0 z-30 m-auto h-32 w-32"
- *     />
- *   )
+ * Renders the soccer-ball fly-through over the globe while a country is hovered
+ * (SPEC §8). The render path is fully wired: `useSoccerBall` probes `public/`
+ * for the Higgsfield asset and exposes it; this draws a transparent WebM (or a
+ * GIF/PNG) centered over the globe. Until the asset is dropped in, it renders
+ * nothing — never a broken image.
  */
-export function SoccerBallOverlay({ active }: SoccerBallOverlayProps): null {
-  const { playing } = useSoccerBall(active)
-  if (!playing) return null
-  // Asset not produced yet — render nothing even while "playing".
-  return null
+export function SoccerBallOverlay({ active }: SoccerBallOverlayProps): ReactElement | null {
+  const { playing, asset } = useSoccerBall(active)
+  if (!playing || !asset) return null
+
+  const className =
+    'pointer-events-none absolute left-1/2 top-1/2 z-30 h-32 w-32 -translate-x-1/2 -translate-y-1/2'
+
+  return asset.kind === 'video' ? (
+    <video src={asset.src} autoPlay loop muted playsInline aria-hidden className={className} />
+  ) : (
+    <img src={asset.src} alt="" aria-hidden className={className} />
+  )
 }

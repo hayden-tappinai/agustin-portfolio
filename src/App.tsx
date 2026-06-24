@@ -1,57 +1,50 @@
 import { useCallback, useState } from 'react'
-import { GlobeHero } from './components/GlobeHero'
+import { AnimatePresence } from 'framer-motion'
+import { BoardingPassNav } from './components/BoardingPassNav'
+import { Hero } from './components/Hero'
+import { Scoreboard } from './components/Scoreboard'
+import { GlobeZone } from './components/GlobeZone'
+import { Scrapbook } from './components/Scrapbook'
+import { Footer } from './components/Footer'
 import { CountryPanel } from './components/CountryPanel'
 import { FeaturedNav } from './components/FeaturedNav'
+import { VISITED_ISO3 } from './data/stories'
 import type { SelectedCountry } from './types/country'
 
+/**
+ * The finished portfolio: a scrollable kraft-paper scrapbook that wraps around
+ * the navy globe (the calm center). Boarding-pass nav → stadium-banner hero +
+ * ticket rip-off → LED scoreboard → the interactive globe → scrapbook collage →
+ * sign-off. Clicking a country opens the scrapbook journal entry.
+ */
 function App() {
   const [selected, setSelected] = useState<SelectedCountry | null>(null)
-  const closePanel = useCallback(() => setSelected(null), [])
-  const panelOpen = selected !== null
+  const close = useCallback(() => setSelected(null), [])
+  const visitedCount = VISITED_ISO3.size
 
   return (
-    <main className="relative h-[100svh] w-full overflow-hidden bg-navy font-sans text-ink">
-      <GlobeHero selected={selected} onSelect={setSelected} />
+    <div className="min-h-screen w-full overflow-x-hidden font-sans text-ink">
+      <BoardingPassNav />
 
-      {/* Keyboard / screen-reader path into the stories (the canvas is pointer-only). */}
+      {/* Keyboard / screen-reader path into every story (the canvas is pointer-only). */}
       <FeaturedNav onSelect={setSelected} />
 
-      {/* Overlay chrome — above the globe, fades out when a panel is open so it
-          never peeks out behind the panel on narrow screens. */}
-      <div
-        className={[
-          'pointer-events-none relative z-10 flex h-full flex-col justify-between p-6 sm:p-10',
-          'transition-opacity duration-300',
-          panelOpen ? 'opacity-0' : 'opacity-100',
-        ].join(' ')}
-        aria-hidden={panelOpen}
-      >
-        <header className="max-w-md">
-          <p className="text-xs font-medium uppercase tracking-[0.28em] text-muted">
-            Footy &amp; far-flung places
-          </p>
-          <h1 className="mt-3 text-4xl font-semibold leading-[1.05] sm:text-5xl">Agustín</h1>
-          <p className="mt-3 text-[15px] leading-relaxed text-muted">
-            A life mapped in stadiums and stamps. Spin the globe, find a country
-            he's been to, and click in.
-          </p>
-        </header>
+      <Hero />
 
-        <footer className="flex flex-wrap items-center gap-2 text-xs text-muted/80">
-          <span className="inline-flex h-6 items-center rounded-full border border-stroke/70 px-3">
-            Drag to spin
-          </span>
-          <span className="inline-flex h-6 items-center rounded-full border border-stroke/70 px-3">
-            Hover to lift
-          </span>
-          <span className="inline-flex h-6 items-center rounded-full border border-stroke/70 px-3">
-            Click for the story
-          </span>
-        </footer>
-      </div>
+      <section id="scoreboard" className="mx-auto w-full max-w-[1180px] px-6 pb-2 sm:px-10">
+        <Scoreboard />
+      </section>
 
-      <CountryPanel country={selected} onClose={closePanel} />
-    </main>
+      <GlobeZone selected={selected} onSelect={setSelected} visitedCount={visitedCount} />
+
+      <Scrapbook visitedCount={visitedCount} />
+
+      <Footer />
+
+      <AnimatePresence>
+        {selected && <CountryPanel key={selected.key} country={selected} onClose={close} />}
+      </AnimatePresence>
+    </div>
   )
 }
 
