@@ -2,8 +2,6 @@ import { useRef } from 'react'
 import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
 import type { SelectedCountry } from '../types/country'
 import { GlobeHero } from './GlobeHero'
-import { TicketStub } from './TicketStub'
-import { scrollToTarget } from '../lib/smoothScroll'
 
 interface GlobeStageProps {
   selected: SelectedCountry | null
@@ -30,8 +28,6 @@ function mapRange(v: number, inMin: number, inMax: number, outMin: number, outMa
  */
 export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const lockupRef = useRef<HTMLDivElement>(null)
-  const lockupInnerRef = useRef<HTMLDivElement>(null)
   const hintRef = useRef<HTMLSpanElement>(null)
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] })
@@ -42,14 +38,6 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
   const globeScale = useTransform(scrollYProgress, [0, 0.4], [0.74, 1])
 
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
-    // Lockup: fades up as the globe rises into the pin.
-    if (lockupRef.current) {
-      lockupRef.current.style.opacity = String(mapRange(v, 0.04, 0.24, 1, 0))
-      lockupRef.current.style.transform = `translateY(${mapRange(v, 0.04, 0.24, 0, -10)}%)`
-    }
-    if (lockupInnerRef.current) {
-      lockupInnerRef.current.style.pointerEvents = v < 0.2 ? 'auto' : 'none'
-    }
     // Hint: surfaces during the pinned beat (0.42→0.52 in, hold, 0.9→1 out).
     if (hintRef.current) {
       const ho = v < 0.52 ? mapRange(v, 0.42, 0.52, 0, 1) : mapRange(v, 0.9, 1, 1, 0)
@@ -64,53 +52,6 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
         <motion.div className="absolute inset-0" style={{ y: globeY, scale: globeScale }}>
           <GlobeHero selected={selected} onSelect={onSelect} />
         </motion.div>
-
-        {/* quiet lockup, off to one side (fades as the globe takes over) */}
-        <div
-          ref={lockupRef}
-          className="pointer-events-none absolute inset-0 mx-auto flex max-w-[1180px] items-center px-6 sm:px-10"
-        >
-          <div ref={lockupInnerRef} className="max-w-[26rem]">
-            <p className="flex items-center gap-[10px] font-mono text-[12px] font-bold uppercase tracking-[0.14em] text-ink-faint">
-              <span className="h-[7px] w-[7px] rounded-full bg-stamp-red" style={{ boxShadow: '0 0 0 3px rgba(192,54,44,0.18)' }} />
-              40.4168° N, 3.7038° W
-            </p>
-
-            <h1 className="mt-3 font-display uppercase leading-[1.04] tracking-[0.02em] text-ink" style={{ fontSize: 'clamp(40px,6vw,72px)' }}>
-              Agustin
-            </h1>
-
-            <p className="mt-1 font-hand text-[clamp(24px,3.2vw,34px)] leading-tight text-pitch" style={{ transform: 'rotate(-2deg)' }}>
-              footy &amp; far-flung places
-            </p>
-
-            <p className="mt-5 max-w-[22rem] font-sans text-[15px] leading-[1.6] text-ink-2">
-              Spin the world, lift a country, and click anywhere I've left a stamp.
-            </p>
-
-            <div className="mt-6">
-              <TicketStub
-                title="Boarding Pass"
-                glyph="✈"
-                fields={[
-                  { k: 'From', v: 'MADRID' },
-                  { k: 'To', v: 'THE WORLD', tone: 'gold' },
-                  { k: 'Seat', v: '10A' },
-                ]}
-                stubAdmit="Admit One"
-                stubBig="Tear"
-                stubSub="to begin"
-                variant="pitch"
-                width="min(380px, 84vw)"
-                onTorn={() => scrollToTarget('scoreboard')}
-                resetAfter={1100}
-              />
-              <span className="mt-3 block font-hand text-[20px] text-ink-faint" style={{ transform: 'rotate(-1.5deg)' }}>
-                ↑ tear it — or just keep scrolling
-              </span>
-            </div>
-          </div>
-        </div>
 
         {/* drag hint during the pinned beat */}
         <span
