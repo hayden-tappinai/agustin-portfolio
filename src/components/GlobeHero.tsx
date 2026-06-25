@@ -125,7 +125,9 @@ export function GlobeHero({ selected, onSelect }: GlobeHeroProps) {
     controls.minPolarAngle = Math.PI * 0.12
     controls.maxPolarAngle = Math.PI * 0.88
 
-    globe.pointOfView({ lat: 20, lng: 0, altitude: 2.1 })
+    // Lower altitude = the globe renders BIGGER natively (camera zoom), so we get a
+    // large locked globe WITHOUT a CSS scale that would break pointer picking.
+    globe.pointOfView({ lat: 20, lng: 0, altitude: 1.75 })
 
     // Debug-only handle for scripted demo recordings (inert without ?debug).
     if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('debug')) {
@@ -208,8 +210,9 @@ export function GlobeHero({ selected, onSelect }: GlobeHeroProps) {
         />
       )}
 
-      {/* Soccer-ball hover animation seam — renders nothing until the asset lands. */}
-      <SoccerBallOverlay active={hovered !== null} />
+      {/* Soccer-ball seam — PARKED: it should NOT fire on country hover (felt wrong /
+          wrong spot). Kept wired but inactive until we decide where it belongs. */}
+      <SoccerBallOverlay active={false} />
 
       {/* Per-country cardboard cutout — pops up standing on the hovered country.
           The anchor is moved each frame to track the country's screen position;

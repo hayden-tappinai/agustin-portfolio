@@ -40,8 +40,13 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
 
   // Globe rises from the bottom → centre, then HOLDS for the pinned beat. The
   // "release" is the sticky un-pinning at the section end (no fade-out gap).
-  const globeY = useTransform(scrollYProgress, [0, 0.4], ['58%', '22%'])
-  const globeScale = useTransform(scrollYProgress, [0, 0.4], [0.82, 1.34])
+  // IMPORTANT: only TRANSLATE the globe — never CSS-`scale` it. A CSS scale on the
+  // WebGL canvas corrupts react-globe.gl's pointer→raycaster mapping (offsetX is
+  // divided by the *unscaled* width), which made hover/click land in the wrong
+  // place (you had to aim at the top-left to hit a country). Size the globe via
+  // the camera altitude in GlobeHero instead, and lock the translate at 0 so the
+  // interactive state has an identity transform.
+  const globeY = useTransform(scrollYProgress, [0, 0.4], ['64%', '0%'])
 
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
     // Hint: surfaces during the pinned beat (0.42→0.52 in, hold, 0.9→1 out).
@@ -65,7 +70,7 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
     <section ref={ref} id="globe" className="relative w-full" style={{ height: '200vh' }}>
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         {/* the rising, pinning globe — straight on the kraft */}
-        <motion.div className="absolute inset-0" style={{ y: globeY, scale: globeScale }}>
+        <motion.div className="absolute inset-0" style={{ y: globeY }}>
           <GlobeHero selected={selected} onSelect={onSelect} />
         </motion.div>
 
