@@ -4,7 +4,6 @@ import Globe, { type GlobeMethods } from 'react-globe.gl'
 import * as THREE from 'three'
 import type { CountryFeature, SelectedCountry } from '../types/country'
 import { useCountries } from '../hooks/useCountries'
-import { SoccerBallOverlay } from './soccer-ball/SoccerBallOverlay'
 import { countryIso3, countryKey, toSelectedCountry } from '../lib/countries'
 import { altitude, palette } from '../lib/theme'
 import { VISITED_ISO3 } from '../data/stories'
@@ -210,9 +209,9 @@ export function GlobeHero({ selected, onSelect }: GlobeHeroProps) {
         />
       )}
 
-      {/* Soccer-ball seam — PARKED: it should NOT fire on country hover (felt wrong /
-          wrong spot). Kept wired but inactive until we decide where it belongs. */}
-      <SoccerBallOverlay active={false} />
+      {/* Soccer-ball seam PARKED — not rendered (it fired on hover, wrong spot, and
+          its asset probe 404s). Component + hook stay in the tree for when we find
+          it a home; just re-add <SoccerBallOverlay active={...} /> here to revive. */}
 
       {/* Per-country cardboard cutout — pops up standing on the hovered country.
           The anchor is moved each frame to track the country's screen position;
