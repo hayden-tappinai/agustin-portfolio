@@ -95,7 +95,7 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
         <div ref={heroRef} aria-hidden className="pointer-events-none absolute inset-0 z-[6]" style={{ opacity: 1 }}>
           <div ref={heroMtnRef} className="absolute inset-x-0 bottom-[26%]" style={{ transform: 'translateY(0px)' }}>
             <motion.img
-              src="/agustin/mountains.png"
+              src={`${import.meta.env.BASE_URL}agustin/mountains.png`}
               alt=""
               draggable={false}
               className="absolute bottom-0 left-[-5%] w-[min(1020px,73vw)] max-w-none select-none"
@@ -104,7 +104,7 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
               transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
             />
             <motion.img
-              src="/agustin/mountains.png"
+              src={`${import.meta.env.BASE_URL}agustin/mountains.png`}
               alt=""
               draggable={false}
               className="absolute bottom-0 right-[-4%] w-[min(660px,48vw)] max-w-none select-none"
@@ -115,7 +115,7 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
           </div>
           <div ref={heroManRef} className="absolute bottom-[24%] left-1/2" style={{ transform: 'translateX(-50%)' }}>
             <motion.img
-              src="/agustin/hero-agustin.png"
+              src={`${import.meta.env.BASE_URL}agustin/hero-agustin.png`}
               alt="Agustin, arms raised, taking it all in"
               draggable={false}
               className="h-[min(74vh,820px)] w-auto max-w-none select-none drop-shadow-[0_18px_30px_rgba(28,23,18,0.28)]"
