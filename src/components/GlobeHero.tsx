@@ -125,9 +125,9 @@ export function GlobeHero({ selected, onSelect }: GlobeHeroProps) {
     controls.minPolarAngle = Math.PI * 0.12
     controls.maxPolarAngle = Math.PI * 0.88
 
-    // Lower altitude = the globe renders BIGGER natively (camera zoom), so we get a
-    // large locked globe WITHOUT a CSS scale that would break pointer picking.
-    globe.pointOfView({ lat: 20, lng: 0, altitude: 1.75 })
+    // Altitude sizes the globe via the camera (NOT a CSS scale, which would break
+    // pointer picking). 1.9 = a large-but-not-overwhelming locked globe.
+    globe.pointOfView({ lat: 20, lng: 0, altitude: 2.0 })
 
     // Debug-only handle for scripted demo recordings (inert without ?debug).
     if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('debug')) {

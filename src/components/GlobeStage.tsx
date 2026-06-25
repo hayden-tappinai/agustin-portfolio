@@ -14,23 +14,27 @@ function mapRange(v: number, inMin: number, inMax: number, outMin: number, outMa
   return outMin + clamp01((v - inMin) / (inMax - inMin)) * (outMax - outMin)
 }
 
-/** A hand-drawn scrapbook arrow (Caveat-era scrawl), rotated to point at the globe. */
+/**
+ * A hand-drawn scrapbook arrow. Base orientation points RIGHT (head at the right
+ * end); `rotate` (deg, clockwise) aims it — e.g. 45 = down-right, 130 = down-left,
+ * -28 = up-right — so each callout's arrow points at the globe.
+ */
 function ScrawlArrow({ className, rotate = 0 }: { className?: string; rotate?: number }) {
   return (
     <svg
-      viewBox="0 0 120 80"
+      viewBox="0 0 120 60"
       aria-hidden
       className={className}
       style={{ transform: `rotate(${rotate}deg)`, overflow: 'visible' }}
       fill="none"
       stroke="currentColor"
-      strokeWidth={3.4}
+      strokeWidth={3.6}
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M6 14 C 40 6, 92 18, 104 58" />
-      <path d="M104 58 L 88 44" />
-      <path d="M104 58 L 110 36" />
+      <path d="M6 32 C 44 16, 78 16, 110 30" />
+      <path d="M110 30 L 92 21" />
+      <path d="M110 30 L 95 44" />
     </svg>
   )
 }
@@ -88,12 +92,12 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
             bottom-left), Agustin centred with hands up. Gently rocks from load,
             then fades + parallaxes down as the globe rises from behind it. */}
         <div ref={heroRef} aria-hidden className="pointer-events-none absolute inset-0 z-[6]" style={{ opacity: 1 }}>
-          <div ref={heroMtnRef} className="absolute inset-x-0 bottom-0" style={{ transform: 'translateY(0px)' }}>
+          <div ref={heroMtnRef} className="absolute inset-x-0 bottom-[9%]" style={{ transform: 'translateY(0px)' }}>
             <motion.img
               src="/agustin/mountains.png"
               alt=""
               draggable={false}
-              className="absolute bottom-0 left-[-6%] w-[min(1120px,80vw)] max-w-none select-none"
+              className="absolute bottom-0 left-[-5%] w-[min(1020px,73vw)] max-w-none select-none"
               style={{ transformOrigin: 'bottom center' }}
               animate={{ rotate: [-1.1, 1.1, -1.1] }}
               transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
@@ -102,18 +106,18 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
               src="/agustin/mountains.png"
               alt=""
               draggable={false}
-              className="absolute bottom-0 right-[-5%] w-[min(720px,52vw)] max-w-none select-none"
+              className="absolute bottom-0 right-[-4%] w-[min(660px,48vw)] max-w-none select-none"
               style={{ scaleX: -1, transformOrigin: 'bottom center' }}
               animate={{ rotate: [1.1, -1.1, 1.1] }}
               transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
             />
           </div>
-          <div ref={heroManRef} className="absolute bottom-[1%] left-1/2" style={{ transform: 'translateX(-50%)' }}>
+          <div ref={heroManRef} className="absolute bottom-[7%] left-1/2" style={{ transform: 'translateX(-50%)' }}>
             <motion.img
               src="/agustin/hero-agustin.png"
               alt="Agustin, arms raised, taking it all in"
               draggable={false}
-              className="h-[min(60vh,660px)] w-auto max-w-none select-none drop-shadow-[0_18px_30px_rgba(28,23,18,0.28)]"
+              className="h-[min(74vh,820px)] w-auto max-w-none select-none drop-shadow-[0_18px_30px_rgba(28,23,18,0.28)]"
               style={{ transformOrigin: 'bottom center' }}
               animate={{ rotate: [-2.2, 2.2, -2.2] }}
               transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
@@ -133,7 +137,7 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
             <p className="font-hand text-[clamp(22px,2.6vw,34px)] font-bold leading-tight text-ink">
               Click into a country
             </p>
-            <ScrawlArrow className="mt-1 h-9 w-14 text-stamp-red" rotate={12} />
+            <ScrawlArrow className="mt-0.5 ml-8 h-9 w-16 text-stamp-red" rotate={32} />
           </div>
 
           {/* top-right — explore / spin, arrow pointing at the globe */}
@@ -144,7 +148,7 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
             <p className="mt-1 font-hand text-[clamp(18px,2vw,26px)] leading-tight text-ink-2">
               drag to spin the globe if you want
             </p>
-            <ScrawlArrow className="ml-auto mt-1 h-10 w-16 text-stamp-red" rotate={118} />
+            <ScrawlArrow className="ml-auto mt-1 h-10 w-16 text-stamp-red" rotate={130} />
           </div>
 
           {/* just above the globe */}
@@ -159,7 +163,7 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
             <p className="font-hand text-[clamp(20px,2.3vw,30px)] font-bold leading-tight text-ink">
               Keep scrolling to read my story
             </p>
-            <ScrawlArrow className="mt-1 h-10 w-12 text-stamp-red" rotate={-42} />
+            <ScrawlArrow className="mt-1 h-10 w-16 text-stamp-red" rotate={-28} />
           </div>
         </div>
       </div>
