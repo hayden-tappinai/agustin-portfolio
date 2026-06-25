@@ -62,7 +62,7 @@ export function Scrapbook({ visitedCount, onSelect }: ScrapbookProps) {
             </span>
           </div>
           <p className="relative z-10 mt-2 max-w-[52ch] font-sans text-[15px] leading-[1.6] text-ink-2">
-            Every country he's been to — and yes, he drew all of their flags as a kid. Tap one to open the
+            Every country I've been to — and yes, I drew all of their flags as a kid. Tap one to open the
             story.
           </p>
 

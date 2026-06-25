@@ -233,7 +233,7 @@ export const WorldCupBalls = memo(function WorldCupBalls() {
           </h2>
           <p className="mt-4 max-w-[52ch] font-sans text-[15px] leading-[1.6] text-ink-2">
             It started with the Jabulani in 2010 — the World Cup that started everything. One ball for
-            every tournament since, all the way to the Trionda he'll watch at home in '26.
+            every tournament since, all the way to the Trionda I'll watch at home in '26.
           </p>
         </div>
       </Reveal>
