@@ -33,6 +33,11 @@ function toneFor(name: string): string {
 // deterministic scrapbook tilt per tile — subtle, straightens on hover
 const TILTS = [-3.4, -1.8, 0.8, 2.6, -0.9, 1.7, -2.4, 3.1, -1.2, 2.1]
 
+// I only pin the first slice to the board — the rest live in my head. The
+// "+N more" chip carries the real remaining count (CLUB_COUNT - SHOWN).
+const SHOWN = 50
+const REMAINING = CLUB_COUNT - SHOWN
+
 const Crest = memo(function Crest({ club, index }: { club: Club; index: number }) {
   // 0 = TheSportsDB badge, 1 = api-sports CDN, 2 = monogram fallback
   const [stage, setStage] = useState(0)
@@ -68,6 +73,27 @@ const Crest = memo(function Crest({ club, index }: { club: Club; index: number }
             {initials(club)}
           </div>
         )}
+      </div>
+    </div>
+  )
+})
+
+// the trailing "+N more" chip — same taped scrapbook tile, but it stands in for
+// every badge I didn't pin up. Same tilt/straighten-on-hover as the crests.
+const MoreChip = memo(function MoreChip({ count, index }: { count: number; index: number }) {
+  const tilt = TILTS[index % TILTS.length]
+  return (
+    <div className="group/crest relative flex aspect-square items-center justify-center" title={`${count} more crests I can name`}>
+      <div
+        className="flex h-full w-full flex-col items-center justify-center rounded-[11px] bg-ink p-[10%] text-center transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.18,0.89,0.32,1.28)] group-hover/crest:!rotate-0 group-hover/crest:scale-[1.13] group-hover/crest:shadow-paper"
+        style={{
+          transform: `rotate(${tilt}deg)`,
+          boxShadow: '0 3px 9px rgba(58,42,18,0.22), inset 0 0 0 1px rgba(166,212,0,0.35)',
+        }}
+        aria-label={`Plus ${count} more crests`}
+      >
+        <span className="font-display text-[clamp(15px,3.2vw,24px)] leading-none tracking-[0.01em] text-volt">+{count}</span>
+        <span className="mt-[5px] font-mono text-[clamp(7px,1.4vw,10px)] font-bold uppercase tracking-[0.14em] text-paper/70">more</span>
       </div>
     </div>
   )
@@ -113,9 +139,10 @@ export const LogoWall = memo(function LogoWall() {
               style={{ boxShadow: 'inset 0 2px 10px rgba(58,42,18,0.1)' }}
             >
               <div className="grid grid-cols-[repeat(auto-fill,minmax(58px,1fr))] gap-2 sm:grid-cols-[repeat(auto-fill,minmax(72px,1fr))] sm:gap-3">
-                {CLUBS.map((club, i) => (
+                {CLUBS.slice(0, SHOWN).map((club, i) => (
                   <Crest key={`${club.apiId || club.name}-${i}`} club={club} index={i} />
                 ))}
+                <MoreChip count={REMAINING} index={SHOWN} />
               </div>
             </div>
           </div>
