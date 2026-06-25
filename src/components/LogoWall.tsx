@@ -80,28 +80,35 @@ const Crest = memo(function Crest({ club, index }: { club: Club; index: number }
 
 // the trailing "+N more" chip — same taped scrapbook tile, but it stands in for
 // every badge I didn't pin up. Same tilt/straighten-on-hover as the crests.
-const MoreChip = memo(function MoreChip({ count, index }: { count: number; index: number }) {
+// the trailing "+N more" chip — now a BUTTON: tap it to actually pin up the rest.
+const MoreChip = memo(function MoreChip({ count, index, onClick }: { count: number; index: number; onClick: () => void }) {
   const tilt = TILTS[index % TILTS.length]
   return (
-    <div className="group/crest relative flex aspect-square items-center justify-center" title={`${count} more crests I can name`}>
+    <button
+      type="button"
+      onClick={onClick}
+      className="group/crest relative flex aspect-square items-center justify-center"
+      title={`Show ${count} more crests`}
+    >
       <div
-        className="flex h-full w-full flex-col items-center justify-center rounded-[11px] bg-ink p-[10%] text-center transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.18,0.89,0.32,1.28)] group-hover/crest:!rotate-0 group-hover/crest:scale-[1.13] group-hover/crest:shadow-paper"
+        className="flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-[11px] bg-ink p-[10%] text-center transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.18,0.89,0.32,1.28)] group-hover/crest:!rotate-0 group-hover/crest:scale-[1.13] group-hover/crest:shadow-paper"
         style={{
           transform: `rotate(${tilt}deg)`,
           boxShadow: '0 3px 9px rgba(58,42,18,0.22), inset 0 0 0 1px rgba(166,212,0,0.35)',
         }}
-        aria-label={`Plus ${count} more crests`}
+        aria-label={`Show ${count} more crests`}
       >
         <span className="font-display text-[clamp(15px,3.2vw,24px)] leading-none tracking-[0.01em] text-volt">+{count}</span>
         <span className="mt-[5px] font-mono text-[clamp(7px,1.4vw,10px)] font-bold uppercase tracking-[0.14em] text-paper/70">more</span>
       </div>
-    </div>
+    </button>
   )
 })
 
 // memo'd: `selected` country state lives in App, so this prop-less section would
 // otherwise re-map all crests on every globe select/close.
 export const LogoWall = memo(function LogoWall() {
+  const [expanded, setExpanded] = useState(false)
   return (
     <section id="logo-wall" className="mx-auto w-full max-w-[1180px] px-6 py-16 sm:px-10 sm:py-24">
       <Reveal>
@@ -139,17 +146,30 @@ export const LogoWall = memo(function LogoWall() {
               style={{ boxShadow: 'inset 0 2px 10px rgba(58,42,18,0.1)' }}
             >
               <div className="grid grid-cols-[repeat(auto-fill,minmax(58px,1fr))] gap-2 sm:grid-cols-[repeat(auto-fill,minmax(72px,1fr))] sm:gap-3">
-                {CLUBS.slice(0, SHOWN).map((club, i) => (
+                {(expanded ? CLUBS : CLUBS.slice(0, SHOWN)).map((club, i) => (
                   <Crest key={`${club.apiId || club.name}-${i}`} club={club} index={i} />
                 ))}
-                <MoreChip count={REMAINING} index={SHOWN} />
+                {!expanded && (
+                  <MoreChip count={REMAINING} index={SHOWN} onClick={() => setExpanded(true)} />
+                )}
               </div>
             </div>
           </div>
 
-          <p className="mt-6 font-hand text-[24px] text-ink-faint" style={{ transform: 'rotate(-1deg)' }}>
-            ...and I could probably tell you what division each one's in <span aria-hidden="true">⚽</span>
-          </p>
+          <div className="mt-6 flex items-center justify-between gap-4">
+            <p className="font-hand text-[24px] text-ink-faint" style={{ transform: 'rotate(-1deg)' }}>
+              ...and I could probably tell you what division each one's in <span aria-hidden="true">⚽</span>
+            </p>
+            {expanded && (
+              <button
+                type="button"
+                onClick={() => setExpanded(false)}
+                className="shrink-0 font-mono text-[12px] font-bold uppercase tracking-[0.14em] text-ink-faint underline-offset-4 hover:text-ink hover:underline"
+              >
+                show less
+              </button>
+            )}
+          </div>
         </div>
       </Reveal>
     </section>
