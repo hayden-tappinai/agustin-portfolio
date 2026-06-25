@@ -69,25 +69,51 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
           <GlobeHero selected={selected} onSelect={onSelect} />
         </motion.div>
 
-        {/* cardboard hero — Agustin (front) + scrapbook mountains (behind), on
-            top of the globe while you're at the top, then fading to reveal it */}
+        {/* cardboard hero — scrapbook mountains SPLIT left+right under the ticket,
+            Agustin centred with his hands up between them. Everything gently rocks
+            (tilt left→centre→right) from page load, then the whole group parallaxes
+            + fades out as the globe rises. Refs hold the parallax translate (written
+            on scroll); the inner images carry the Framer rock so they don't fight. */}
         <div ref={heroRef} aria-hidden className="pointer-events-none absolute inset-0 z-[6]" style={{ opacity: 1 }}>
-          <img
+          <div
             ref={heroMtnRef}
-            src="/agustin/mountains.png"
-            alt=""
-            draggable={false}
-            className="absolute left-1/2 top-[53%] w-[min(1080px,128vw)] max-w-none select-none"
+            className="absolute left-1/2 top-[41%] w-[132vw] max-w-[1180px]"
             style={{ transform: 'translate(-50%, -50%)' }}
-          />
-          <img
+          >
+            <motion.img
+              src="/agustin/mountains.png"
+              alt=""
+              draggable={false}
+              className="absolute bottom-0 left-0 w-[47%] max-w-none select-none"
+              style={{ transformOrigin: 'bottom center' }}
+              animate={{ rotate: [-1.6, 1.6, -1.6] }}
+              transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <motion.img
+              src="/agustin/mountains.png"
+              alt=""
+              draggable={false}
+              className="absolute bottom-0 right-0 w-[47%] max-w-none select-none"
+              style={{ scaleX: -1, transformOrigin: 'bottom center' }}
+              animate={{ rotate: [1.6, -1.6, 1.6] }}
+              transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          </div>
+          <div
             ref={heroManRef}
-            src="/agustin/hero-agustin.png"
-            alt="Agustin, arms raised, taking it all in"
-            draggable={false}
-            className="absolute left-1/2 top-[47%] h-[min(72vh,760px)] w-auto max-w-none select-none drop-shadow-[0_18px_30px_rgba(28,23,18,0.28)]"
+            className="absolute left-1/2 top-[47%]"
             style={{ transform: 'translate(-50%, -50%)' }}
-          />
+          >
+            <motion.img
+              src="/agustin/hero-agustin.png"
+              alt="Agustin, arms raised, taking it all in"
+              draggable={false}
+              className="h-[min(66vh,720px)] w-auto max-w-none select-none drop-shadow-[0_18px_30px_rgba(28,23,18,0.28)]"
+              style={{ transformOrigin: 'bottom center' }}
+              animate={{ rotate: [-2.4, 2.4, -2.4] }}
+              transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          </div>
         </div>
 
         {/* drag hint during the pinned beat */}

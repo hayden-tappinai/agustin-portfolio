@@ -127,6 +127,11 @@ export function GlobeHero({ selected, onSelect }: GlobeHeroProps) {
 
     globe.pointOfView({ lat: 20, lng: 0, altitude: 2.1 })
 
+    // Debug-only handle for scripted demo recordings (inert without ?debug).
+    if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('debug')) {
+      ;(window as unknown as { __globe?: typeof globe }).__globe = globe
+    }
+
     globe.lights([
       new THREE.AmbientLight(0xffffff, 2.1),
       (() => {
@@ -218,11 +223,14 @@ export function GlobeHero({ selected, onSelect }: GlobeHeroProps) {
           {cutoutIso && (
             <motion.div
               key={cutoutIso}
-              initial={{ opacity: 0, scale: 0.55 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.5 }}
-              transition={{ type: 'spring', stiffness: 320, damping: 22 }}
+              initial={{ opacity: 0, scale: 0.18, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.3, y: 8 }}
+              transition={{ type: 'spring', stiffness: 340, damping: 24 }}
               className="absolute bottom-0 left-0"
+              // Anchor the figure's base at the country's centre so he POPS UP out
+              // of it (small), waving once. transformOrigin bottom-centre = grows
+              // up from that point rather than being pinned flat on the country.
               style={{ x: '-50%', transformOrigin: 'bottom center' }}
             >
               <img
@@ -239,7 +247,7 @@ export function GlobeHero({ selected, onSelect }: GlobeHeroProps) {
                     setMissingCutouts((prev) => new Set(prev).add(cutoutIso))
                   }
                 }}
-                className="h-[clamp(120px,26vh,260px)] w-auto max-w-none select-none drop-shadow-[0_14px_22px_rgba(28,23,18,0.4)]"
+                className="h-[clamp(96px,17vh,186px)] w-auto max-w-none select-none drop-shadow-[0_10px_18px_rgba(28,23,18,0.38)]"
               />
             </motion.div>
           )}
