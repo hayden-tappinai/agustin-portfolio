@@ -86,7 +86,7 @@ export const LogoWall = memo(function LogoWall() {
           </p>
           <h2 className="mt-3 font-display text-[clamp(40px,8vw,92px)] uppercase leading-[1.04] tracking-[0.015em] text-ink">
             Every Badge
-            <br /> He Can Name
+            <br /> I Can Name
           </h2>
           <p className="mt-4 max-w-[60ch] font-sans text-[15px] leading-[1.6] text-ink-2">
             Two divisions deep in Argentina, Spain &amp; England — plus everyone who's played a Libertadores,
@@ -121,7 +121,7 @@ export const LogoWall = memo(function LogoWall() {
           </div>
 
           <p className="mt-6 font-hand text-[24px] text-ink-faint" style={{ transform: 'rotate(-1deg)' }}>
-            ...and he could probably tell you what division each one's in <span aria-hidden="true">⚽</span>
+            ...and I could probably tell you what division each one's in <span aria-hidden="true">⚽</span>
           </p>
         </div>
       </Reveal>
