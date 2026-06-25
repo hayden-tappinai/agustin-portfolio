@@ -67,11 +67,12 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
     // Hero (mountains + Agustin): present at the top, gone as the globe rises.
     if (heroRef.current) heroRef.current.style.opacity = String(mapRange(v, 0, 0.22, 1, 0))
+    // Hero drifts UP (negative) as it fades + the globe rises from below — never down.
     if (heroManRef.current) {
-      heroManRef.current.style.transform = `translateX(-50%) translateY(${mapRange(v, 0, 0.4, 0, 90)}px)`
+      heroManRef.current.style.transform = `translateX(-50%) translateY(${mapRange(v, 0, 0.4, 0, -120)}px)`
     }
     if (heroMtnRef.current) {
-      heroMtnRef.current.style.transform = `translateY(${mapRange(v, 0, 0.4, 0, 130)}px)`
+      heroMtnRef.current.style.transform = `translateY(${mapRange(v, 0, 0.4, 0, -140)}px)`
     }
     // Callouts: fade in once the globe locks (0.42→0.55), hold, fade out (0.9→1).
     if (calloutRef.current) {
@@ -92,7 +93,7 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
             bottom-left), Agustin centred with hands up. Gently rocks from load,
             then fades + parallaxes down as the globe rises from behind it. */}
         <div ref={heroRef} aria-hidden className="pointer-events-none absolute inset-0 z-[6]" style={{ opacity: 1 }}>
-          <div ref={heroMtnRef} className="absolute inset-x-0 bottom-[9%]" style={{ transform: 'translateY(0px)' }}>
+          <div ref={heroMtnRef} className="absolute inset-x-0 bottom-[26%]" style={{ transform: 'translateY(0px)' }}>
             <motion.img
               src="/agustin/mountains.png"
               alt=""
@@ -112,7 +113,7 @@ export function GlobeStage({ selected, onSelect }: GlobeStageProps) {
               transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
             />
           </div>
-          <div ref={heroManRef} className="absolute bottom-[7%] left-1/2" style={{ transform: 'translateX(-50%)' }}>
+          <div ref={heroManRef} className="absolute bottom-[24%] left-1/2" style={{ transform: 'translateX(-50%)' }}>
             <motion.img
               src="/agustin/hero-agustin.png"
               alt="Agustin, arms raised, taking it all in"
